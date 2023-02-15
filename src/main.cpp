@@ -2,9 +2,8 @@
 #include <cstdlib>
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
-#include <random>
 #include <vector>
-#include "Shapes/Circle.h"
+#include "Shapes/Triangle.h"
 
 int main(int argc, char* argv[])
 {
@@ -23,25 +22,25 @@ int main(int argc, char* argv[])
     ctx.imgui = [&]() {
         ImGui::Begin("Test");
         ImGui::End();
-        //ImGui::ShowDemoWindow();
+        // ImGui::ShowDemoWindow();
     };
 
-    std::vector<Shapes::Circle> circles{};
+    std::vector<Shapes::Triangle> triangles{};
     for (unsigned int i = 0; i < 50; i++)
     {
-        circles.emplace_back(
+        triangles.emplace_back(
             glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
-            p6::Angle{p6::Radians{p6::random::number(0, M_PI * 2)}},
+            p6::Angle{p6::Radians{p6::random::number(0, p6::TAU)}},
             0.05
         );
     }
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
-        for (auto& circle : circles)
+        for (auto& triangle : triangles)
         {
-            circle.update(ctx);
-            circle.draw(ctx);
+            triangle.update(ctx);
+            triangle.draw(ctx);
         }
     };
 
