@@ -3,7 +3,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <vector>
-#include "Shapes/Triangle.h"
+#include "Boids.h"
 
 int main(int argc, char* argv[])
 {
@@ -25,23 +25,11 @@ int main(int argc, char* argv[])
         // ImGui::ShowDemoWindow();
     };
 
-    std::vector<Shapes::Triangle> triangles{};
-    for (unsigned int i = 0; i < 50; i++)
-    {
-        triangles.emplace_back(
-            glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
-            p6::Angle{p6::Radians{p6::random::number(0, p6::TAU)}},
-            0.05
-        );
-    }
+    auto boids = Boids{ctx, 50};
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
-        for (auto& triangle : triangles)
-        {
-            triangle.update(ctx);
-            triangle.draw(ctx);
-        }
+        boids.updateAndDraw(ctx);
     };
 
     ctx.start();
