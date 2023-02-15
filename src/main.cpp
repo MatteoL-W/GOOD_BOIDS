@@ -1,32 +1,49 @@
-#include <stdlib.h>
-#include "p6/p6.h"
+#include <p6/p6.h>
+#include <cstdlib>
 #define DOCTEST_CONFIG_IMPLEMENT
-#include "doctest/doctest.h"
+#include <doctest/doctest.h>
+#include <random>
+#include <vector>
+#include "Shapes/Circle.h"
 
 int main(int argc, char* argv[])
 {
-    { // Run the tests
+    {
         if (doctest::Context{}.run() != 0)
             return EXIT_FAILURE;
-        // The CI does not have a GPU so it cannot run the rest of the code.
+
         const bool no_gpu_available = argc >= 2 && strcmp(argv[1], "-nogpu") == 0; // NOLINT(cppcoreguidelines-pro-bounds-pointer-arithmetic)
         if (no_gpu_available)
             return EXIT_SUCCESS;
     }
 
-    // Actual app
-    auto ctx = p6::Context{{.title = "Simple-p6-Setup"}};
+    auto ctx = p6::Context{{.title = "GOOD_BOIDS"}};
     ctx.maximize_window();
 
-    // Declare your infinite update loop.
-    ctx.update = [&]() {
-        ctx.background(p6::NamedColor::Blue);
-        ctx.circle(
-            p6::Center{ctx.mouse()},
-            p6::Radius{0.2f}
-        );
+    ctx.imgui = [&]() {
+        ImGui::Begin("Test");
+        ImGui::End();
+        //ImGui::ShowDemoWindow();
     };
 
-    // Should be done last. It starts the infinite loop.
+    std::vector<Shapes::Circle> circles{};
+    for (unsigned int i = 0; i < 50; i++)
+    {
+        circles.emplace_back(
+            glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
+            p6::Angle{p6::Radians{p6::random::number(0, M_PI * 2)}},
+            0.05
+        );
+    }
+
+    ctx.update = [&]() {
+        ctx.background(p6::NamedColor::Gray);
+        for (auto& circle : circles)
+        {
+            circle.update(ctx);
+            circle.draw(ctx);
+        }
+    };
+
     ctx.start();
 }
