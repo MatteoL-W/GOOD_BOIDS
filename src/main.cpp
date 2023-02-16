@@ -2,7 +2,6 @@
 #include <cstdlib>
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
-#include <vector>
 #include "Boids.h"
 
 int main(int argc, char* argv[])
@@ -18,6 +17,7 @@ int main(int argc, char* argv[])
 
     auto ctx = p6::Context{{.title = "GOOD_BOIDS"}};
     ctx.maximize_window();
+    ctx.framerate_capped_at(60); // Avoid differents results on 240Hz/60Hz
 
     ctx.imgui = [&]() {
         ImGui::Begin("Test");
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
         // ImGui::ShowDemoWindow();
     };
 
-    auto boids = Boids{ctx, 50};
+    auto boids = Boids{ctx, 20};
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
