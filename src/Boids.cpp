@@ -15,7 +15,7 @@ void Boids::updateAndDraw(p6::Context& ctx)
 {
     for (auto& triangle : _triangles)
     {
-        triangle.update(ctx);
+        triangle.update(ctx, _triangles);
         triangle.draw(ctx);
     }
 }
