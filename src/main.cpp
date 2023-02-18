@@ -1,8 +1,8 @@
 #include <p6/p6.h>
-#include <cstdlib>
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include "Boids.h"
+#include <stdlib.h>
 
 int main(int argc, char* argv[])
 {
