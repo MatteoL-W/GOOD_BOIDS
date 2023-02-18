@@ -10,7 +10,7 @@ void SingleBoid::update(p6::Context& ctx, const std::vector<SingleBoid>& boids)
     applySteeringForces(boids);
 
     // ToDo : Ugly multiplication
-    _position += _velocity * glm::vec2(0.01);
+    _position += _velocity * glm::vec2(0.01f);
 
     keepBoidInTheScreen(ctx);
     _acceleration *= 0;
