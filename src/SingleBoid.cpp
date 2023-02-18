@@ -1,13 +1,11 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-namespace Shapes {
-
 SingleBoid::SingleBoid(glm::vec2 const& position, float const& radius)
     : _position(position), _velocity(p6::random::number(-1, 1), p6::random::number(-1, 1)), _radius(radius)
 {}
 
-void SingleBoid::update(p6::Context& ctx, const std::vector<Shapes::SingleBoid>& boids)
+void SingleBoid::update(p6::Context& ctx, const std::vector<SingleBoid>& boids)
 {
     applySteeringForces(boids);
 
@@ -29,7 +27,7 @@ void SingleBoid::draw(p6::Context& ctx)
     );
 }
 
-void SingleBoid::applySteeringForces(const std::vector<Shapes::SingleBoid>& boids)
+void SingleBoid::applySteeringForces(const std::vector<SingleBoid>& boids)
 {
     _acceleration += computeSeparationForce(boids);
     _acceleration += computeAlignmentForce(boids);
@@ -39,9 +37,9 @@ void SingleBoid::applySteeringForces(const std::vector<Shapes::SingleBoid>& boid
     utils::vec::limit(_velocity, _maxSpeed);
 }
 
-glm::vec2 SingleBoid::computeSeparationForce(const std::vector<Shapes::SingleBoid>& boids)
+glm::vec2 SingleBoid::computeSeparationForce(const std::vector<SingleBoid>& boids)
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, 0.1f);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _radius * 2);
     auto                          force        = glm::vec2{};
 
     for (auto const& closeMember : closeMembers)
@@ -50,9 +48,9 @@ glm::vec2 SingleBoid::computeSeparationForce(const std::vector<Shapes::SingleBoi
     return force;
 }
 
-glm::vec2 SingleBoid::computeAlignmentForce(const std::vector<Shapes::SingleBoid>& boids)
+glm::vec2 SingleBoid::computeAlignmentForce(const std::vector<SingleBoid>& boids)
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, 0.2f);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _radius * 4);
     if (closeMembers.empty())
         return glm::vec2{};
 
@@ -63,9 +61,9 @@ glm::vec2 SingleBoid::computeAlignmentForce(const std::vector<Shapes::SingleBoid
     return averageDirection / static_cast<float>(closeMembers.size());
 }
 
-glm::vec2 SingleBoid::computeCohesionForce(const std::vector<Shapes::SingleBoid>& boids)
+glm::vec2 SingleBoid::computeCohesionForce(const std::vector<SingleBoid>& boids)
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, 0.1f);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _radius * 2);
     if (closeMembers.empty())
         return glm::vec2{};
 
@@ -76,7 +74,7 @@ glm::vec2 SingleBoid::computeCohesionForce(const std::vector<Shapes::SingleBoid>
     return averagePosition / static_cast<float>(closeMembers.size());
 }
 
-std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<Shapes::SingleBoid> const& boids, double radius)
+std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius)
 {
     // ToDo : OctTree / BVH ?
     std::vector<SingleBoid> nearbyBoids{};
@@ -105,5 +103,3 @@ void SingleBoid::keepBoidInTheScreen(const p6::Context& ctx)
     if (_position.y < -1)
         _position.y += 2;
 }
-
-} // namespace Shapes

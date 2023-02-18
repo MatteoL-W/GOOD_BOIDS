@@ -12,5 +12,5 @@ public:
     void updateAndDraw(p6::Context&);
 
 private:
-    std::vector<Shapes::SingleBoid> _boids{};
+    std::vector<SingleBoid> _boids{};
 };
