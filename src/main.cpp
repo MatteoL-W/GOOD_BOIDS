@@ -21,14 +21,16 @@ int main(int argc, char* argv[])
 
     Boids boids{};
     int   numberOfBoids = 40;
+    float boidsSize     = 0.05;
     auto  load_boids    = [&]() {
-        boids = Boids{ctx, static_cast<unsigned int>(numberOfBoids)};
+        boids = Boids{ctx, static_cast<unsigned int>(numberOfBoids), boidsSize};
     };
 
     ctx.imgui = [&]() {
         ImGui::Begin("Tweak values");
 
-        ImGui::DragInt("Number of Boids", &numberOfBoids, 1.f, 0, 100);
+        ImGui::DragInt("Number of Boids", &numberOfBoids, 1.f, 0, 500);
+        ImGui::DragFloat("Boids size", &boidsSize, 0.01f, 0, 2);
         if (ImGui::Button("Reload flock"))
             load_boids();
 
