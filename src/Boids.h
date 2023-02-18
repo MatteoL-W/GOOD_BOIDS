@@ -7,7 +7,7 @@ class Boids {
 public:
     // ToDo: Abstract Shape
     // ToDo: Do something to avoid the context
-    Boids() {};
+    Boids() = default;
     Boids(p6::Context&, unsigned int quantity);
     void updateAndDraw(p6::Context&);
 

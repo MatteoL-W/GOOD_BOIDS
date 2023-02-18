@@ -11,8 +11,8 @@ Triangle::Triangle(glm::vec2 const& position, float const& radius)
 
 void Triangle::update(p6::Context& ctx, const std::vector<Shapes::Triangle>& _triangles)
 {
-    std::vector<Triangle> const closeMembers = getNearbyTriangles(_triangles);
-    _acceleration += computeSeparationForce(closeMembers);
+    _acceleration += computeSeparationForce(_triangles);
+    _acceleration += computeAlignmentForce(_triangles);
 
     _velocity += _acceleration;
     utils::vec::limit(_velocity, _maxSpeed);
@@ -34,12 +34,24 @@ void Triangle::draw(p6::Context& ctx)
 
 glm::vec2 Triangle::computeSeparationForce(const std::vector<Shapes::Triangle>& _triangles)
 {
-    glm::vec2 force;
+    std::vector<Triangle> const closeMembers = getNearbyTriangles(_triangles, 0.1f);
+    auto                        force        = glm::vec2{0, 0};
 
-    for (auto const& closeMember : _triangles)
+    for (auto const& closeMember : closeMembers)
         force += glm::normalize(_position - closeMember._position) / glm::distance(_position, closeMember._position);
 
     return force;
+}
+
+glm::vec2 Triangle::computeAlignmentForce(const std::vector<Shapes::Triangle>& _triangles)
+{
+    std::vector<Triangle> const closeMembers     = getNearbyTriangles(_triangles, 0.4f);
+    auto                        averageDirection = glm::vec2{0, 0};
+
+    for (auto const& closeMember : closeMembers)
+        averageDirection += closeMember._velocity;
+
+    return averageDirection /= static_cast<float>(_triangles.size());
 }
 
 std::vector<Triangle> Triangle::getNearbyTriangles(std::vector<Shapes::Triangle> const& triangles, double radius)
