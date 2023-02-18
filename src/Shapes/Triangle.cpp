@@ -1,29 +1,23 @@
 #include "Triangle.h"
+#include "../utils/vec.hpp"
 
 namespace Shapes {
 
-Triangle::Triangle(glm::vec2 const& position, float const& radius, float const& speed)
-    : _position(position), _velocity(p6::random::number(-1, 1), p6::random::number(-1, 1)), _acceleration(0, 0), _radius(radius), _speed(speed)
+Triangle::Triangle(glm::vec2 const& position, float const& radius)
+    : _position(position), _velocity(p6::random::number(-1, 1), p6::random::number(-1, 1)), _acceleration(0, 0), _radius(radius)
 {}
 
 void Triangle::update(p6::Context& ctx, const std::vector<Shapes::Triangle>& _triangles)
 {
-    // computeSeparationForce(_triangles);
-    //_velocity += _acceleration;
+    std::vector<Triangle> const closeMembers = getNearbyTriangles(_triangles);
+    _acceleration += computeSeparationForce(closeMembers);
 
+    _velocity += _acceleration;
+    utils::vec::limit(_velocity, _maxSpeed);
     _position += _velocity * glm::vec2(0.01);
 
-    if (_position.x > ctx.aspect_ratio())
-        _position.x -= 2 * ctx.aspect_ratio();
-
-    if (_position.y > 1)
-        _position.y -= 2 * 1;
-
-    if (_position.x < -ctx.aspect_ratio())
-        _position.x += 2 * ctx.aspect_ratio();
-
-    if (_position.y < -1)
-        _position.y += 2;
+    keepTriangleInTheScreen(ctx);
+    _acceleration *= 0;
 }
 
 void Triangle::draw(p6::Context& ctx)
@@ -38,12 +32,10 @@ void Triangle::draw(p6::Context& ctx)
 
 glm::vec2 Triangle::computeSeparationForce(const std::vector<Shapes::Triangle>& _triangles)
 {
-    // ToDo : Verify
     glm::vec2 force;
-    auto      closeMembers = getNearbyTriangles(_triangles);
 
-    for (auto const& closeMember : closeMembers)
-        force += (_position - closeMember._position) / glm::distance(_position, closeMember._position);
+    for (auto const& closeMember : _triangles)
+        force += glm::normalize(_position - closeMember._position) / glm::distance(_position, closeMember._position);
 
     return force;
 }
@@ -51,7 +43,6 @@ glm::vec2 Triangle::computeSeparationForce(const std::vector<Shapes::Triangle>& 
 std::vector<Triangle> Triangle::getNearbyTriangles(std::vector<Shapes::Triangle> const& triangles, double radius)
 {
     // ToDo : OctTree / BVH ?
-    // ToDo : Do we need this method ?
     std::vector<Triangle> nearbyTriangles{};
     for (const auto& triangle : triangles)
     {
@@ -62,6 +53,21 @@ std::vector<Triangle> Triangle::getNearbyTriangles(std::vector<Shapes::Triangle>
             nearbyTriangles.push_back(triangle);
     }
     return nearbyTriangles;
+}
+
+void Triangle::keepTriangleInTheScreen(const p6::Context& ctx)
+{
+    if (_position.x > ctx.aspect_ratio())
+        _position.x -= 2 * ctx.aspect_ratio();
+
+    if (_position.y > 1)
+        _position.y -= 2 * 1;
+
+    if (_position.x < -ctx.aspect_ratio())
+        _position.x += 2 * ctx.aspect_ratio();
+
+    if (_position.y < -1)
+        _position.y += 2;
 }
 
 } // namespace Shapes

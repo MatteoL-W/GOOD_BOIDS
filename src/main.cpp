@@ -1,8 +1,9 @@
 #include <p6/p6.h>
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
+#include <cstdlib>
+
 #include "Boids.h"
-#include <stdlib.h>
 
 int main(int argc, char* argv[])
 {
@@ -22,10 +23,10 @@ int main(int argc, char* argv[])
     ctx.imgui = [&]() {
         ImGui::Begin("Test");
         ImGui::End();
-        // ImGui::ShowDemoWindow();
+        //mGui::ShowDemoWindow();
     };
 
-    auto boids = Boids{ctx, 20};
+    auto boids = Boids{ctx, 40};
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);

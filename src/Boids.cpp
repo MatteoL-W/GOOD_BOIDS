@@ -1,10 +1,14 @@
 #include "Boids.h"
+
 Boids::Boids(p6::Context& ctx, unsigned int quantity)
 {
     for (unsigned int i = 0; i < quantity; i++)
     {
         _triangles.emplace_back(
-            glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)}, 0.05
+            glm::vec2{
+                p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()),
+                p6::random::number(-1, 1)},
+            0.05
         );
     }
 }
