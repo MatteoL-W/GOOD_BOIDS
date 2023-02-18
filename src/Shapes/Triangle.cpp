@@ -13,6 +13,7 @@ void Triangle::update(p6::Context& ctx, const std::vector<Shapes::Triangle>& _tr
 {
     _acceleration += computeSeparationForce(_triangles);
     _acceleration += computeAlignmentForce(_triangles);
+    _acceleration += computeCohesionForce(_triangles);
 
     _velocity += _acceleration;
     utils::vec::limit(_velocity, _maxSpeed);
@@ -35,7 +36,7 @@ void Triangle::draw(p6::Context& ctx)
 glm::vec2 Triangle::computeSeparationForce(const std::vector<Shapes::Triangle>& _triangles)
 {
     std::vector<Triangle> const closeMembers = getNearbyTriangles(_triangles, 0.1f);
-    auto                        force        = glm::vec2{0, 0};
+    auto                        force        = glm::vec2{0};
 
     for (auto const& closeMember : closeMembers)
         force += glm::normalize(_position - closeMember._position) / glm::distance(_position, closeMember._position);
@@ -45,13 +46,28 @@ glm::vec2 Triangle::computeSeparationForce(const std::vector<Shapes::Triangle>& 
 
 glm::vec2 Triangle::computeAlignmentForce(const std::vector<Shapes::Triangle>& _triangles)
 {
-    std::vector<Triangle> const closeMembers     = getNearbyTriangles(_triangles, 0.4f);
-    auto                        averageDirection = glm::vec2{0, 0};
+    std::vector<Triangle> const closeMembers = getNearbyTriangles(_triangles, 0.2f);
+    if (closeMembers.empty())
+        return glm::vec2{0};
 
+    auto averageDirection = glm::vec2{0, 0};
     for (auto const& closeMember : closeMembers)
         averageDirection += closeMember._velocity;
 
-    return averageDirection /= static_cast<float>(_triangles.size());
+    return averageDirection / static_cast<float>(closeMembers.size());
+}
+
+glm::vec2 Triangle::computeCohesionForce(const std::vector<Shapes::Triangle>& _triangles)
+{
+    std::vector<Triangle> const closeMembers = getNearbyTriangles(_triangles, 0.1f);
+    if (closeMembers.empty())
+        return glm::vec2{0};
+
+    auto averagePosition = glm::vec2{0};
+    for (auto const& closeMember : closeMembers)
+        averagePosition += closeMember._position;
+
+    return averagePosition / static_cast<float>(closeMembers.size());
 }
 
 std::vector<Triangle> Triangle::getNearbyTriangles(std::vector<Shapes::Triangle> const& triangles, double radius)
