@@ -1,17 +1,16 @@
 #pragma once
 
-#include "Shapes/Triangle.h"
+#include "SingleBoid.h"
 #include "p6/p6.h"
 
 class Boids {
 public:
     // ToDo: Abstract Shape
-    // ToDo: Do something to avoid the context
+    // ToDo: Do something to avoid the context ?
     Boids() = default;
-    Boids(p6::Context&, unsigned int quantity);
+    Boids(p6::Context&, unsigned int quantity, float size);
     void updateAndDraw(p6::Context&);
 
 private:
-    std::vector<Shapes::Triangle> _triangles{};
+    std::vector<Shapes::SingleBoid> _boids{};
 };
-
