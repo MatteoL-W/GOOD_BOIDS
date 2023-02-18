@@ -3,6 +3,8 @@
 
 namespace Shapes {
 
+// ToDo : Abstract this
+
 Triangle::Triangle(glm::vec2 const& position, float const& radius)
     : _position(position), _velocity(p6::random::number(-1, 1), p6::random::number(-1, 1)), _acceleration(0, 0), _radius(radius)
 {}

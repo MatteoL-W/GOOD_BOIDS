@@ -11,7 +11,7 @@ public:
     void draw(p6::Context& ctx);
 
 private:
-    [[nodiscard]] std::vector<Triangle> getNearbyTriangles(std::vector<Shapes::Triangle> const&, double radius = 0.1f);
+    [[nodiscard]] std::vector<Triangle> getNearbyTriangles(std::vector<Shapes::Triangle> const&, double radius = 0.15f);
     [[nodiscard]] glm::vec2             computeSeparationForce(const std::vector<Shapes::Triangle>& _triangles);
     void                                keepTriangleInTheScreen(const p6::Context& ctx);
 

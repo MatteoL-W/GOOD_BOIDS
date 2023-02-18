@@ -2,7 +2,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <cstdlib>
-
 #include "Boids.h"
 
 int main(int argc, char* argv[])
@@ -20,13 +19,24 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
     ctx.framerate_capped_at(60); // Avoid differents results on 240Hz/60Hz
 
-    ctx.imgui = [&]() {
-        ImGui::Begin("Test");
-        ImGui::End();
-        //mGui::ShowDemoWindow();
+    Boids boids{};
+    int   numberOfBoids = 40;
+    auto  load_boids    = [&]() {
+        boids = Boids{ctx, static_cast<unsigned int>(numberOfBoids)};
     };
 
-    auto boids = Boids{ctx, 40};
+    ctx.imgui = [&]() {
+        ImGui::Begin("Tweak values");
+
+        ImGui::DragInt("Number of Boids", &numberOfBoids, 1.f, 0, 100);
+        if (ImGui::Button("Reload flock"))
+            load_boids();
+
+        ImGui::End();
+        // mGui::ShowDemoWindow();
+    };
+
+    load_boids();
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
