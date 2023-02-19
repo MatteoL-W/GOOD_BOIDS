@@ -1,105 +1,105 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(glm::vec2 const& position, float const& radius)
-    : _position(position), _velocity(p6::random::number(-1, 1), p6::random::number(-1, 1)), _radius(radius)
+SingleBoid::SingleBoid(Movement const& movement, Config const& config)
+    : _movement(movement), _config(config)
 {}
 
-void SingleBoid::update(p6::Context& ctx, const std::vector<SingleBoid>& boids)
+void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids)
 {
     applySteeringForces(boids);
 
-    // ToDo : Ugly multiplication
-    _position += _velocity * glm::vec2(0.01f);
+    addToPosition(getVelocity() * glm::vec2(0.01f));
 
-    keepBoidInTheScreen(ctx);
-    _acceleration *= 0;
+    keepInTheScreen(ctx);
+    setAcceleration(glm::vec2{0});
 }
 
-void SingleBoid::draw(p6::Context& ctx)
+void SingleBoid::draw(p6::Context& ctx) const
 {
     // ToDo : Abstract this
     ctx.fill = {1, 1, 1, 1};
     ctx.equilateral_triangle(
-        p6::Center{_position},
-        p6::Radius{_radius},
-        p6::Rotation{p6::Angle{_velocity}}
+        p6::Center{getPosition()},
+        p6::Radius{_config._radius},
+        p6::Rotation{p6::Angle{getVelocity()}}
     );
 }
 
-void SingleBoid::applySteeringForces(const std::vector<SingleBoid>& boids)
+void SingleBoid::applySteeringForces(std::vector<SingleBoid> const& boids)
 {
-    _acceleration += computeSeparationForce(boids);
-    _acceleration += computeAlignmentForce(boids);
-    _acceleration += computeCohesionForce(boids);
+    addToAcceleration(computeSeparationForce(boids));
+    addToAcceleration(computeAlignmentForce(boids));
+    addToAcceleration(computeCohesionForce(boids));
 
-    _velocity += _acceleration;
-    utils::vec::limit(_velocity, _maxSpeed);
+    addToVelocity(_movement._acceleration);
+    utils::vec::limit(_movement._velocity, _config._maxSpeed);
 }
 
-glm::vec2 SingleBoid::computeSeparationForce(const std::vector<SingleBoid>& boids)
+glm::vec2 SingleBoid::computeSeparationForce(std::vector<SingleBoid> const& boids) const
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _radius * 2);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._separation_radius);
     auto                          force        = glm::vec2{};
 
     for (auto const& closeMember : closeMembers)
-        force += glm::normalize(_position - closeMember._position) / glm::distance(_position, closeMember._position);
+        force += glm::normalize(getPosition() - closeMember.getPosition()) / glm::distance(getPosition(), closeMember.getPosition());
 
     return force;
 }
 
-glm::vec2 SingleBoid::computeAlignmentForce(const std::vector<SingleBoid>& boids)
+glm::vec2 SingleBoid::computeAlignmentForce(std::vector<SingleBoid> const& boids) const
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _radius * 4);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._alignment_radius);
     if (closeMembers.empty())
         return glm::vec2{};
 
     auto averageDirection = glm::vec2{};
     for (auto const& closeMember : closeMembers)
-        averageDirection += closeMember._velocity;
+        averageDirection += closeMember.getVelocity();
 
     return averageDirection / static_cast<float>(closeMembers.size());
 }
 
-glm::vec2 SingleBoid::computeCohesionForce(const std::vector<SingleBoid>& boids)
+glm::vec2 SingleBoid::computeCohesionForce(std::vector<SingleBoid> const& boids) const
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _radius * 2);
+    // ToDo : Handle screen separation
+    auto                          averagePosition = glm::vec2{};
+    std::vector<SingleBoid> const closeMembers    = getNearbyBoids(boids, _config._cohesion_radius);
     if (closeMembers.empty())
-        return glm::vec2{};
+        return averagePosition;
 
-    auto averagePosition = glm::vec2{};
     for (auto const& closeMember : closeMembers)
-        averagePosition += closeMember._position;
+        averagePosition += closeMember.getPosition();
 
     return averagePosition / static_cast<float>(closeMembers.size());
 }
 
-std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius)
+std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const
 {
     // ToDo : OctTree / BVH ?
     std::vector<SingleBoid> nearbyBoids{};
     for (const auto& boid : boids)
     {
-        if (boid._position == _position)
+        if (boid.getPosition() == getPosition())
             continue;
 
-        if (glm::distance(_position, boid._position) < radius)
+        if (glm::distance(getPosition(), boid.getPosition()) < radius)
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;
 }
 
-void SingleBoid::keepBoidInTheScreen(const p6::Context& ctx)
+void SingleBoid::keepInTheScreen(p6::Context const& ctx)
 {
-    if (_position.x > ctx.aspect_ratio())
-        _position.x -= 2 * ctx.aspect_ratio();
+    if (getPosition().x > ctx.aspect_ratio())
+        _movement._position.x -= 2 * ctx.aspect_ratio();
 
-    if (_position.y > 1)
-        _position.y -= 2 * 1;
+    if (getPosition().y > 1)
+        _movement._position.y -= 2 * 1;
 
-    if (_position.x < -ctx.aspect_ratio())
-        _position.x += 2 * ctx.aspect_ratio();
+    if (getPosition().x < -ctx.aspect_ratio())
+        _movement._position.x += 2 * ctx.aspect_ratio();
 
-    if (_position.y < -1)
-        _position.y += 2;
+    if (getPosition().y < -1)
+        _movement._position.y += 2;
 }

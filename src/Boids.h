@@ -8,7 +8,7 @@ public:
     // ToDo: Abstract Shape
     // ToDo: Do something to avoid the context ?
     Boids() = default;
-    Boids(p6::Context&, unsigned int quantity, float size);
+    Boids(p6::Context&, unsigned int quantity, Config);
     void updateAndDraw(p6::Context&);
 
 private:
