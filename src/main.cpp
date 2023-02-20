@@ -3,6 +3,7 @@
 #include <doctest/doctest.h>
 #include <cstdlib>
 #include "Boids.h"
+#include "Shapes/2D.h"
 
 int main(int argc, char* argv[])
 {
@@ -30,7 +31,12 @@ int main(int argc, char* argv[])
     Boids boids{};
     int   numberOfBoids = 300;
     auto  load_boids    = [&]() {
-        boids = Boids{ctx, static_cast<unsigned int>(numberOfBoids), config};
+        boids = Boids{
+            ctx,
+            static_cast<unsigned int>(numberOfBoids),
+            config,
+            Shapes::TwoDimensions::Triangle{},
+        };
     };
     load_boids();
 
@@ -51,7 +57,7 @@ int main(int argc, char* argv[])
             load_boids();
 
         ImGui::End();
-        // mGui::ShowDemoWindow();
+        // ImGui::ShowDemoWindow();
     };
 
     ctx.update = [&]() {
