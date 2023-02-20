@@ -5,7 +5,7 @@
 #include "SingleBoid.h"
 #include "p6/p6.h"
 
-using ShapesType = std::variant<Shapes::TwoDimensions::Triangle>;
+using ShapesType = std::variant<Shapes::TwoDimensions::Triangle, Shapes::TwoDimensions::Circle>;
 
 class Boids {
 public:
@@ -15,6 +15,7 @@ public:
 
     void updateAndDraw(p6::Context&);
     void updateConfig(Config);
+    void updateShape(ShapesType);
 
 private:
     std::vector<SingleBoid> _boids{};

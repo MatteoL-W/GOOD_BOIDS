@@ -53,6 +53,12 @@ int main(int argc, char* argv[])
             boids.updateConfig(config);
         }
 
+        if (ImGui::Button("Shape : Triangle"))
+            boids.updateShape(Shapes::TwoDimensions::Triangle{});
+
+        if (ImGui::Button("Shape : Circle"))
+            boids.updateShape(Shapes::TwoDimensions::Circle{});
+
         if (ImGui::Button("Reload flock"))
             load_boids();
 

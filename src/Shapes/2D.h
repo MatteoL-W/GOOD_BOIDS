@@ -4,6 +4,7 @@
 #include "SingleBoid.h"
 
 namespace Shapes::TwoDimensions {
+
 struct Triangle {
     static void draw(p6::Context& ctx, SingleBoid boid)
     {
@@ -15,4 +16,16 @@ struct Triangle {
         );
     }
 };
+
+struct Circle {
+    static void draw(p6::Context& ctx, SingleBoid boid)
+    {
+        ctx.fill = {1, 1, 1, 1};
+        ctx.circle(
+            p6::Center{boid.getPosition()},
+            p6::Radius{boid.getRadius()}
+        );
+    }
+};
+
 } // namespace Shapes::TwoDimensions

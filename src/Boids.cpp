@@ -24,6 +24,13 @@ void Boids::updateAndDraw(p6::Context& ctx)
     for (auto& boid : _boids)
     {
         boid.update(ctx, _boids);
-        std::get<0>(_shape).draw(ctx, boid);
+        std::visit([&](auto shape){
+            shape.draw(ctx, boid);
+        }, _shape);
     }
+}
+
+void Boids::updateShape(ShapesType shape)
+{
+    _shape = shape;
 }
