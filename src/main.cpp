@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
             ctx,
             static_cast<unsigned int>(numberOfBoids),
             config,
-            Shapes::TwoDimensions::Triangle{},
+            Shapes::TwoDimensions::Fish{},
         };
     };
     load_boids();
@@ -58,6 +58,9 @@ int main(int argc, char* argv[])
 
         if (ImGui::Button("Shape : Circle"))
             boids.updateShape(Shapes::TwoDimensions::Circle{});
+
+        if (ImGui::Button("Shape : Fish"))
+            boids.updateShape(Shapes::TwoDimensions::Fish{});
 
         if (ImGui::Button("Reload flock"))
             load_boids();

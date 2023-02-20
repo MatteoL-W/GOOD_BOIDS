@@ -5,7 +5,10 @@
 #include "SingleBoid.h"
 #include "p6/p6.h"
 
-using ShapesType = std::variant<Shapes::TwoDimensions::Triangle, Shapes::TwoDimensions::Circle>;
+using ShapesType = std::variant<
+    Shapes::TwoDimensions::Triangle,
+    Shapes::TwoDimensions::Circle,
+    Shapes::TwoDimensions::Fish>;
 
 class Boids {
 public:
