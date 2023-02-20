@@ -20,11 +20,11 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     auto config = Config{
-        ._radius = 0.02f,
-        ._maxSpeed = 2.f,
+        ._radius            = 0.02f,
+        ._maxSpeed          = 2.f,
         ._separation_radius = 0.1f,
-        ._alignment_radius = 0.2f,
-        ._cohesion_radius = 0.1f,
+        ._alignment_radius  = 0.2f,
+        ._cohesion_radius   = 0.1f,
     };
 
     Boids boids{};
@@ -38,11 +38,14 @@ int main(int argc, char* argv[])
         ImGui::Begin("Tweak values");
 
         ImGui::DragInt("Number of Boids", &numberOfBoids, 1.f, 0, 500);
-        ImGui::DragFloat("Boids size", &config._radius, 0.01f, 0.f, 2.f);
-        ImGui::DragFloat("Boids max speed", &config._maxSpeed, 0.01f, 0.f, 5.f);
-        ImGui::DragFloat("Boids separation radius", &config._separation_radius, 0.01f, 0, 1.f);
-        ImGui::DragFloat("Boids alignment radius", &config._alignment_radius, 0.01f, 0, 1.f);
-        ImGui::DragFloat("Boids cohesion radius", &config._cohesion_radius, 0.01f, 0, 1.f);
+        if (ImGui::DragFloat("Boids size", &config._radius, 0.01f, 0.f, 2.f)
+            || ImGui::DragFloat("Boids max speed", &config._maxSpeed, 0.01f, 0.f, 5.f)
+            || ImGui::DragFloat("Boids separation radius", &config._separation_radius, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Boids alignment radius", &config._alignment_radius, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Boids cohesion radius", &config._cohesion_radius, 0.01f, 0, 1.f))
+        {
+            boids.updateConfig(config);
+        }
 
         if (ImGui::Button("Reload flock"))
             load_boids();

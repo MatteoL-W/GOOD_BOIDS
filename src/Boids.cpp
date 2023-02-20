@@ -14,6 +14,13 @@ Boids::Boids(p6::Context& ctx, unsigned int quantity, Config config)
     }
 }
 
+void Boids::updateConfig(Config config)
+{
+    for(auto& boid : _boids) {
+        boid.setConfig(config);
+    }
+}
+
 void Boids::updateAndDraw(p6::Context& ctx)
 {
     for (auto& boid : _boids)
@@ -22,3 +29,4 @@ void Boids::updateAndDraw(p6::Context& ctx)
         boid.draw(ctx);
     }
 }
+

@@ -27,6 +27,7 @@ public:
     [[nodiscard]] glm::vec2 getAcceleration() const { return _movement._acceleration; };
     [[nodiscard]] float     getRadius() const { return _config._radius; };
 
+    void setConfig(Config config) { _config = config; };
     void setAcceleration(glm::vec2 acceleration) { _movement._acceleration = acceleration; };
 
     void addToPosition(glm::vec2 position) { _movement._position += position; };
@@ -42,6 +43,6 @@ private:
     void                                  keepInTheScreen(p6::Context const& ctx);
 
 private:
-    Movement            _movement{};
-    Config              _config{};
+    Movement _movement{};
+    Config   _config{};
 };

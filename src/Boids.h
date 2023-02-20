@@ -10,6 +10,7 @@ public:
     Boids() = default;
     Boids(p6::Context&, unsigned int quantity, Config);
     void updateAndDraw(p6::Context&);
+    void updateConfig(Config);
 
 private:
     std::vector<SingleBoid> _boids{};
