@@ -23,7 +23,7 @@ public:
     void draw(p6::Context& ctx) const;
 
     [[nodiscard]] glm::vec2 getPosition() const { return _movement._position; };
-    [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity; };
+    [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity * glm::vec2(0.01f); };
     [[nodiscard]] glm::vec2 getAcceleration() const { return _movement._acceleration; };
     [[nodiscard]] float     getRadius() const { return _config._radius; };
 

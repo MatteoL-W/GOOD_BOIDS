@@ -9,7 +9,7 @@ void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids)
 {
     applySteeringForces(boids);
 
-    addToPosition(getVelocity() * glm::vec2(0.01f));
+    addToPosition(getVelocity());
 
     keepInTheScreen(ctx);
     setAcceleration(glm::vec2{0});
