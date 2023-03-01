@@ -13,7 +13,6 @@ void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids, 
 
     addToPosition(getVelocity());
 
-    keepInTheScreen(ctx);
     resetForces();
 }
 
@@ -112,19 +111,4 @@ std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;
-}
-
-void SingleBoid::keepInTheScreen(p6::Context const& ctx)
-{
-    if (getPosition().x > ctx.aspect_ratio())
-        _movement._position.x -= 2 * ctx.aspect_ratio();
-
-    if (getPosition().y > 1)
-        _movement._position.y -= 2 * 1;
-
-    if (getPosition().x < -ctx.aspect_ratio())
-        _movement._position.x += 2 * ctx.aspect_ratio();
-
-    if (getPosition().y < -1)
-        _movement._position.y += 2;
 }

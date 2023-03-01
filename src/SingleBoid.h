@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Obstacle.h"
+#include "Obstacles.h"
 #include "p6/p6.h"
 
 struct Movement {
@@ -44,9 +44,6 @@ private:
     [[nodiscard]] glm::vec2               computeSeparationForce(std::vector<SingleBoid> const& boids) const;
     [[nodiscard]] glm::vec2               computeAlignmentForce(std::vector<SingleBoid> const& boids) const;
     [[nodiscard]] glm::vec2               computeCohesionForce(std::vector<SingleBoid> const& boids) const;
-
-    // ToDo : Constraint boids in the screen
-    void keepInTheScreen(p6::Context const& ctx);
 
 private:
     Movement _movement{};

@@ -3,7 +3,7 @@
 #include <doctest/doctest.h>
 #include <cstdlib>
 #include "Boids.h"
-#include "Obstacle.h"
+#include "Obstacles.h"
 #include "Shapes/2D.h"
 
 int main(int argc, char* argv[])
@@ -70,10 +70,13 @@ int main(int argc, char* argv[])
         // ImGui::ShowDemoWindow();
     };
 
-    auto obstacles = Obstacles{std::vector<Obstacle>{
-        Obstacle{glm::vec2{0,0}, .1},
-        Obstacle{glm::vec2{0.2,0}, .1},
-    }};
+    auto obstacles = Obstacles{};
+    float obstacleRadius = .1;
+    obstacles.addRange({-ctx.aspect_ratio(), 1 + obstacleRadius}, {ctx.aspect_ratio(), 1 + obstacleRadius}, obstacleRadius);
+    obstacles.addRange({-ctx.aspect_ratio(), -1 - obstacleRadius}, {ctx.aspect_ratio(), -1 - obstacleRadius}, obstacleRadius);
+    obstacles.addRange({-ctx.aspect_ratio()- obstacleRadius, -1}, {-ctx.aspect_ratio()- obstacleRadius, 1}, obstacleRadius);
+    obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
+
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
         boids.updateAndDraw(ctx, obstacles);
