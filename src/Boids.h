@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include "Obstacle.h"
 #include "Shapes/2D.h"
 #include "SingleBoid.h"
 #include "p6/p6.h"
@@ -16,7 +17,7 @@ public:
     Boids() = default;
     Boids(p6::Context&, unsigned int quantity, Config, ShapesType);
 
-    void updateAndDraw(p6::Context&);
+    void updateAndDraw(p6::Context&, Obstacles const&);
     void updateConfig(Config);
     void updateShape(ShapesType);
 

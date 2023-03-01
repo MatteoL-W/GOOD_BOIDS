@@ -19,11 +19,11 @@ void Boids::updateConfig(Config config)
         boid.setConfig(config);
 }
 
-void Boids::updateAndDraw(p6::Context& ctx)
+void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles)
 {
     for (auto& boid : _boids)
     {
-        boid.update(ctx, _boids);
+        boid.update(ctx, _boids, obstacles);
         std::visit([&](auto shape){
             shape.draw(ctx, boid);
         }, _shape);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Obstacle.h"
 #include "p6/p6.h"
 
 struct Movement {
@@ -19,7 +20,7 @@ struct Config {
 class SingleBoid {
 public:
     explicit SingleBoid(Movement const& movement, Config const& config);
-    void update(p6::Context& ctx, std::vector<SingleBoid> const& boids);
+    void update(p6::Context& ctx, std::vector<SingleBoid> const& boids, Obstacles const& obstacles);
     void draw(p6::Context& ctx) const;
 
     [[nodiscard]] glm::vec2 getPosition() const { return _movement._position; };
@@ -35,12 +36,17 @@ public:
     void addToAcceleration(glm::vec2 velocity) { _movement._velocity += velocity; };
 
 private:
-    void                                  applySteeringForces(std::vector<SingleBoid> const& boids);
+    void applyObstaclesForces(Obstacles const& obstacles);
+    void applySteeringForces(std::vector<SingleBoid> const& boids);
+
     [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const;
+    [[nodiscard]] glm::vec2               computeObstaclesForce(Obstacles const& obstacles) const;
     [[nodiscard]] glm::vec2               computeSeparationForce(std::vector<SingleBoid> const& boids) const;
     [[nodiscard]] glm::vec2               computeAlignmentForce(std::vector<SingleBoid> const& boids) const;
     [[nodiscard]] glm::vec2               computeCohesionForce(std::vector<SingleBoid> const& boids) const;
-    void                                  keepInTheScreen(p6::Context const& ctx);
+
+    // ToDo : Constraint boids in the screen
+    void keepInTheScreen(p6::Context const& ctx);
 
 private:
     Movement _movement{};

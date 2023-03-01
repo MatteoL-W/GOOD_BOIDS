@@ -5,9 +5,12 @@ SingleBoid::SingleBoid(Movement const& movement, Config const& config)
     : _movement(movement), _config(config)
 {}
 
-void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids)
+void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
 {
+    applyObstaclesForces(obstacles);
     applySteeringForces(boids);
+    addToVelocity(_movement._acceleration);
+    utils::vec::limit(_movement._velocity, _config._maxSpeed);
 
     addToPosition(getVelocity());
 
@@ -15,15 +18,9 @@ void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids)
     setAcceleration(glm::vec2{0});
 }
 
-void SingleBoid::draw(p6::Context& ctx) const
+void SingleBoid::applyObstaclesForces(Obstacles const& obstacles)
 {
-    // ToDo : Abstract this
-    ctx.fill = {1, 1, 1, 1};
-    ctx.equilateral_triangle(
-        p6::Center{getPosition()},
-        p6::Radius{_config._radius},
-        p6::Rotation{p6::Angle{getVelocity()}}
-    );
+    addToAcceleration(computeObstaclesForce(obstacles));
 }
 
 void SingleBoid::applySteeringForces(std::vector<SingleBoid> const& boids)
@@ -31,9 +28,23 @@ void SingleBoid::applySteeringForces(std::vector<SingleBoid> const& boids)
     addToAcceleration(computeSeparationForce(boids));
     addToAcceleration(computeAlignmentForce(boids));
     addToAcceleration(computeCohesionForce(boids));
+}
 
-    addToVelocity(_movement._acceleration);
-    utils::vec::limit(_movement._velocity, _config._maxSpeed);
+glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
+{
+    auto force = glm::vec2{};
+    for (auto const& obstacle : obstacles.getAll()) {
+        const float distance = glm::distance(obstacle._position, getPosition());
+
+        if (distance < obstacle._radius) {
+            // Compute a force that repels the boid from the obstacle using inverse square law
+            const glm::vec2 direction = glm::normalize(getPosition() - obstacle._position);
+            const float strength = 1.0f / (distance * distance);
+            force += direction * strength;
+        }
+
+    }
+    return force;
 }
 
 glm::vec2 SingleBoid::computeSeparationForce(std::vector<SingleBoid> const& boids) const
