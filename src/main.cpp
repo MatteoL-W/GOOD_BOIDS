@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 
     auto obstacles = Obstacles{std::vector<Obstacle>{
         Obstacle{glm::vec2{0,0}, .1},
-        Obstacle{glm::vec2{0.8,0.4}, .1},
+        Obstacle{glm::vec2{0.2,0}, .1},
     }};
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);

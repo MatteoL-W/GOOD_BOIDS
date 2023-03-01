@@ -7,43 +7,57 @@ SingleBoid::SingleBoid(Movement const& movement, Config const& config)
 
 void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
 {
-    applyObstaclesForces(obstacles);
-    applySteeringForces(boids);
-    addToVelocity(_movement._acceleration);
-    utils::vec::limit(_movement._velocity, _config._maxSpeed);
+    addObstaclesForce(obstacles);
+    addClassicBoidsForces(boids);
+    applyAddedForces();
 
     addToPosition(getVelocity());
 
     keepInTheScreen(ctx);
-    setAcceleration(glm::vec2{0});
+    resetForces();
 }
 
-void SingleBoid::applyObstaclesForces(Obstacles const& obstacles)
+void SingleBoid::addObstaclesForce(const Obstacles& obstacles)
 {
     addToAcceleration(computeObstaclesForce(obstacles));
 }
 
-void SingleBoid::applySteeringForces(std::vector<SingleBoid> const& boids)
+void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
 {
     addToAcceleration(computeSeparationForce(boids));
     addToAcceleration(computeAlignmentForce(boids));
     addToAcceleration(computeCohesionForce(boids));
 }
 
+void SingleBoid::applyAddedForces()
+{
+    addToVelocity(_movement._acceleration);
+    utils::vec::limit(_movement._velocity, _config._maxSpeed);
+}
+
 glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
 {
     auto force = glm::vec2{};
-    for (auto const& obstacle : obstacles.getAll()) {
-        const float distance = glm::distance(obstacle._position, getPosition());
 
-        if (distance < obstacle._radius) {
-            // Compute a force that repels the boid from the obstacle using inverse square law
-            const glm::vec2 direction = glm::normalize(getPosition() - obstacle._position);
-            const float strength = 1.0f / (distance * distance);
-            force += direction * strength;
-        }
+    for (auto const& obstacle : obstacles.getAll())
+    {
+        const float distance        = glm::distance(obstacle._position, getPosition()) - (getRadius() / 2);
+        const float avoidanceRadius = obstacle._radius * 1.5f;
+        if (distance > avoidanceRadius)
+            continue;
 
+        float strength = 0;
+
+        const float maxAvoidanceRadius = obstacle._radius * 0.8f;
+        if (distance < maxAvoidanceRadius)
+            strength = 1.0f / (distance * distance); // Compute a more drastic strength if the boid is inside the obstacle.
+        else
+            strength = glm::clamp((avoidanceRadius - distance) / avoidanceRadius, 0.0f, 1.0f); // Calculate a strength value based on how close the boid is to the obstacle
+
+        auto direction = glm::normalize(getPosition() - obstacle._position);
+        force += direction * strength;
     }
+
     return force;
 }
 
