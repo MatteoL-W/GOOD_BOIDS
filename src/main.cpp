@@ -22,14 +22,14 @@ int main(int argc, char* argv[])
 
     auto config = Config{
         ._radius            = 0.02f,
-        ._maxSpeed          = 2.f,
+        ._maxSpeed          = 1.f,
         ._separation_radius = 0.1f,
         ._alignment_radius  = 0.2f,
         ._cohesion_radius   = 0.1f,
     };
 
     Boids boids{};
-    int   numberOfBoids = 300;
+    int   numberOfBoids = 100;
     auto  load_boids    = [&]() {
         boids = Boids{
             ctx,
