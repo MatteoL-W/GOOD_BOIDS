@@ -8,6 +8,7 @@ struct Obstacle {
     float     _radius;
 };
 
+// ToDo: Don't use a class, just do some functions
 class Obstacles {
 public:
     Obstacles() = default;

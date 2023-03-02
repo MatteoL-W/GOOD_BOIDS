@@ -5,11 +5,13 @@ SingleBoid::SingleBoid(Movement const& movement, Config const& config)
     : _movement(movement), _config(config)
 {}
 
-void SingleBoid::update(p6::Context& ctx, std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
+void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
 {
     addObstaclesForce(obstacles);
     addClassicBoidsForces(boids);
-    applyAddedForces();
+
+    addToVelocity(getAcceleration());
+    utils::vec::constrain(_movement._velocity, _config._minSpeed, _config._maxSpeed);
 
     addToPosition(getVelocity());
 
@@ -28,12 +30,6 @@ void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
     addToAcceleration(computeCohesionForce(boids));
 }
 
-void SingleBoid::applyAddedForces()
-{
-    addToVelocity(_movement._acceleration);
-    utils::vec::limit(_movement._velocity, _config._maxSpeed);
-}
-
 glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
 {
     auto force = glm::vec2{};
@@ -41,7 +37,7 @@ glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
     for (auto const& obstacle : obstacles.getAll())
     {
         const float distance        = glm::distance(obstacle._position, getPosition()) - (getRadius() / 2);
-        const float avoidanceRadius = obstacle._radius * 1.5f;
+        const float avoidanceRadius = obstacle._radius * 2.f;
         if (distance > avoidanceRadius)
             continue;
 
@@ -62,13 +58,13 @@ glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
 
 glm::vec2 SingleBoid::computeSeparationForce(std::vector<SingleBoid> const& boids) const
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._separation_radius);
-    auto                          force        = glm::vec2{};
+    auto force = glm::vec2{};
 
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._separation_radius);
     for (auto const& closeMember : closeMembers)
         force += glm::normalize(getPosition() - closeMember.getPosition()) / glm::distance(getPosition(), closeMember.getPosition());
 
-    return force;
+    return force * _config._avoid_factor;
 }
 
 glm::vec2 SingleBoid::computeAlignmentForce(std::vector<SingleBoid> const& boids) const
@@ -77,25 +73,26 @@ glm::vec2 SingleBoid::computeAlignmentForce(std::vector<SingleBoid> const& boids
     if (closeMembers.empty())
         return glm::vec2{};
 
-    auto averageDirection = glm::vec2{};
+    auto averageVelocity = glm::vec2{};
     for (auto const& closeMember : closeMembers)
-        averageDirection += closeMember.getVelocity();
+        averageVelocity += glm::normalize(closeMember.getVelocity());
 
-    return averageDirection / static_cast<float>(closeMembers.size());
+    averageVelocity /= static_cast<float>(closeMembers.size());
+    return (averageVelocity - getVelocity()) * _config._matching_factor;
 }
 
 glm::vec2 SingleBoid::computeCohesionForce(std::vector<SingleBoid> const& boids) const
 {
-    // ToDo : Handle screen separation
-    auto                          averagePosition = glm::vec2{};
-    std::vector<SingleBoid> const closeMembers    = getNearbyBoids(boids, _config._cohesion_radius);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._cohesion_radius);
     if (closeMembers.empty())
-        return averagePosition;
+        return glm::vec2{};
 
+    auto averagePosition = glm::vec2{};
     for (auto const& closeMember : closeMembers)
-        averagePosition += closeMember.getPosition();
+        averagePosition += glm::normalize(closeMember.getPosition());
 
-    return averagePosition / static_cast<float>(closeMembers.size());
+    averagePosition /= static_cast<float>(closeMembers.size());
+    return (averagePosition - getPosition()) * _config._centering_factor;
 }
 
 std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const

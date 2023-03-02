@@ -11,16 +11,20 @@ struct Movement {
 
 struct Config {
     float _radius            = 0.05f;
+    float _minSpeed          = .5f;
     float _maxSpeed          = 2.f;
     float _separation_radius = _radius * 2;
-    float _alignment_radius  = _radius * 4;
+    float _avoid_factor      = .1f;
+    float _alignment_radius  = _radius * 2;
+    float _matching_factor   = .1f;
     float _cohesion_radius   = _radius * 2;
+    float _centering_factor  = .1f;
 };
 
 class SingleBoid {
 public:
     explicit SingleBoid(Movement const& movement, Config const& config);
-    void update(p6::Context& ctx, std::vector<SingleBoid> const& boids, Obstacles const& obstacles);
+    void update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles);
     void resetForces() { _movement._acceleration = glm::vec2{0}; };
 
     [[nodiscard]] glm::vec2 getPosition() const { return _movement._position; };
@@ -37,7 +41,6 @@ public:
 private:
     void addObstaclesForce(Obstacles const& obstacles);
     void addClassicBoidsForces(std::vector<SingleBoid> const& boids);
-    void applyAddedForces();
 
     [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const;
     [[nodiscard]] glm::vec2               computeObstaclesForce(Obstacles const& obstacles) const;
