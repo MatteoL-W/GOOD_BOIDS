@@ -23,7 +23,7 @@ void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles)
 {
     for (auto& boid : _boids)
     {
-        boid.update(ctx, _boids, obstacles);
+        boid.update(_boids, obstacles);
         std::visit([&](auto shape){
             shape.draw(ctx, boid);
         }, _shape);
