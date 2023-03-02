@@ -25,12 +25,12 @@ int main(int argc, char* argv[])
         ._radius            = 0.02f,
         ._maxSpeed          = 1.f,
         ._separation_radius = 0.1f,
-        ._alignment_radius  = 0.2f,
+        ._alignment_radius  = 0.23f,
         ._cohesion_radius   = 0.1f,
     };
 
     Boids boids{};
-    int   numberOfBoids = 100;
+    int   numberOfBoids = 50;
     auto  load_boids    = [&]() {
         boids = Boids{
             ctx,
@@ -46,10 +46,14 @@ int main(int argc, char* argv[])
 
         ImGui::DragInt("Number of Boids", &numberOfBoids, 1.f, 0, 500);
         if (ImGui::DragFloat("Boids size", &config._radius, 0.01f, 0.f, 2.f)
+            || ImGui::DragFloat("Boids min speed", &config._minSpeed, 0.01f, 0.f, 5.f)
             || ImGui::DragFloat("Boids max speed", &config._maxSpeed, 0.01f, 0.f, 5.f)
             || ImGui::DragFloat("Boids separation radius", &config._separation_radius, 0.01f, 0, 1.f)
             || ImGui::DragFloat("Boids alignment radius", &config._alignment_radius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Boids cohesion radius", &config._cohesion_radius, 0.01f, 0, 1.f))
+            || ImGui::DragFloat("Boids cohesion radius", &config._cohesion_radius, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Avoid Factor (Separation)", &config._avoid_factor, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Matching Factor (Alignment)", &config._matching_factor, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Centering Factor (Cohesion)", &config._centering_factor, 0.01f, 0, 1.f))
         {
             boids.updateConfig(config);
         }
@@ -70,11 +74,11 @@ int main(int argc, char* argv[])
         // ImGui::ShowDemoWindow();
     };
 
-    auto obstacles = Obstacles{};
-    float obstacleRadius = .1;
+    auto  obstacles      = Obstacles{};
+    float const obstacleRadius = .1;
     obstacles.addRange({-ctx.aspect_ratio(), 1 + obstacleRadius}, {ctx.aspect_ratio(), 1 + obstacleRadius}, obstacleRadius);
     obstacles.addRange({-ctx.aspect_ratio(), -1 - obstacleRadius}, {ctx.aspect_ratio(), -1 - obstacleRadius}, obstacleRadius);
-    obstacles.addRange({-ctx.aspect_ratio()- obstacleRadius, -1}, {-ctx.aspect_ratio()- obstacleRadius, 1}, obstacleRadius);
+    obstacles.addRange({-ctx.aspect_ratio() - obstacleRadius, -1}, {-ctx.aspect_ratio() - obstacleRadius, 1}, obstacleRadius);
     obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
 
     ctx.update = [&]() {
