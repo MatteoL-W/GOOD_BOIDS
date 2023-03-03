@@ -1,8 +1,8 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(Movement const& movement, Config const& config)
-    : _movement(movement), _config(config)
+SingleBoid::SingleBoid(Movement const& movement, float const& radius, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _movement(movement), _radius(radius), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
@@ -11,7 +11,7 @@ void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& o
     addClassicBoidsForces(boids);
 
     addToVelocity(getAcceleration());
-    utils::vec::constrain(_movement._velocity, _config._minSpeed, _config._maxSpeed);
+    utils::vec::constrain(_movement._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
 
     addToPosition(getVelocity());
 
@@ -60,16 +60,16 @@ glm::vec2 SingleBoid::computeSeparationForce(std::vector<SingleBoid> const& boid
 {
     auto force = glm::vec2{};
 
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._separation_radius);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _forcesConfig._separation_radius);
     for (auto const& closeMember : closeMembers)
         force += glm::normalize(getPosition() - closeMember.getPosition()) / glm::distance(getPosition(), closeMember.getPosition());
 
-    return force * _config._avoid_factor;
+    return force * _forcesConfig._avoid_factor;
 }
 
 glm::vec2 SingleBoid::computeAlignmentForce(std::vector<SingleBoid> const& boids) const
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._alignment_radius);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _forcesConfig._alignment_radius);
     if (closeMembers.empty())
         return glm::vec2{};
 
@@ -78,12 +78,12 @@ glm::vec2 SingleBoid::computeAlignmentForce(std::vector<SingleBoid> const& boids
         averageVelocity += glm::normalize(closeMember.getVelocity());
 
     averageVelocity /= static_cast<float>(closeMembers.size());
-    return (averageVelocity - getVelocity()) * _config._matching_factor;
+    return (averageVelocity - getVelocity()) * _forcesConfig._matching_factor;
 }
 
 glm::vec2 SingleBoid::computeCohesionForce(std::vector<SingleBoid> const& boids) const
 {
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _config._cohesion_radius);
+    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _forcesConfig._cohesion_radius);
     if (closeMembers.empty())
         return glm::vec2{};
 
@@ -92,12 +92,11 @@ glm::vec2 SingleBoid::computeCohesionForce(std::vector<SingleBoid> const& boids)
         averagePosition += glm::normalize(closeMember.getPosition());
 
     averagePosition /= static_cast<float>(closeMembers.size());
-    return (averagePosition - getPosition()) * _config._centering_factor;
+    return (averagePosition - getPosition()) * _forcesConfig._centering_factor;
 }
 
 std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const
 {
-    // ToDo : OctTree / BVH ?
     std::vector<SingleBoid> nearbyBoids{};
     for (const auto& boid : boids)
     {

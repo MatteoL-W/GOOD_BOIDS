@@ -15,11 +15,13 @@ class Boids {
 public:
     // ToDo: Do something to avoid the context ?
     Boids() = default;
-    Boids(p6::Context&, unsigned int quantity, Config, ShapesType);
+    Boids(p6::Context&, unsigned int quantity, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
 
     void updateAndDraw(p6::Context&, Obstacles const&);
-    void updateConfig(Config);
-    void updateShape(ShapesType);
+    void updateForcesConfig(ForcesConfig const&);
+    void updateBehaviorConfig(BehaviorConfig const&);
+    void updateShape(ShapesType const& shape) { _shape = shape; };
+    void updateRadius(float radius);
 
 private:
     std::vector<SingleBoid> _boids{};
