@@ -1,7 +1,7 @@
 #pragma once
 
-#include <p6/p6.h>
 #include <vector>
+#include "p6/p6.h"
 
 struct Obstacle {
     glm::vec2 _position;

@@ -14,7 +14,6 @@ void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& o
     utils::vec::constrain(_movement._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
 
     addToPosition(getVelocity());
-
     resetForces();
 }
 

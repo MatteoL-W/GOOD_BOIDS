@@ -2,9 +2,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <cstdlib>
-#include "Boids.h"
+#include "Boids/Boids.h"
 #include "Helper/ImGuiHelper.hpp"
-#include "Obstacles.h"
+#include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
 
 int main(int argc, char* argv[])
@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
     };
 
     auto        obstacles      = Obstacles{};
-    float const obstacleRadius = .1;
+    float const obstacleRadius = .1f;
     obstacles.addRange({-ctx.aspect_ratio(), 1 + obstacleRadius}, {ctx.aspect_ratio(), 1 + obstacleRadius}, obstacleRadius);
     obstacles.addRange({-ctx.aspect_ratio(), -1 - obstacleRadius}, {ctx.aspect_ratio(), -1 - obstacleRadius}, obstacleRadius);
     obstacles.addRange({-ctx.aspect_ratio() - obstacleRadius, -1}, {-ctx.aspect_ratio() - obstacleRadius, 1}, obstacleRadius);

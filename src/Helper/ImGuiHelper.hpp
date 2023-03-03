@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Boids.h"
-#include "SingleBoid.h"
+#include "Boids/Boids.h"
+#include "Boids/SingleBoid.h"
 
 namespace BoidsHelper {
 void load_boids_helper(Boids& boids, int& numberOfBoids, float& radius);

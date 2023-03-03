@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Obstacles.h"
+#include "Obstacles/Obstacles.h"
 #include "p6/p6.h"
 
 struct Movement {

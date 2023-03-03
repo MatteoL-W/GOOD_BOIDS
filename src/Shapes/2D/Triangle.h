@@ -1,7 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "SingleBoid.h"
+#include "Boids/SingleBoid.h"
 
 namespace Shapes::TwoDimensions {
 
