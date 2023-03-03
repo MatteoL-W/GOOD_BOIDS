@@ -29,8 +29,9 @@ public:
     void update(std::vector<SingleBoid> const& boids, Obstacles const&);
     void resetForces() { _movement._acceleration = glm::vec2{0}; };
 
+    [[nodiscard]] Movement  getMovement() const { return _movement; };
     [[nodiscard]] glm::vec2 getPosition() const { return _movement._position; };
-    [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity * glm::vec2(0.01f); };
+    [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity * glm::vec2(0.01f); }; //ToDo : so bad
     [[nodiscard]] glm::vec2 getAcceleration() const { return _movement._acceleration; };
     [[nodiscard]] float     getRadius() const { return _radius; };
 

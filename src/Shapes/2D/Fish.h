@@ -1,7 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "DrawableContent.h"
+#include "SingleBoid.h"
 
 namespace Shapes::TwoDimensions {
 
@@ -12,19 +12,19 @@ public:
     explicit Fish(float radius)
         : _radius(radius){};
 
-    static void draw(p6::Context& ctx, DrawableContent const& content)
+    void draw(p6::Context& ctx, Movement const& movement) const
     {
         ctx.fill   = {1, 1, 1, 1};
         ctx.stroke = {1, 1, 1, 1};
         ctx.equilateral_triangle(
             // Position in the inverse direction multiplied to be approximately 80% of the circle
-            p6::Center{content._position - 2.f * glm::vec2(content._radius * 80) * content._velocity},
-            p6::Radius{static_cast<float>(content._radius)},
-            p6::Rotation{p6::Angle{content._velocity}}
+            p6::Center{movement._position - 2.f * glm::vec2(_radius * 80) * (movement._velocity * 0.01f)}, //ToDo : cracra
+            p6::Radius{static_cast<float>(_radius)},
+            p6::Rotation{p6::Angle{movement._velocity * 0.01f}} // ToDo: eurk
         );
         ctx.circle(
-            p6::Center{content._position},
-            p6::Radius{content._radius}
+            p6::Center{movement._position},
+            p6::Radius{_radius}
         );
     }
 

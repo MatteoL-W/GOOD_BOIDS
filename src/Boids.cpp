@@ -38,7 +38,7 @@ void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles)
     {
         boid.update(_boids, obstacles);
         std::visit([&](auto shape) {
-            shape.draw(ctx, Shapes::TwoDimensions::DrawableContent{boid.getPosition(), boid.getVelocity(), shape.getRadius()});
+            shape.draw(ctx, boid.getMovement());
         }, _shape);
     }
 }

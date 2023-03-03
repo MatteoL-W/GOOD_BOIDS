@@ -1,15 +1,12 @@
 #include "Obstacles.h"
+#include "Shapes/2D.h"
 
 void Obstacles::draw(p6::Context& ctx)
 {
     for (auto const& obstacle : _obstacles)
     {
-        // ToDo : Compat with 2D
-        ctx.fill = {1, 1, 1, 1};
-        ctx.circle(
-            p6::Center{obstacle._position},
-            p6::Radius{obstacle._radius}
-        );
+        auto obstacleShape = Shapes::TwoDimensions::Circle{obstacle._radius};
+        obstacleShape.draw(ctx, Movement{obstacle._position, glm::vec2{}});
     }
 }
 void Obstacles::addRange(glm::vec2 start, glm::vec2 end, float radius)

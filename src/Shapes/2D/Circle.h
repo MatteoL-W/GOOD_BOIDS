@@ -1,7 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "DrawableContent.h"
+#include "SingleBoid.h"
 
 namespace Shapes::TwoDimensions {
 
@@ -12,12 +12,12 @@ public:
     explicit Circle(float radius)
         : _radius(radius){};
 
-    static void draw(p6::Context& ctx, DrawableContent const& content)
+    void draw(p6::Context& ctx, Movement const& movement) const
     {
         ctx.fill = {1, 1, 1, 1};
         ctx.circle(
-            p6::Center{content._position},
-            p6::Radius{content._radius}
+            p6::Center{movement._position},
+            p6::Radius{_radius}
         );
     }
 
