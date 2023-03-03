@@ -9,6 +9,7 @@ void Obstacles::draw(p6::Context& ctx)
         obstacleShape.draw(ctx, Movement{obstacle._position, glm::vec2{}});
     }
 }
+
 void Obstacles::addRange(glm::vec2 start, glm::vec2 end, float radius)
 {
     const float NB_ITERATIONS = std::ceil(glm::distance(start, end)) * 6;

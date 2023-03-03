@@ -25,7 +25,7 @@ struct ForcesConfig {
 
 class SingleBoid {
 public:
-    explicit SingleBoid(Movement const&, float const& radius, BehaviorConfig const&, ForcesConfig const&);
+    explicit SingleBoid(Movement const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<SingleBoid> const& boids, Obstacles const&);
     void resetForces() { _movement._acceleration = glm::vec2{0}; };
 
@@ -33,9 +33,7 @@ public:
     [[nodiscard]] glm::vec2 getPosition() const { return _movement._position; };
     [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity * glm::vec2(0.01f); }; //ToDo : so bad
     [[nodiscard]] glm::vec2 getAcceleration() const { return _movement._acceleration; };
-    [[nodiscard]] float     getRadius() const { return _radius; };
 
-    void setRadius(float radius) { _radius = radius; };
     void setForcesConfig(ForcesConfig config) { _forcesConfig = config; };
     void setBehaviorConfig(BehaviorConfig config) { _behaviorConfig = config; };
 
@@ -55,7 +53,6 @@ private:
 
 private:
     Movement       _movement{};
-    float          _radius = 0.05f;
     BehaviorConfig _behaviorConfig{};
     ForcesConfig   _forcesConfig{};
 };

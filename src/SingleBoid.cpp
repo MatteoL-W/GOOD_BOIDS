@@ -1,8 +1,8 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(Movement const& movement, float const& radius, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _movement(movement), _radius(radius), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+SingleBoid::SingleBoid(Movement const& movement, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _movement(movement), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
@@ -36,7 +36,7 @@ glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
 
     for (auto const& obstacle : obstacles.getAll())
     {
-        const float distance        = glm::distance(obstacle._position, getPosition()) - (getRadius() / 2);
+        const float distance        = glm::distance(obstacle._position, getPosition());
         const float avoidanceRadius = obstacle._radius * 2.f;
         if (distance > avoidanceRadius)
             continue;
