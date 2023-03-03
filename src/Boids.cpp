@@ -4,7 +4,7 @@ Boids::Boids(p6::Context& ctx, unsigned int quantity, ShapesType const& shape, B
     : _shape(shape)
 {
     float radius = 0;
-    std::visit([&](auto shape){
+    std::visit([&](auto shape) {
         radius = shape.getRadius();
     }, shape);
 
@@ -37,8 +37,8 @@ void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles)
     for (auto& boid : _boids)
     {
         boid.update(_boids, obstacles);
-        std::visit([&](auto shape){
-            shape.draw(ctx, boid);
+        std::visit([&](auto shape) {
+            shape.draw(ctx, Shapes::TwoDimensions::DrawableContent{boid.getPosition(), boid.getVelocity(), shape.getRadius()});
         }, _shape);
     }
 }
