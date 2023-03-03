@@ -17,12 +17,12 @@ void load_forces_helper(Boids& boids, ForcesConfig& forcesConfig)
 {
     if (ImGui::CollapsingHeader("Boids forces"))
     {
-        if (ImGui::DragFloat("Boids separation radius", &forcesConfig._separation_radius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Boids alignment radius", &forcesConfig._alignment_radius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Boids cohesion radius", &forcesConfig._cohesion_radius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Avoid Factor (Separation)", &forcesConfig._avoid_factor, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Matching Factor (Alignment)", &forcesConfig._matching_factor, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Centering Factor (Cohesion)", &forcesConfig._centering_factor, 0.01f, 0, 1.f))
+        if (ImGui::DragFloat("Separation Radius", &forcesConfig._separation_radius, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Separation Factor", &forcesConfig._avoid_factor, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Alignment Radius", &forcesConfig._alignment_radius, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Alignment Factor", &forcesConfig._matching_factor, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesion_radius, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Cohesion Factor", &forcesConfig._centering_factor, 0.01f, 0, 1.f))
         {
             boids.updateForcesConfig(forcesConfig);
         }
