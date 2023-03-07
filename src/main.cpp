@@ -3,6 +3,7 @@
 #include <doctest/doctest.h>
 #include <cstdlib>
 #include "Boids/Boids.h"
+#include "Food/FoodProvider.h"
 #include "Helper/ImGuiHelper.hpp"
 #include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
@@ -47,7 +48,7 @@ int main(int argc, char* argv[])
 
         if (ImGui::Button("Reload flock"))
             load_boids();
-        //ImGui::ShowDemoWindow();
+        // ImGui::ShowDemoWindow();
         ImGui::End();
     };
 
@@ -58,10 +59,16 @@ int main(int argc, char* argv[])
     obstacles.addRange({-ctx.aspect_ratio() - obstacleRadius, -1}, {-ctx.aspect_ratio() - obstacleRadius, 1}, obstacleRadius);
     obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
 
+    auto foodProvider = FoodProvider{};
+    foodProvider.addFoodRandomly(ctx);
+    foodProvider.addFoodRandomly(ctx);
+    foodProvider.addFoodRandomly(ctx);
+
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
         boids.updateAndDraw(ctx, obstacles);
         obstacles.draw(ctx);
+        foodProvider.draw(ctx);
     };
 
     ctx.start();
