@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include "Food/FoodProvider.h"
 #include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
 #include "SingleBoid.h"
@@ -13,11 +14,10 @@ using ShapesType = std::variant<
 
 class Boids {
 public:
-    // ToDo: Do something to avoid the context ?
     Boids() = default;
     Boids(p6::Context&, unsigned int quantity, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
 
-    void updateAndDraw(p6::Context&, Obstacles const&);
+    void updateAndDraw(p6::Context&, Obstacles const&, FoodProvider const&);
     void updateForcesConfig(ForcesConfig const&);
     void updateBehaviorConfig(BehaviorConfig const&);
     void updateShape(ShapesType const& shape) { _shape = shape; };

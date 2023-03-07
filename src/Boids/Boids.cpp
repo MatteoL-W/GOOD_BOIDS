@@ -14,11 +14,11 @@ Boids::Boids(p6::Context& ctx, unsigned int quantity, ShapesType const& shape, B
         );
 }
 
-void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles)
+void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles, FoodProvider const& foodProvider)
 {
     for (auto& boid : _boids)
     {
-        boid.update(_boids, obstacles);
+        boid.update(_boids, obstacles, foodProvider);
         std::visit([&](auto shape) {
             ctx.use_stroke = false;
             ctx.fill = {1, 1, 1, 1};

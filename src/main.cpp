@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
 
     ctx.imgui = [&]() {
         ImGui::Begin("Boids");
+
         BoidsHelper::load_boids_helper(boids, numberOfBoids, radius);
         BoidsHelper::load_forces_helper(boids, forcesConfig);
         BoidsHelper::load_behaviour_helper(boids, behaviorConfig);
@@ -48,6 +49,7 @@ int main(int argc, char* argv[])
 
         if (ImGui::Button("Reload flock"))
             load_boids();
+
         // ImGui::ShowDemoWindow();
         ImGui::End();
     };
@@ -65,10 +67,10 @@ int main(int argc, char* argv[])
     foodProvider.addFoodRandomly(ctx);
 
     ctx.update = [&]() {
-        ctx.background(p6::NamedColor::Gray);
-        boids.updateAndDraw(ctx, obstacles);
-        obstacles.draw(ctx);
-        foodProvider.draw(ctx);
+      ctx.background(p6::NamedColor::Gray);
+      foodProvider.draw(ctx);
+      boids.updateAndDraw(ctx, obstacles, foodProvider);
+      obstacles.draw(ctx);
     };
 
     ctx.start();

@@ -5,9 +5,10 @@ SingleBoid::SingleBoid(Movement const& movement, BehaviorConfig const& behaviorC
     : _movement(movement), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
-void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles)
+void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider const& foodProvider)
 {
-    addObstaclesForce(obstacles);
+    addFoodAttraction(foodProvider);
+    addObstaclesAvoidance(obstacles);
     addClassicBoidsForces(boids);
 
     addToVelocity(getAcceleration());
@@ -17,9 +18,14 @@ void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& o
     resetForces();
 }
 
-void SingleBoid::addObstaclesForce(const Obstacles& obstacles)
+void SingleBoid::addFoodAttraction(FoodProvider const& foodProvider)
 {
-    addToAcceleration(computeObstaclesForce(obstacles));
+    addToAcceleration(computeFoodAttraction(foodProvider));
+}
+
+void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
+{
+    addToAcceleration(computeObstaclesAvoidance(obstacles));
 }
 
 void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
@@ -29,7 +35,35 @@ void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
     addToAcceleration(computeCohesionForce(boids));
 }
 
-glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
+glm::vec2 SingleBoid::computeFoodAttraction(FoodProvider const& foodProvider) const
+{
+    auto const allFood = foodProvider.getFood();
+    if (allFood.empty())
+        return glm::vec2{};
+
+    auto closestFood = allFood.begin(); // initialize to the first food item
+
+    float minDistance = glm::distance(getPosition(), *closestFood);
+    for (auto food = allFood.begin(); food != allFood.end(); ++food)
+    {
+        const float distance = glm::distance(getPosition(), *food);
+        if (distance < minDistance)
+        {
+            closestFood = food;
+            minDistance = distance;
+        }
+    }
+
+    if (_behaviorConfig._food_attraction_radius < minDistance)
+        return glm::vec2{};
+
+    if (minDistance < foodProvider.getFoodRadius()) {}
+        foodProvider.getFood().erase(closestFood);
+
+    return glm::normalize(*closestFood - getPosition()); //  * _config._food_attraction_strength;
+}
+
+glm::vec2 SingleBoid::computeObstaclesAvoidance(Obstacles const& obstacles) const
 {
     auto force = glm::vec2{};
 
@@ -94,13 +128,18 @@ glm::vec2 SingleBoid::computeCohesionForce(std::vector<SingleBoid> const& boids)
 
 std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const
 {
+    return getNearbyBoidsFromPosition(getPosition(), boids, radius);
+}
+
+std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, std::vector<SingleBoid> const& boids, double radius)
+{
     std::vector<SingleBoid> nearbyBoids{};
     for (const auto& boid : boids)
     {
-        if (boid.getPosition() == getPosition())
+        if (boid.getPosition() == position)
             continue;
 
-        if (glm::distance(getPosition(), boid.getPosition()) < radius)
+        if (glm::distance(position, boid.getPosition()) < radius)
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;
