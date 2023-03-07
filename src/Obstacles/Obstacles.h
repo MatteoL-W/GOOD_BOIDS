@@ -15,7 +15,7 @@ public:
     explicit Obstacles(std::vector<Obstacle> const& obstacles)
         : _obstacles(obstacles){};
 
-    void draw(p6::Context& ctx);
+    void draw(p6::Context&);
     void addRange(glm::vec2 start, glm::vec2 end, float radius = 0.1f);
     std::vector<Obstacle> getAll() const { return _obstacles; };
 
