@@ -14,8 +14,6 @@ public:
 
     void draw(p6::Context& ctx, Movement const& movement) const
     {
-        ctx.fill   = {1, 1, 1, 1};
-        ctx.stroke = {1, 1, 1, 1};
         ctx.equilateral_triangle(
             // Position in the inverse direction multiplied to be approximately 80% of the circle
             p6::Center{movement._position - 2.f * glm::vec2(_radius * 80) * (movement._velocity * 0.01f)}, //ToDo : cracra

@@ -26,7 +26,7 @@ struct ForcesConfig {
 class SingleBoid {
 public:
     explicit SingleBoid(Movement const&, BehaviorConfig const&, ForcesConfig const&);
-    void update(std::vector<SingleBoid> const& boids, Obstacles const&);
+    void update(std::vector<SingleBoid> const&, Obstacles const&);
     void resetForces() { _movement._acceleration = glm::vec2{0}; };
 
     [[nodiscard]] Movement  getMovement() const { return _movement; };

@@ -41,11 +41,12 @@ glm::vec2 SingleBoid::computeObstaclesForce(Obstacles const& obstacles) const
             continue;
 
         // Calculate a avoidanceStrength value based on how close the boid is to the obstacle
-        const float avoidanceStrength = glm::clamp((avoidanceRadius - distanceToObstacle) / avoidanceRadius, 0.0f, 1.0f);
-        const auto directionToObstacle         = glm::normalize(getPosition() - obstacle._position);
-        const auto fartherPositionFromObstacle = getPosition() + directionToObstacle * avoidanceRadius;
-        const auto avoidanceVelocity           = glm::normalize(fartherPositionFromObstacle - getPosition());
-        const auto steeringForceFromAvoidance  = avoidanceVelocity - getVelocity();
+        const float avoidanceStrength           = glm::clamp((avoidanceRadius - distanceToObstacle) / avoidanceRadius, 0.0f, 1.0f);
+        const auto  directionToObstacle         = glm::normalize(getPosition() - obstacle._position);
+        const auto  fartherPositionFromObstacle = getPosition() + directionToObstacle * avoidanceRadius;
+        const auto  avoidanceVelocity           = glm::normalize(fartherPositionFromObstacle - getPosition());
+        const auto  steeringForceFromAvoidance  = avoidanceVelocity - getVelocity();
+
         force += glm::normalize(steeringForceFromAvoidance + directionToObstacle * avoidanceStrength) * avoidanceStrength;
     }
 

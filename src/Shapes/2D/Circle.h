@@ -14,7 +14,6 @@ public:
 
     void draw(p6::Context& ctx, Movement const& movement) const
     {
-        ctx.fill = {1, 1, 1, 1};
         ctx.circle(
             p6::Center{movement._position},
             p6::Radius{_radius}

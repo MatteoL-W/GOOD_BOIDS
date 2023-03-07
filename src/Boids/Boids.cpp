@@ -20,6 +20,8 @@ void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles)
     {
         boid.update(_boids, obstacles);
         std::visit([&](auto shape) {
+            ctx.use_stroke = false;
+            ctx.fill = {1, 1, 1, 1};
             shape.draw(ctx, boid.getMovement());
         }, _shape);
     }
