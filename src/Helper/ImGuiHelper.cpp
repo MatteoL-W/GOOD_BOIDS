@@ -33,8 +33,8 @@ void load_behaviour_helper(Boids& boids, BehaviorConfig& behaviorConfig)
 {
     if (ImGui::CollapsingHeader("Boids behaviour"))
     {
-        if (ImGui::DragFloat("Boids min speed", &behaviorConfig._minSpeed, 0.01f, 0.f, 5.f)
-            || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, 0.01f, 0.f, 5.f))
+        if (ImGui::DragFloat("Boids min speed", &behaviorConfig._minSpeed, .001f, 0.f, 2.f)
+            || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, 0.001f, 0.f, 5.f))
         {
             boids.updateBehaviorConfig(behaviorConfig);
         }

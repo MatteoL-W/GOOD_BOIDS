@@ -7,7 +7,7 @@ Boids::Boids(p6::Context& ctx, unsigned int quantity, ShapesType const& shape, B
         _boids.emplace_back(
             Movement{
                 ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
-                ._velocity = glm::vec2{p6::random::number(-1, 1), p6::random::number(-1, 1)},
+                ._velocity = glm::vec2{p6::random::number(-0.001, 0.001), p6::random::number(-0.01, 0.01)},
             },
             behaviorConfig,
             forcesConfig

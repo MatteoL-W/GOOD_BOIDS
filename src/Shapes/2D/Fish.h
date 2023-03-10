@@ -16,9 +16,9 @@ public:
     {
         ctx.equilateral_triangle(
             // Position in the inverse direction multiplied to be approximately 80% of the circle
-            p6::Center{movement._position - 2.f * glm::vec2(_radius * 80) * (movement._velocity * 0.01f)}, // ToDo : cracra
+            p6::Center{movement._position - 2.f * glm::vec2(_radius * 80) * (movement._velocity)},
             p6::Radius{static_cast<float>(_radius)},
-            p6::Rotation{p6::Angle{movement._velocity * 0.01f}} // ToDo: eurk
+            p6::Rotation{p6::Angle{movement._velocity}}
         );
         ctx.circle(
             p6::Center{movement._position},
