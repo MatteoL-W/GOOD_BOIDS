@@ -10,6 +10,11 @@ void Obstacles::draw(p6::Context& ctx)
     }
 }
 
+void Obstacles::addOne(glm::vec2 pos, float radius)
+{
+    _obstacles.push_back(Obstacle{glm::vec2{pos}, radius});
+}
+
 void Obstacles::addRange(glm::vec2 start, glm::vec2 end, float radius)
 {
     const float NB_ITERATIONS = std::ceil(glm::distance(start, end)) * 6;

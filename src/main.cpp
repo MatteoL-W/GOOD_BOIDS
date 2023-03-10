@@ -71,6 +71,7 @@ int main(int argc, char* argv[])
     obstacles.addRange({-ctx.aspect_ratio(), -1 - obstacleRadius}, {ctx.aspect_ratio(), -1 - obstacleRadius}, obstacleRadius);
     obstacles.addRange({-ctx.aspect_ratio() - obstacleRadius, -1}, {-ctx.aspect_ratio() - obstacleRadius, 1}, obstacleRadius);
     obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
+    obstacles.addOne({0, 0}, 0.1);
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);

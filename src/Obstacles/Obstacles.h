@@ -16,6 +16,7 @@ public:
         : _obstacles(obstacles){};
 
     void                  draw(p6::Context&);
+    void                  addOne(glm::vec2 pos, float radius = 0.1f);
     void                  addRange(glm::vec2 start, glm::vec2 end, float radius = 0.1f);
     std::vector<Obstacle> getAll() const { return _obstacles; };
 

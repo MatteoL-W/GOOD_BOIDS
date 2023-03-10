@@ -70,7 +70,7 @@ glm::vec2 SingleBoid::computeObstaclesAvoidance(Obstacles const& obstacles) cons
     for (auto const& obstacle : obstacles.getAll())
     {
         const float distanceToObstacle = glm::distance(obstacle._position, getPosition());
-        const float avoidanceRadius    = obstacle._radius * 2.5f;
+        const float avoidanceRadius    = obstacle._radius * 2.f;
         if (distanceToObstacle > avoidanceRadius)
             continue;
 
