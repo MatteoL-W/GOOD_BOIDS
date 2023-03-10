@@ -5,6 +5,8 @@ SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, ShapesTyp
     : _transformAttributes(transformAttributes), _shape(shapesType), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
+// ToDo: Species instead of Shape
+
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
 {
     addFoodAttraction(foodProvider);
@@ -33,6 +35,7 @@ void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
     addToAcceleration(computeSeparationForce(boids));
     addToAcceleration(computeAlignmentForce(boids));
     addToAcceleration(computeCohesionForce(boids));
+    // ToDo: Abstract forces computation
 }
 
 glm::vec2 SingleBoid::computeFoodAttraction(FoodProvider& foodProvider) const
