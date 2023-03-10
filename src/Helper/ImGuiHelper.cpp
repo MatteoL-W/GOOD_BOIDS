@@ -8,8 +8,8 @@ void load_boids_helper(Boids& boids, int& numberOfBoids, float& radius)
     {
         ImGui::DragInt("Number of Boids", &numberOfBoids, 1.f, 0, 500);
 
-        if (ImGui::DragFloat("Boids radius", &radius, 0.01f, 0.01f, 0.2f))
-            boids.updateRadius(radius);
+        /*if (ImGui::DragFloat("Boids radius", &radius, 0.01f, 0.01f, 0.2f))
+            boids.updateRadius(radius);*/
     }
 }
 
@@ -41,7 +41,7 @@ void load_behaviour_helper(Boids& boids, BehaviorConfig& behaviorConfig)
     }
 }
 
-void load_shapes_helper(Boids& boids, ShapesType& shape, float& radius)
+/*void load_shapes_helper(Boids& boids, ShapesType& shape, float& radius)
 {
     if (ImGui::CollapsingHeader("Boids Shapes"))
     {
@@ -63,7 +63,7 @@ void load_shapes_helper(Boids& boids, ShapesType& shape, float& radius)
             boids.updateShape(shape);
         }
     }
-}
+}*/
 
 void load_food_helper(FoodProvider& foodProvider, FoodConfig& foodConfig)
 {
