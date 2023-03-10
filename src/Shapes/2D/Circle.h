@@ -12,10 +12,10 @@ public:
     explicit Circle(float radius)
         : _radius(radius){};
 
-    void draw(p6::Context& ctx, Movement const& movement) const
+    void draw(p6::Context& ctx, TransformAttributes const& transformAttributes) const
     {
         ctx.circle(
-            p6::Center{movement._position},
+            p6::Center{transformAttributes._position},
             p6::Radius{_radius}
         );
     }

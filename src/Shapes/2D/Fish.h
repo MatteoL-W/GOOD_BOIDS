@@ -12,16 +12,16 @@ public:
     explicit Fish(float radius)
         : _radius(radius){};
 
-    void draw(p6::Context& ctx, Movement const& movement) const
+    void draw(p6::Context& ctx, TransformAttributes const& transformAttributes) const
     {
         ctx.equilateral_triangle(
             // Position in the inverse direction multiplied to be approximately 80% of the circle
-            p6::Center{movement._position - 2.f * glm::vec2(_radius * 80) * (movement._velocity)},
+            p6::Center{transformAttributes._position - 2.f * glm::vec2(_radius * 80) * (transformAttributes._velocity)},
             p6::Radius{static_cast<float>(_radius)},
-            p6::Rotation{p6::Angle{movement._velocity}}
+            p6::Rotation{p6::Angle{transformAttributes._velocity}}
         );
         ctx.circle(
-            p6::Center{movement._position},
+            p6::Center{transformAttributes._position},
             p6::Radius{_radius}
         );
     }
