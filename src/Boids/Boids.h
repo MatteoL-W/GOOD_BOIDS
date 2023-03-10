@@ -17,7 +17,7 @@ public:
     Boids() = default;
     Boids(p6::Context&, unsigned int quantity, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
 
-    void updateAndDraw(p6::Context&, Obstacles const&, FoodProvider const&);
+    void updateAndDraw(p6::Context&, Obstacles const&, FoodProvider&);
     void updateForcesConfig(ForcesConfig const&);
     void updateBehaviorConfig(BehaviorConfig const&);
     void updateShape(ShapesType const& shape) { _shape = shape; };

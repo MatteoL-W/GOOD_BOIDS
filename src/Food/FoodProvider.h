@@ -10,10 +10,11 @@ public:
     void draw(p6::Context&) const;
     void addFoodRandomly(p6::Context&);
 
-    std::list<glm::vec2> getFood() const { return _foods; };
-    float                getFoodRadius() const { return _radius; };
+    std::list<glm::vec2> const& getFood() const { return _foods; };
+    float                       getFoodRadius() const { return _radius; };
+    void                        erase(std::list<glm::vec2>::const_iterator it) { _foods.erase(it); };
 
 private:
-    mutable std::list<glm::vec2> _foods{};
+    std::list<glm::vec2> _foods{};
     float                _radius = 0.01f;
 };

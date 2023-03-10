@@ -14,7 +14,7 @@ Boids::Boids(p6::Context& ctx, unsigned int quantity, ShapesType const& shape, B
         );
 }
 
-void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles, FoodProvider const& foodProvider)
+void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles, FoodProvider& foodProvider)
 {
     for (auto& boid : _boids)
     {
