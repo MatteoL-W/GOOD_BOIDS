@@ -1,8 +1,8 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(Movement const& movement, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _movement(movement), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
@@ -12,7 +12,7 @@ void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& o
     addClassicBoidsForces(boids);
 
     addToVelocity(getAcceleration());
-    utils::vec::constrain(_movement._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
+    utils::vec::constrain(_transformAttributes._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
 
     addToPosition(getVelocity());
     resetForces();
