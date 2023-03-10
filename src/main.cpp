@@ -34,11 +34,12 @@ int main(int argc, char* argv[])
     foodProvider.enableRandomFood();
 
     Boids      boids{};
-    int        numberOfBoids = 50;
+    int        numberOfBoids = 25;
     float      radius        = .02f;
-    ShapesType shape         = Shapes::TwoDimensions::Fish{radius};
     auto       load_boids    = [&]() {
-        boids = Boids{ctx, static_cast<unsigned int>(numberOfBoids), shape, behaviorConfig, forcesConfig};
+        boids.reset();
+        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), Shapes::TwoDimensions::Fish{radius}, behaviorConfig, forcesConfig);
+        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), Shapes::TwoDimensions::Triangle{radius}, behaviorConfig, forcesConfig);
     };
     load_boids();
 
@@ -48,7 +49,7 @@ int main(int argc, char* argv[])
         BoidsHelper::load_boids_helper(boids, numberOfBoids, radius);
         BoidsHelper::load_forces_helper(boids, forcesConfig);
         BoidsHelper::load_behaviour_helper(boids, behaviorConfig);
-        BoidsHelper::load_shapes_helper(boids, shape, radius);
+        //BoidsHelper::load_shapes_helper(boids, shape, radius);
         BoidsHelper::load_food_helper(foodProvider, foodConfig);
 
         if (ImGui::Button("Reload flock"))

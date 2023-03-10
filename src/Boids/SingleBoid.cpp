@@ -1,8 +1,8 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, ShapesType const& shapesType, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _transformAttributes(transformAttributes), _shape(shapesType), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
@@ -65,6 +65,7 @@ glm::vec2 SingleBoid::computeFoodAttraction(FoodProvider& foodProvider) const
 
 glm::vec2 SingleBoid::computeObstaclesAvoidance(Obstacles const& obstacles) const
 {
+    // ToDo : ImGui
     auto force = glm::vec2{};
 
     for (auto const& obstacle : obstacles.getAll())
@@ -143,4 +144,12 @@ std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, st
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;
+}
+void SingleBoid::draw(p6::Context& ctx)
+{
+    std::visit([&](auto shape) {
+        ctx.use_stroke = false;
+        ctx.fill       = {1, 1, 1, 1};
+        shape.draw(ctx, getTransformAttributes());
+    }, _shape);
 }
