@@ -32,6 +32,10 @@ int main(int argc, char* argv[])
                 ._alignment_radius  = 0.23f,
                 ._cohesion_radius   = 0.1f,
     };
+    auto foodConfig = FoodConfig{};
+
+    auto foodProvider = FoodProvider{foodConfig};
+    foodProvider.enableRandomFood();
 
     Boids boids{};
     auto  load_boids = [&]() {
@@ -46,6 +50,7 @@ int main(int argc, char* argv[])
         BoidsHelper::load_forces_helper(boids, forcesConfig);
         BoidsHelper::load_behaviour_helper(boids, behaviorConfig);
         BoidsHelper::load_shapes_helper(boids, shape, radius);
+        BoidsHelper::load_food_helper(foodProvider, foodConfig);
 
         if (ImGui::Button("Reload flock"))
             load_boids();
@@ -61,15 +66,14 @@ int main(int argc, char* argv[])
     obstacles.addRange({-ctx.aspect_ratio() - obstacleRadius, -1}, {-ctx.aspect_ratio() - obstacleRadius, 1}, obstacleRadius);
     obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
 
-    auto foodProvider = FoodProvider{};
-    foodProvider.addFoodRandomly(ctx);
-    foodProvider.addFoodRandomly(ctx);
-    foodProvider.addFoodRandomly(ctx);
-
     ctx.update = [&]() {
       ctx.background(p6::NamedColor::Gray);
+
+      foodProvider.update(ctx);
       foodProvider.draw(ctx);
+
       boids.updateAndDraw(ctx, obstacles, foodProvider);
+
       obstacles.draw(ctx);
     };
 

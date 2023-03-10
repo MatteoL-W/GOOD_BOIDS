@@ -64,4 +64,15 @@ void load_shapes_helper(Boids& boids, ShapesType& shape, float& radius)
         }
     }
 }
+
+void load_food_helper(FoodProvider& foodProvider, FoodConfig& foodConfig) {
+    if (ImGui::CollapsingHeader("Food Provider")) {
+        if (ImGui::DragInt("Number of drops", &foodConfig._drops, 3, 0, 10)
+            || ImGui::DragInt("Interval of drop", &foodConfig._providing_interval, 5, 0, 10)
+            || ImGui::DragFloat("Boids radius", &foodConfig._radius, 0.1f, 0.01f, 0.2f))
+        {
+            foodProvider.updateFoodConfig(foodConfig);
+        }
+    }
+}
 } // namespace BoidsHelper
