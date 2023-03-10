@@ -1,5 +1,5 @@
 #include "ImGuiHelper.hpp"
-#include "p6/p6.h"
+#include <p6/p6.h>
 
 namespace BoidsHelper {
 void load_boids_helper(Boids& boids, int& numberOfBoids, float& radius)
@@ -65,11 +65,13 @@ void load_shapes_helper(Boids& boids, ShapesType& shape, float& radius)
     }
 }
 
-void load_food_helper(FoodProvider& foodProvider, FoodConfig& foodConfig) {
-    if (ImGui::CollapsingHeader("Food Provider")) {
+void load_food_helper(FoodProvider& foodProvider, FoodConfig& foodConfig)
+{
+    if (ImGui::CollapsingHeader("Food Provider"))
+    {
         if (ImGui::DragInt("Number of drops", &foodConfig._drops, 3, 0, 10)
-            || ImGui::DragInt("Interval of drop", &foodConfig._providing_interval, 5, 0, 10)
-            || ImGui::DragFloat("Boids radius", &foodConfig._radius, 0.1f, 0.01f, 0.2f))
+            || ImGui::DragInt("Interval of drop", &foodConfig._providing_interval, 5, 0, 30)
+            || ImGui::DragFloat("Food radius", &foodConfig._radius, 0.1f, 0.01f, 0.2f))
         {
             foodProvider.updateFoodConfig(foodConfig);
         }

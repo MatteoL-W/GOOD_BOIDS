@@ -1,11 +1,11 @@
 #pragma once
 
+#include <p6/p6.h>
 #include <variant>
 #include "Food/FoodProvider.h"
 #include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
 #include "SingleBoid.h"
-#include "p6/p6.h"
 
 using ShapesType = std::variant<
     Shapes::TwoDimensions::Triangle,

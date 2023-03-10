@@ -23,22 +23,21 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
-    int        numberOfBoids  = 50;
-    float      radius         = .02f;
-    ShapesType shape          = Shapes::TwoDimensions::Fish{radius};
-    auto       behaviorConfig = BehaviorConfig{};
-    auto       forcesConfig   = ForcesConfig{
-                ._separation_radius = 0.1f,
-                ._alignment_radius  = 0.23f,
-                ._cohesion_radius   = 0.1f,
+    auto behaviorConfig = BehaviorConfig{};
+    auto forcesConfig   = ForcesConfig{
+          ._separation_radius = 0.1f,
+          ._alignment_radius  = 0.23f,
+          ._cohesion_radius   = 0.1f,
     };
-    auto foodConfig = FoodConfig{};
-
+    auto foodConfig   = FoodConfig{};
     auto foodProvider = FoodProvider{foodConfig};
     foodProvider.enableRandomFood();
 
-    Boids boids{};
-    auto  load_boids = [&]() {
+    Boids      boids{};
+    int        numberOfBoids = 50;
+    float      radius        = .02f;
+    ShapesType shape         = Shapes::TwoDimensions::Fish{radius};
+    auto       load_boids    = [&]() {
         boids = Boids{ctx, static_cast<unsigned int>(numberOfBoids), shape, behaviorConfig, forcesConfig};
     };
     load_boids();
@@ -55,6 +54,13 @@ int main(int argc, char* argv[])
         if (ImGui::Button("Reload flock"))
             load_boids();
 
+        if (ImGui::Button("Reset settings"))
+        {
+            behaviorConfig = BehaviorConfig{};
+            forcesConfig   = ForcesConfig{};
+            foodConfig     = FoodConfig{};
+        }
+
         // ImGui::ShowDemoWindow();
         ImGui::End();
     };
@@ -67,14 +73,14 @@ int main(int argc, char* argv[])
     obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
 
     ctx.update = [&]() {
-      ctx.background(p6::NamedColor::Gray);
+        ctx.background(p6::NamedColor::Gray);
 
-      foodProvider.update(ctx);
-      foodProvider.draw(ctx);
+        foodProvider.update(ctx);
+        foodProvider.draw(ctx);
 
-      boids.updateAndDraw(ctx, obstacles, foodProvider);
+        boids.updateAndDraw(ctx, obstacles, foodProvider);
 
-      obstacles.draw(ctx);
+        obstacles.draw(ctx);
     };
 
     ctx.start();

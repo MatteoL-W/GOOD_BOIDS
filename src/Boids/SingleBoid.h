@@ -1,8 +1,8 @@
 #pragma once
 
+#include <p6/p6.h>
 #include "Food/FoodProvider.h"
 #include "Obstacles/Obstacles.h"
-#include "p6/p6.h"
 
 struct Movement {
     glm::vec2 _position{};
@@ -11,8 +11,8 @@ struct Movement {
 };
 
 struct BehaviorConfig {
-    float _minSpeed = .5f;
-    float _maxSpeed = 2.f;
+    float _minSpeed               = .5f;
+    float _maxSpeed               = 2.f;
     float _food_attraction_radius = 0.3f;
 };
 
@@ -33,7 +33,7 @@ public:
 
     [[nodiscard]] Movement  getMovement() const { return _movement; };
     [[nodiscard]] glm::vec2 getPosition() const { return _movement._position; };
-    [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity * glm::vec2(0.01f); }; //ToDo : so bad
+    [[nodiscard]] glm::vec2 getVelocity() const { return _movement._velocity * glm::vec2(0.01f); }; // ToDo : so bad
     [[nodiscard]] glm::vec2 getAcceleration() const { return _movement._acceleration; };
 
     void setForcesConfig(ForcesConfig config) { _forcesConfig = config; };

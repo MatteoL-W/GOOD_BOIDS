@@ -21,7 +21,7 @@ void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles, FoodProv
         boid.update(_boids, obstacles, foodProvider);
         std::visit([&](auto shape) {
             ctx.use_stroke = false;
-            ctx.fill = {1, 1, 1, 1};
+            ctx.fill       = {1, 1, 1, 1};
             shape.draw(ctx, boid.getMovement());
         }, _shape);
     }

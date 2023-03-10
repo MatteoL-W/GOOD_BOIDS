@@ -14,7 +14,8 @@ void FoodProvider::update(p6::Context& ctx)
 
     auto current_time = Clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(current_time - *_random_food_start_time).count();
-    if (elapsed_time >= _config._providing_interval) {
+    if (elapsed_time >= _config._providing_interval)
+    {
         addFoodRandomly(ctx);
         _random_food_start_time = current_time;
     }
