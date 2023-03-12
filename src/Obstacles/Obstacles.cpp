@@ -6,7 +6,7 @@ void Obstacles::draw(p6::Context& ctx)
     for (auto const& obstacle : _obstacles)
     {
         auto obstacleShape = Shapes::TwoDimensions::Circle{obstacle._radius};
-        obstacleShape.draw(ctx, TransformAttributes{obstacle._position});
+        obstacleShape.draw(ctx, utils::TransformAttributes{obstacle._position});
     }
 }
 

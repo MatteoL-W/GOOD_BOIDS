@@ -4,7 +4,7 @@ void Boids::addSpecies(p6::Context& ctx, unsigned int quantity, Species const& s
 {
     for (unsigned int i = 0; i < quantity; i++)
         _boids.emplace_back(
-            TransformAttributes{
+            utils::TransformAttributes{
                 ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
                 ._velocity = glm::vec2{p6::random::number(-0.001, 0.001), p6::random::number(-0.01, 0.01)},
             },

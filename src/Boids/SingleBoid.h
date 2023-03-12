@@ -23,11 +23,11 @@ struct ForcesConfig {
 
 class SingleBoid {
 public:
-    explicit SingleBoid(TransformAttributes const&, Species const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit SingleBoid(utils::TransformAttributes const&, Species const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<SingleBoid> const&, Obstacles const&, FoodProvider&);
     void draw(p6::Context&);
 
-    [[nodiscard]] TransformAttributes getTransformAttributes() const { return _transformAttributes; };
+    [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec2           getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec2           getVelocity() const { return _transformAttributes._velocity; };
     [[nodiscard]] glm::vec2           getAcceleration() const { return _transformAttributes._acceleration; };
@@ -53,7 +53,7 @@ private:
     [[nodiscard]] glm::vec2               computeCohesionForce(std::vector<SingleBoid> const& boids) const;
 
 private:
-    TransformAttributes _transformAttributes{};
+    utils::TransformAttributes _transformAttributes{};
     Species             _species{};
     BehaviorConfig      _behaviorConfig{};
     ForcesConfig        _forcesConfig{};
