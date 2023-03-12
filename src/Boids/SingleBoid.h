@@ -3,7 +3,7 @@
 #include <p6/p6.h>
 #include "Food/FoodProvider.h"
 #include "Obstacles/Obstacles.h"
-#include "Shapes/2D.h"
+#include "Species/Species.h"
 #include "utils/TransformAttributes.h"
 
 struct BehaviorConfig {
@@ -23,16 +23,16 @@ struct ForcesConfig {
 
 class SingleBoid {
 public:
-    explicit SingleBoid(TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit SingleBoid(TransformAttributes const&, Species const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<SingleBoid> const&, Obstacles const&, FoodProvider&);
     void draw(p6::Context&);
-    void resetForces() { _transformAttributes._acceleration = glm::vec2{0}; };
 
     [[nodiscard]] TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec2           getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec2           getVelocity() const { return _transformAttributes._velocity; };
     [[nodiscard]] glm::vec2           getAcceleration() const { return _transformAttributes._acceleration; };
 
+    void resetForces() { _transformAttributes._acceleration = glm::vec2{0}; };
     void setForcesConfig(ForcesConfig config) { _forcesConfig = config; };
     void setBehaviorConfig(BehaviorConfig config) { _behaviorConfig = config; };
 
@@ -54,7 +54,7 @@ private:
 
 private:
     TransformAttributes _transformAttributes{};
-    ShapesType          _shape{};
+    Species             _species{};
     BehaviorConfig      _behaviorConfig{};
     ForcesConfig        _forcesConfig{};
 };
