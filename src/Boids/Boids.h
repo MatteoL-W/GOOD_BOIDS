@@ -4,8 +4,8 @@
 #include <variant>
 #include "Food/FoodProvider.h"
 #include "Obstacles/Obstacles.h"
-#include "Species/Species.h"
 #include "SingleBoid.h"
+#include "Species/Species.h"
 
 class Boids {
 public:
@@ -17,10 +17,10 @@ public:
     void updateForcesConfig(ForcesConfig const&);
     void updateBehaviorConfig(BehaviorConfig const&);
     void reset() { _boids.clear(); };
-    //void updateShape(ShapesType const& shape) { _shape = shape; };
-    //void updateRadius(float radius);
+    // void updateShape(ShapesType const& shape) { _shape = shape; };
+    // void updateRadius(float radius);
 
 private:
     std::vector<SingleBoid> _boids{};
-    //ShapesType              _shape{};
+    // ShapesType              _shape{};
 };

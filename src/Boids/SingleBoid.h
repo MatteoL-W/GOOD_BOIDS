@@ -28,9 +28,9 @@ public:
     void draw(p6::Context&);
 
     [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
-    [[nodiscard]] glm::vec2           getPosition() const { return _transformAttributes._position; };
-    [[nodiscard]] glm::vec2           getVelocity() const { return _transformAttributes._velocity; };
-    [[nodiscard]] glm::vec2           getAcceleration() const { return _transformAttributes._acceleration; };
+    [[nodiscard]] glm::vec2                  getPosition() const { return _transformAttributes._position; };
+    [[nodiscard]] glm::vec2                  getVelocity() const { return _transformAttributes._velocity; };
+    [[nodiscard]] glm::vec2                  getAcceleration() const { return _transformAttributes._acceleration; };
 
     void resetForces() { _transformAttributes._acceleration = glm::vec2{0}; };
     void setForcesConfig(ForcesConfig config) { _forcesConfig = config; };
@@ -43,20 +43,15 @@ public:
 private:
     void addFoodAttraction(FoodProvider&);
     void addObstaclesAvoidance(Obstacles const&);
-    void addClassicBoidsForces(std::vector<SingleBoid> const& boids);
+    void addClassicBoidsForces(std::vector<SingleBoid> const&);
 
-    [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const;
-    [[nodiscard]] glm::vec2               computeFoodAttraction(FoodProvider&) const;
-    [[nodiscard]] glm::vec2               computeObstaclesAvoidance(Obstacles const&) const;
-    [[nodiscard]] glm::vec2               computeSeparationForce(std::vector<SingleBoid> const& boids) const;
-    [[nodiscard]] glm::vec2               computeAlignmentForce(std::vector<SingleBoid> const& boids) const;
-    [[nodiscard]] glm::vec2               computeCohesionForce(std::vector<SingleBoid> const& boids) const;
+    [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const&, double radius) const;
 
 private:
     utils::TransformAttributes _transformAttributes{};
-    Species             _species{};
-    BehaviorConfig      _behaviorConfig{};
-    ForcesConfig        _forcesConfig{};
+    Species                    _species{};
+    BehaviorConfig             _behaviorConfig{};
+    ForcesConfig               _forcesConfig{};
 };
 
 std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, std::vector<SingleBoid> const& boids, double radius);
