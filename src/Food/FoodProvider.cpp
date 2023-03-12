@@ -4,20 +4,20 @@
 
 void FoodProvider::enableRandomFood()
 {
-    _random_food_start_time = Clock::now();
+    _randomFoodStartTime = Clock::now();
 }
 
 void FoodProvider::update(p6::Context& ctx)
 {
-    if (!_random_food_start_time.has_value())
+    if (!_randomFoodStartTime.has_value())
         return;
 
     auto current_time = Clock::now();
-    auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(current_time - *_random_food_start_time).count();
+    auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(current_time - *_randomFoodStartTime).count();
     if (elapsed_time >= _config._providing_interval)
     {
         addFoodRandomly(ctx);
-        _random_food_start_time = current_time;
+        _randomFoodStartTime = current_time;
     }
 }
 

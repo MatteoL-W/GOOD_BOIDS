@@ -31,7 +31,7 @@ private:
     void addFoodRandomly(p6::Context&);
 
 private:
-    std::optional<Clock::time_point> _random_food_start_time;
+    std::optional<Clock::time_point> _randomFoodStartTime;
     std::list<glm::vec2>             _foods{};
     FoodConfig                       _config{};
 };

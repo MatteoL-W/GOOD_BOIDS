@@ -20,9 +20,18 @@ void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& o
     resetForces();
 }
 
+void SingleBoid::draw(p6::Context& ctx)
+{
+    std::visit([&](auto shape) {
+        ctx.use_stroke = false;
+        ctx.fill       = {1, 1, 1, 1};
+        shape.draw(ctx, getTransformAttributes());
+    }, _species.getShape());
+}
+
 void SingleBoid::addFoodAttraction(FoodProvider& foodProvider)
 {
-    addToAcceleration(utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._food_attraction_radius)); //  * _config._food_attraction_strength;);
+    addToAcceleration(utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); //  * _config._food_attraction_strength;);
 }
 
 void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
@@ -32,9 +41,9 @@ void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
 
 void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
 {
-    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separation_radius)) * _forcesConfig._avoid_factor;
-    auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyBoids(boids, _forcesConfig._alignment_radius)) * _forcesConfig._matching_factor;
-    auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyBoids(boids, _forcesConfig._cohesion_radius)) * _forcesConfig._centering_factor;
+    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._avoidFactor;
+    auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyBoids(boids, _forcesConfig._alignmentRadius)) * _forcesConfig._matchingFactor;
+    auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyBoids(boids, _forcesConfig._cohesionRadius)) * _forcesConfig._centeringFactor;
 
     addToAcceleration(separation);
     addToAcceleration(alignment);
@@ -58,13 +67,4 @@ std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, st
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;
-}
-
-void SingleBoid::draw(p6::Context& ctx)
-{
-    std::visit([&](auto shape) {
-        ctx.use_stroke = false;
-        ctx.fill       = {1, 1, 1, 1};
-        shape.draw(ctx, getTransformAttributes());
-    }, _species.getShape());
 }

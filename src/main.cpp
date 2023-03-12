@@ -26,9 +26,9 @@ int main(int argc, char* argv[])
 
     auto behaviorConfig = BehaviorConfig{};
     auto forcesConfig   = ForcesConfig{
-          ._separation_radius = 0.1f,
-          ._alignment_radius  = 0.23f,
-          ._cohesion_radius   = 0.1f,
+          ._separationRadius = 0.1f,
+          ._alignmentRadius  = 0.23f,
+          ._cohesionRadius   = 0.1f,
     };
     auto foodConfig   = FoodConfig{};
     auto foodProvider = FoodProvider{foodConfig};

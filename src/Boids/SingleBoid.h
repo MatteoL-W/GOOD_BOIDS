@@ -9,16 +9,16 @@
 struct BehaviorConfig {
     float _minSpeed               = .005f;
     float _maxSpeed               = .2f;
-    float _food_attraction_radius = 0.3f;
+    float _foodAttractionRadius   = 0.3f;
 };
 
 struct ForcesConfig {
-    float _separation_radius = .1f;
-    float _avoid_factor      = .1f;
-    float _alignment_radius  = .2f;
-    float _matching_factor   = .1f;
-    float _cohesion_radius   = .1f;
-    float _centering_factor  = .1f;
+    float _separationRadius  = .1f;
+    float _avoidFactor       = .1f;
+    float _alignmentRadius   = .2f;
+    float _matchingFactor    = .1f;
+    float _cohesionRadius    = .1f;
+    float _centeringFactor   = .1f;
 };
 
 class SingleBoid {
