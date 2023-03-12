@@ -27,7 +27,7 @@ void FoodProvider::draw(p6::Context& ctx) const
     {
         ctx.fill       = {1.f, .5f, .2f, 1.f};
         auto foodShape = Shapes::TwoDimensions::Circle{_config._radius};
-        foodShape.draw(ctx, TransformAttributes{food});
+        foodShape.draw(ctx, utils::TransformAttributes{food});
     }
 }
 

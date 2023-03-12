@@ -1,7 +1,8 @@
 #include "SingleBoid.h"
+#include "utils/boidsForcesCalculator.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, Species const& species, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+SingleBoid::SingleBoid(utils::TransformAttributes const& transformAttributes, Species const& species, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _transformAttributes(transformAttributes), _species(species), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
@@ -147,6 +148,7 @@ std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, st
     }
     return nearbyBoids;
 }
+
 void SingleBoid::draw(p6::Context& ctx)
 {
     std::visit([&](auto shape) {
