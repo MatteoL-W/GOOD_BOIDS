@@ -7,6 +7,7 @@
 #include "Helper/ImGuiHelper.hpp"
 #include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
+#include "Species/Species.h"
 
 int main(int argc, char* argv[])
 {
@@ -33,13 +34,17 @@ int main(int argc, char* argv[])
     auto foodProvider = FoodProvider{foodConfig};
     foodProvider.enableRandomFood();
 
-    Boids      boids{};
-    int        numberOfBoids = 25;
-    float      radius        = .02f;
-    auto       load_boids    = [&]() {
+    Boids boids{};
+    int   numberOfBoids = 25;
+    float radius        = .02f;
+
+    auto prey     = Species{Shapes::TwoDimensions::Triangle{radius}, SpeciesType::Prey};
+    auto predator = Species{Shapes::TwoDimensions::Fish{radius}, SpeciesType::Predator};
+
+    auto load_boids = [&]() {
         boids.reset();
-        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), Shapes::TwoDimensions::Fish{radius}, behaviorConfig, forcesConfig);
-        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), Shapes::TwoDimensions::Triangle{radius}, behaviorConfig, forcesConfig);
+        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), prey, behaviorConfig, forcesConfig);
+        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), predator, behaviorConfig, forcesConfig);
     };
     load_boids();
 
@@ -49,7 +54,7 @@ int main(int argc, char* argv[])
         BoidsHelper::load_boids_helper(boids, numberOfBoids, radius);
         BoidsHelper::load_forces_helper(boids, forcesConfig);
         BoidsHelper::load_behaviour_helper(boids, behaviorConfig);
-        //BoidsHelper::load_shapes_helper(boids, shape, radius);
+        // BoidsHelper::load_shapes_helper(boids, shape, radius);
         BoidsHelper::load_food_helper(foodProvider, foodConfig);
 
         if (ImGui::Button("Reload flock"))

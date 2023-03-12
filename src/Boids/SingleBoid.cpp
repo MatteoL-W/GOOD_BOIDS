@@ -1,11 +1,10 @@
 #include "SingleBoid.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, ShapesType const& shapesType, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _transformAttributes(transformAttributes), _shape(shapesType), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+SingleBoid::SingleBoid(TransformAttributes const& transformAttributes, Species const& species, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _transformAttributes(transformAttributes), _species(species), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
-// ToDo: Species instead of Shape
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
 {
@@ -79,7 +78,7 @@ glm::vec2 SingleBoid::computeObstaclesAvoidance(Obstacles const& obstacles) cons
             continue;
 
         // Calculate a avoidanceStrength value based on how close the boid is to the obstacle
-        const float avoidanceStrength           = glm::clamp((avoidanceRadius - distanceToObstacle) / avoidanceRadius, 0.0f, 1.0f);
+        const float avoidanceStrength           = glm::clamp((avoidanceRadius - distanceToObstacle) / avoidanceRadius, 0.0f, 1.0f) / 2.f;
         const auto  directionToObstacle         = glm::normalize(getPosition() - obstacle._position);
         const auto  fartherPositionFromObstacle = getPosition() + directionToObstacle * avoidanceRadius;
         const auto  avoidanceVelocity           = glm::normalize(fartherPositionFromObstacle - getPosition());
@@ -154,5 +153,5 @@ void SingleBoid::draw(p6::Context& ctx)
         ctx.use_stroke = false;
         ctx.fill       = {1, 1, 1, 1};
         shape.draw(ctx, getTransformAttributes());
-    }, _shape);
+    }, _species.getShape());
 }
