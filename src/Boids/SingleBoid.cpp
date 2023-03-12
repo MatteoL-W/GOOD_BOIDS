@@ -1,14 +1,14 @@
 #include "SingleBoid.h"
-#include "utils/boidsForcesCalculator.h"
+#include "utils/boidsForces.h"
 #include "utils/vec.hpp"
 
 SingleBoid::SingleBoid(utils::TransformAttributes const& transformAttributes, Species const& species, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _transformAttributes(transformAttributes), _species(species), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
-
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
 {
+    // Add forces to acceleration
     addFoodAttraction(foodProvider);
     addObstaclesAvoidance(obstacles);
     addClassicBoidsForces(boids);
@@ -22,112 +22,23 @@ void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& o
 
 void SingleBoid::addFoodAttraction(FoodProvider& foodProvider)
 {
-    addToAcceleration(computeFoodAttraction(foodProvider));
+    addToAcceleration(utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._food_attraction_radius)); //  * _config._food_attraction_strength;);
 }
 
 void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
 {
-    addToAcceleration(computeObstaclesAvoidance(obstacles));
+    addToAcceleration(utils::boidsForces::computeObstaclesAvoidance(*this, obstacles)); //  * _config._food_attraction_strength;);
 }
 
 void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
 {
-    addToAcceleration(computeSeparationForce(boids));
-    addToAcceleration(computeAlignmentForce(boids));
-    addToAcceleration(computeCohesionForce(boids));
-    // ToDo: Abstract forces computation
-}
+    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separation_radius)) * _forcesConfig._avoid_factor;
+    auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyBoids(boids, _forcesConfig._alignment_radius)) * _forcesConfig._matching_factor;
+    auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyBoids(boids, _forcesConfig._cohesion_radius)) * _forcesConfig._centering_factor;
 
-glm::vec2 SingleBoid::computeFoodAttraction(FoodProvider& foodProvider) const
-{
-    auto const& allFood = foodProvider.getFood();
-    if (allFood.empty())
-        return glm::vec2{};
-
-    auto closestFood = allFood.begin(); // initialize to the first food item
-
-    float minDistance = glm::distance(getPosition(), *closestFood);
-    for (auto food = allFood.begin(); food != allFood.end(); ++food)
-    {
-        const float distance = glm::distance(getPosition(), *food);
-        if (distance < minDistance)
-        {
-            closestFood = food;
-            minDistance = distance;
-        }
-    }
-
-    if (_behaviorConfig._food_attraction_radius < minDistance)
-        return glm::vec2{};
-
-    if (minDistance < foodProvider.getFoodRadius())
-        foodProvider.erase(closestFood);
-
-    return glm::normalize(*closestFood - getPosition()); //  * _config._food_attraction_strength;
-}
-
-glm::vec2 SingleBoid::computeObstaclesAvoidance(Obstacles const& obstacles) const
-{
-    // ToDo : ImGui
-    auto force = glm::vec2{};
-
-    for (auto const& obstacle : obstacles.getAll())
-    {
-        const float distanceToObstacle = glm::distance(obstacle._position, getPosition());
-        const float avoidanceRadius    = obstacle._radius * 2.f;
-        if (distanceToObstacle > avoidanceRadius)
-            continue;
-
-        // Calculate a avoidanceStrength value based on how close the boid is to the obstacle
-        const float avoidanceStrength           = glm::clamp((avoidanceRadius - distanceToObstacle) / avoidanceRadius, 0.0f, 1.0f) / 2.f;
-        const auto  directionToObstacle         = glm::normalize(getPosition() - obstacle._position);
-        const auto  fartherPositionFromObstacle = getPosition() + directionToObstacle * avoidanceRadius;
-        const auto  avoidanceVelocity           = glm::normalize(fartherPositionFromObstacle - getPosition());
-        const auto  steeringForceFromAvoidance  = avoidanceVelocity - getVelocity();
-
-        force += glm::normalize(steeringForceFromAvoidance + directionToObstacle * avoidanceStrength) * avoidanceStrength;
-    }
-
-    return force;
-}
-
-glm::vec2 SingleBoid::computeSeparationForce(std::vector<SingleBoid> const& boids) const
-{
-    auto force = glm::vec2{};
-
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _forcesConfig._separation_radius);
-    for (auto const& closeMember : closeMembers)
-        force += glm::normalize(getPosition() - closeMember.getPosition()) / glm::distance(getPosition(), closeMember.getPosition());
-
-    return force * _forcesConfig._avoid_factor;
-}
-
-glm::vec2 SingleBoid::computeAlignmentForce(std::vector<SingleBoid> const& boids) const
-{
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _forcesConfig._alignment_radius);
-    if (closeMembers.empty())
-        return glm::vec2{};
-
-    auto averageVelocity = glm::vec2{};
-    for (auto const& closeMember : closeMembers)
-        averageVelocity += glm::normalize(closeMember.getVelocity());
-
-    averageVelocity /= static_cast<float>(closeMembers.size());
-    return (averageVelocity - getVelocity()) * _forcesConfig._matching_factor;
-}
-
-glm::vec2 SingleBoid::computeCohesionForce(std::vector<SingleBoid> const& boids) const
-{
-    std::vector<SingleBoid> const closeMembers = getNearbyBoids(boids, _forcesConfig._cohesion_radius);
-    if (closeMembers.empty())
-        return glm::vec2{};
-
-    auto averagePosition = glm::vec2{};
-    for (auto const& closeMember : closeMembers)
-        averagePosition += glm::normalize(closeMember.getPosition());
-
-    averagePosition /= static_cast<float>(closeMembers.size());
-    return (averagePosition - getPosition()) * _forcesConfig._centering_factor;
+    addToAcceleration(separation);
+    addToAcceleration(alignment);
+    addToAcceleration(cohesion);
 }
 
 std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const
