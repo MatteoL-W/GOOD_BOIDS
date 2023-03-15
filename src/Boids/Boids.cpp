@@ -1,16 +1,16 @@
 #include "Boids.h"
 
-void Boids::addSpecies(p6::Context& ctx, unsigned int quantity, Species const& species, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+void Boids::addSpecies(p6::Context& ctx, SpeciesInitialization& speciesInitialization)
 {
-    for (unsigned int i = 0; i < quantity; i++)
+    for (int i = 0; i < speciesInitialization._quantity; i++)
         _boids.emplace_back(
             utils::TransformAttributes{
                 ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
                 ._velocity = glm::vec2{p6::random::number(-0.001, 0.001), p6::random::number(-0.01, 0.01)},
             },
-            species,
-            behaviorConfig,
-            forcesConfig
+            speciesInitialization._species,
+            speciesInitialization._behaviorConfig,
+            speciesInitialization._forcesConfig
         );
 }
 

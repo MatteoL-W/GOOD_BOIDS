@@ -7,11 +7,18 @@
 #include "SingleBoid.h"
 #include "Species/Species.h"
 
+struct SpeciesInitialization {
+    Species        _species;
+    int            _quantity;
+    BehaviorConfig _behaviorConfig;
+    ForcesConfig   _forcesConfig;
+};
+
 class Boids {
 public:
     Boids() = default;
 
-    void addSpecies(p6::Context&, unsigned int quantity, Species const&, BehaviorConfig const&, ForcesConfig const&);
+    void addSpecies(p6::Context&, SpeciesInitialization&);
 
     void updateAndDraw(p6::Context&, Obstacles const&, FoodProvider&);
     void updateForcesConfig(ForcesConfig const&);
