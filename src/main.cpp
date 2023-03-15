@@ -24,48 +24,71 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
-    auto behaviorConfig = BehaviorConfig{};
-    auto forcesConfig   = ForcesConfig{
-          ._separationRadius = 0.1f,
-          ._alignmentRadius  = 0.23f,
-          ._cohesionRadius   = 0.1f,
-    };
+    // Lil Fish
+    float lilFishRadius   = .01f;
+    int   lilFishQuantity = 35;
+    auto  lilFishSpecies  = Species{Shapes::TwoDimensions::Fish{lilFishRadius}, SpeciesType::Prey};
+    auto  lilFishForces   = ForcesConfig{._separationRadius = 0.05f, ._alignmentRadius = 0.2f, ._cohesionRadius = 0.1f};
+    auto  lilFishBehavior = BehaviorConfig{._minSpeed = .01f, ._maxSpeed = 2.5f};
+    auto  lilFishInit     = SpeciesInitialization{._species = lilFishSpecies, ._quantity = lilFishQuantity, ._behaviorConfig = lilFishBehavior, ._forcesConfig = lilFishForces};
+
+    // Mid Fish
+    float midFishRadius   = .03f;
+    int   midFishQuantity = 15;
+    auto  midFishSpecies  = Species{Shapes::TwoDimensions::Fish{midFishRadius}, SpeciesType::Prey};
+    auto  midFishForces   = ForcesConfig{._separationRadius = 0.1f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f};
+    auto  midFishBehavior = BehaviorConfig{._minSpeed = .005f, ._maxSpeed = 2.f};
+    auto  midFishInit     = SpeciesInitialization{._species = midFishSpecies, ._quantity = midFishQuantity, ._behaviorConfig = midFishBehavior, ._forcesConfig = midFishForces};
+
+    // Big Fish
+    float bigFishRadius   = .07f;
+    int   bigFishQuantity = 4;
+    auto  bigFishSpecies  = Species{Shapes::TwoDimensions::Fish{bigFishRadius}, SpeciesType::Prey};
+    auto  bigFishForces   = ForcesConfig{._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f};
+    auto  bigFishBehavior = BehaviorConfig{._minSpeed = .005f, ._maxSpeed = 2.f};
+    auto  bigFishInit     = SpeciesInitialization{._species = bigFishSpecies, ._quantity = bigFishQuantity, ._behaviorConfig = bigFishBehavior, ._forcesConfig = bigFishForces};
+
     auto foodConfig   = FoodConfig{};
     auto foodProvider = FoodProvider{foodConfig};
     foodProvider.enableRandomFood();
 
     Boids boids{};
-    int   numberOfBoids = 25;
-    float radius        = .02f;
-
-    auto prey     = Species{Shapes::TwoDimensions::Triangle{radius}, SpeciesType::Prey};
-    auto predator = Species{Shapes::TwoDimensions::Fish{radius}, SpeciesType::Predator};
 
     auto load_boids = [&]() {
         boids.reset();
-        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), prey, behaviorConfig, forcesConfig);
-        boids.addSpecies(ctx, static_cast<unsigned int>(numberOfBoids), predator, behaviorConfig, forcesConfig);
+        boids.addSpecies(ctx, lilFishInit);
+        boids.addSpecies(ctx, midFishInit);
+        boids.addSpecies(ctx, bigFishInit);
     };
     load_boids();
 
     ctx.imgui = [&]() {
-        ImGui::Begin("Boids");
+        ImGui::Begin("My super GUI");
 
-        BoidsHelper::load_boids_helper(boids, numberOfBoids, radius);
-        BoidsHelper::load_forces_helper(boids, forcesConfig);
-        BoidsHelper::load_behaviour_helper(boids, behaviorConfig);
-        // BoidsHelper::load_shapes_helper(boids, shape, radius);
+        if (ImGui::CollapsingHeader("Lil boids")) {
+            //BoidsHelper::load_boids_helper(boids, lilFishQuantity, lilFishRadius);
+            BoidsHelper::load_forces_helper(boids, lilFishForces);
+            BoidsHelper::load_behaviour_helper(boids, lilFishBehavior);
+            // BoidsHelper::load_shapes_helper(boids, shape, radius);
+        }
+
+        if (ImGui::CollapsingHeader("Mid boids")) {
+            BoidsHelper::load_forces_helper(boids, midFishForces);
+            BoidsHelper::load_behaviour_helper(boids, midFishBehavior);
+        }
+
+        if (ImGui::CollapsingHeader("Big boids")) {
+            BoidsHelper::load_forces_helper(boids, bigFishForces);
+            BoidsHelper::load_behaviour_helper(boids, bigFishBehavior);
+        }
+
         BoidsHelper::load_food_helper(foodProvider, foodConfig);
 
         if (ImGui::Button("Reload flock"))
             load_boids();
 
-        if (ImGui::Button("Reset settings"))
-        {
-            behaviorConfig = BehaviorConfig{};
-            forcesConfig   = ForcesConfig{};
-            foodConfig     = FoodConfig{};
-        }
+        // ToDo
+        // if (ImGui::Button("Reset settings"))
 
         // ImGui::ShowDemoWindow();
         ImGui::End();
