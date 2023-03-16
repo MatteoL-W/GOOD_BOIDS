@@ -1,9 +1,10 @@
 #include "SingleBoid.h"
+#include <variant>
 #include "utils/boidsForces.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(utils::TransformAttributes const& transformAttributes, Species const& species, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _transformAttributes(transformAttributes), _species(species), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+SingleBoid::SingleBoid(utils::TransformAttributes const& transformAttributes, ShapesType const& shape, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _transformAttributes(transformAttributes), _shape(shape), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
@@ -26,7 +27,8 @@ void SingleBoid::draw(p6::Context& ctx)
         ctx.use_stroke = false;
         ctx.fill       = {1, 1, 1, 1};
         shape.draw(ctx, getTransformAttributes());
-    }, _species.getShape());
+    },
+               getShape());
 }
 
 void SingleBoid::addFoodAttraction(FoodProvider& foodProvider)
@@ -41,21 +43,21 @@ void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
 
 void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
 {
-    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._avoidFactor;
-    auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyBoids(boids, _forcesConfig._alignmentRadius)) * _forcesConfig._matchingFactor;
-    auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyBoids(boids, _forcesConfig._cohesionRadius)) * _forcesConfig._centeringFactor;
+    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._avoidFactor;
+    auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._alignmentRadius)) * _forcesConfig._matchingFactor;
+    auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._cohesionRadius)) * _forcesConfig._centeringFactor;
 
     addToAcceleration(separation);
     addToAcceleration(alignment);
     addToAcceleration(cohesion);
 }
 
-std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const
+std::vector<SingleBoid> SingleBoid::getNearbyAndSameBoids(std::vector<SingleBoid> const& boids, double radius) const
 {
-    return getNearbyBoidsFromPosition(getPosition(), boids, radius);
+    return getNearbyBoidsFromPosition(getPosition(), boids, radius, getShape());
 }
 
-std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, std::vector<SingleBoid> const& boids, double radius)
+std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, std::vector<SingleBoid> const& boids, double radius, ShapesType const& shape)
 {
     std::vector<SingleBoid> nearbyBoids{};
     for (const auto& boid : boids)
@@ -63,7 +65,8 @@ std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, st
         if (boid.getPosition() == position)
             continue;
 
-        if (glm::distance(position, boid.getPosition()) < radius)
+        if (glm::distance(position, boid.getPosition()) < radius
+            && boid.getShape().index() == shape.index())
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;

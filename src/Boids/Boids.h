@@ -4,11 +4,11 @@
 #include <variant>
 #include "Food/FoodProvider.h"
 #include "Obstacles/Obstacles.h"
+#include "Shapes/2D.h"
 #include "SingleBoid.h"
-#include "Species/Species.h"
 
 struct SpeciesInitialization {
-    Species        _species;
+    ShapesType     _shape;
     int            _quantity;
     BehaviorConfig _behaviorConfig;
     ForcesConfig   _forcesConfig;

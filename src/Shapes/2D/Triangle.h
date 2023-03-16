@@ -21,10 +21,6 @@ public:
         );
     }
 
-    void  setRadius(float radius) { _radius = radius; };
-    float getRadius() const { return _radius; };
-
-private:
     float _radius;
 };
 
