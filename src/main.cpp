@@ -7,7 +7,6 @@
 #include "Helper/ImGuiHelper.hpp"
 #include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
-#include "Species/Species.h"
 
 int main(int argc, char* argv[])
 {
@@ -27,33 +26,32 @@ int main(int argc, char* argv[])
     // Lil Fish
     float lilFishRadius   = .01f;
     int   lilFishQuantity = 35;
-    auto  lilFishSpecies  = Species{Shapes::TwoDimensions::Fish{lilFishRadius}, SpeciesType::Prey};
+    auto  lilFishShape  = Shapes::TwoDimensions::Fish{lilFishRadius};
     auto  lilFishForces   = ForcesConfig{._separationRadius = 0.05f, ._alignmentRadius = 0.2f, ._cohesionRadius = 0.1f};
     auto  lilFishBehavior = BehaviorConfig{._minSpeed = .01f, ._maxSpeed = 2.5f};
-    auto  lilFishInit     = SpeciesInitialization{._species = lilFishSpecies, ._quantity = lilFishQuantity, ._behaviorConfig = lilFishBehavior, ._forcesConfig = lilFishForces};
+    auto  lilFishInit     = SpeciesInitialization{._shape = lilFishShape, ._quantity = lilFishQuantity, ._behaviorConfig = lilFishBehavior, ._forcesConfig = lilFishForces};
 
     // Mid Fish
     float midFishRadius   = .03f;
     int   midFishQuantity = 15;
-    auto  midFishSpecies  = Species{Shapes::TwoDimensions::Fish{midFishRadius}, SpeciesType::Prey};
+    auto  midFishShape  = Shapes::TwoDimensions::Fish{midFishRadius};
     auto  midFishForces   = ForcesConfig{._separationRadius = 0.1f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f};
     auto  midFishBehavior = BehaviorConfig{._minSpeed = .005f, ._maxSpeed = 2.f};
-    auto  midFishInit     = SpeciesInitialization{._species = midFishSpecies, ._quantity = midFishQuantity, ._behaviorConfig = midFishBehavior, ._forcesConfig = midFishForces};
+    auto  midFishInit     = SpeciesInitialization{._shape = midFishShape, ._quantity = midFishQuantity, ._behaviorConfig = midFishBehavior, ._forcesConfig = midFishForces};
 
     // Big Fish
     float bigFishRadius   = .07f;
     int   bigFishQuantity = 4;
-    auto  bigFishSpecies  = Species{Shapes::TwoDimensions::Fish{bigFishRadius}, SpeciesType::Prey};
+    auto  bigFishShape  = Shapes::TwoDimensions::Fish{bigFishRadius};
     auto  bigFishForces   = ForcesConfig{._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f};
     auto  bigFishBehavior = BehaviorConfig{._minSpeed = .005f, ._maxSpeed = 2.f};
-    auto  bigFishInit     = SpeciesInitialization{._species = bigFishSpecies, ._quantity = bigFishQuantity, ._behaviorConfig = bigFishBehavior, ._forcesConfig = bigFishForces};
+    auto  bigFishInit     = SpeciesInitialization{._shape = bigFishShape, ._quantity = bigFishQuantity, ._behaviorConfig = bigFishBehavior, ._forcesConfig = bigFishForces};
 
     auto foodConfig   = FoodConfig{};
     auto foodProvider = FoodProvider{foodConfig};
     foodProvider.enableRandomFood();
 
     Boids boids{};
-
     auto load_boids = [&]() {
         boids.reset();
         boids.addSpecies(ctx, lilFishInit);
