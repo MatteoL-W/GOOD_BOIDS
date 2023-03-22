@@ -3,8 +3,8 @@
 #include "utils/boidsForces.h"
 #include "utils/vec.hpp"
 
-SingleBoid::SingleBoid(utils::TransformAttributes const& transformAttributes, ShapesType const& shape, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _transformAttributes(transformAttributes), _shape(shape), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+SingleBoid::SingleBoid(std::string species, utils::TransformAttributes const& transformAttributes, ShapesType const& shape, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _species(species), _transformAttributes(transformAttributes), _shape(shape), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
 void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
@@ -43,7 +43,7 @@ void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
 
 void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
 {
-    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._avoidFactor;
+    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._avoidFactor;
     auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._alignmentRadius)) * _forcesConfig._matchingFactor;
     auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._cohesionRadius)) * _forcesConfig._centeringFactor;
 
@@ -52,21 +52,42 @@ void SingleBoid::addClassicBoidsForces(std::vector<SingleBoid> const& boids)
     addToAcceleration(cohesion);
 }
 
-std::vector<SingleBoid> SingleBoid::getNearbyAndSameBoids(std::vector<SingleBoid> const& boids, double radius) const
+std::vector<SingleBoid> SingleBoid::getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const
 {
-    return getNearbyBoidsFromPosition(getPosition(), boids, radius, getShape());
+    return getNearbyBoidsFromBoid(*this, boids, radius, std::nullopt);
 }
 
-std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, std::vector<SingleBoid> const& boids, double radius, ShapesType const& shape)
+std::vector<SingleBoid> SingleBoid::getNearbyAndSameBoids(std::vector<SingleBoid> const& boids, double radius) const
+{
+    return getNearbyBoidsFromBoid(*this, boids, radius, getSpecies());
+}
+
+std::vector<SingleBoid> getNearbyBoidsFromBoid(
+    SingleBoid const&                      scannedBoid,
+    std::vector<SingleBoid> const&         otherBoids,
+    double                                 maxDistance,
+    std::optional<std::string> const& species
+)
 {
     std::vector<SingleBoid> nearbyBoids{};
-    for (const auto& boid : boids)
+    for (const auto& boid : otherBoids)
     {
-        if (boid.getPosition() == position)
+        if (boid.getPosition() == scannedBoid.getPosition())
             continue;
 
-        if (glm::distance(position, boid.getPosition()) < radius
-            && boid.getShape().index() == shape.index())
+        float actualDistance = glm::distance(scannedBoid.getPosition(), boid.getPosition());
+        std::visit(
+            [&](auto scannedShape, auto closeShape) {
+                actualDistance += -scannedShape.getRadius() - closeShape.getRadius();
+            },
+            boid.getShape(),
+            scannedBoid.getShape()
+        );
+
+        // If no species is specified, we add every close boids.
+        // If a species is specified, we add close boids having this species.
+        bool const hasSameSpecies = species.has_value() && boid.getSpecies() == species;
+        if (actualDistance < maxDistance && (!species.has_value() || hasSameSpecies))
             nearbyBoids.push_back(boid);
     }
     return nearbyBoids;

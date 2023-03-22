@@ -7,18 +7,19 @@
 #include "Shapes/2D.h"
 #include "SingleBoid.h"
 
-struct SpeciesInitialization {
-    ShapesType     _shape;
-    int            _quantity;
-    BehaviorConfig _behaviorConfig;
-    ForcesConfig   _forcesConfig;
+struct Species {
+    std::string _name;
+    ShapesType       _shape;
+    int              _quantity;
+    BehaviorConfig   _behaviorConfig;
+    ForcesConfig     _forcesConfig;
 };
 
 class Boids {
 public:
     Boids() = default;
 
-    void addSpecies(p6::Context&, SpeciesInitialization&);
+    void addSpecies(p6::Context&, Species&);
 
     void updateAndDraw(p6::Context&, Obstacles const&, FoodProvider&);
     void updateForcesConfig(ForcesConfig const&);
