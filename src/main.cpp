@@ -25,15 +25,15 @@ int main(int argc, char* argv[])
 
     // Lil Fish
     float lilFishRadius   = .01f;
-    int   lilFishQuantity = 3;
+    int   lilFishQuantity = 30;
     auto  lilFishShape    = Shapes::TwoDimensions::Fish{lilFishRadius};
-    auto  lilFishForces   = ForcesConfig{._separationRadius = 0.05f, ._alignmentRadius = 0.2f, ._cohesionRadius = 0.1f};
-    auto  lilFishBehavior = BehaviorConfig{._minSpeed = .01f, ._maxSpeed = 2.5f};
+    auto  lilFishForces   = ForcesConfig{._separationRadius = 0.05f, ._separationFactor = 0.1f, ._alignmentRadius = 0.2f, ._alignmentFactor = 1.f, ._cohesionRadius = .2f, ._cohesionFactor = 1.f};
+    auto  lilFishBehavior = BehaviorConfig{._minSpeed = .01f, ._maxSpeed = 0.5f};
     auto  lilFishInit     = Species{._shape = lilFishShape, ._quantity = lilFishQuantity, ._behaviorConfig = lilFishBehavior, ._forcesConfig = lilFishForces};
 
     // Mid Fish
     float midFishRadius   = .03f;
-    int   midFishQuantity = 3;
+    int   midFishQuantity = 7;
     auto  midFishShape    = Shapes::TwoDimensions::Fish{midFishRadius};
     auto  midFishForces   = ForcesConfig{._separationRadius = 0.1f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f};
     auto  midFishBehavior = BehaviorConfig{._minSpeed = .005f, ._maxSpeed = 2.f};
@@ -66,8 +66,8 @@ int main(int argc, char* argv[])
         if (ImGui::CollapsingHeader("Lil boids"))
         {
             // BoidsHelper::load_boids_helper(boids, lilFishQuantity, lilFishRadius);
-            BoidsHelper::load_forces_helper(boids, lilFishForces);
-            BoidsHelper::load_behaviour_helper(boids, lilFishBehavior);
+            //BoidsHelper::load_forces_helper(boids, lilFishForces);
+            //BoidsHelper::load_behaviour_helper(boids, lilFishBehavior);
             // BoidsHelper::load_shapes_helper(boids, shape, radius);
         }
 

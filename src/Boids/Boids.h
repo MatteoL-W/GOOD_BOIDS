@@ -8,11 +8,11 @@
 #include "SingleBoid.h"
 
 struct Species {
-    std::string _name;
-    ShapesType       _shape;
-    int              _quantity;
-    BehaviorConfig   _behaviorConfig;
-    ForcesConfig     _forcesConfig;
+    std::string    _name;
+    ShapesType     _shape;
+    int            _quantity;
+    BehaviorConfig _behaviorConfig;
+    ForcesConfig   _forcesConfig;
 };
 
 class Boids {
@@ -29,6 +29,7 @@ public:
     // void updateRadius(float radius);
 
 private:
-    std::vector<SingleBoid> _boids{};
+    inline static unsigned int _speciesNumber = 0;
+    std::vector<SingleBoid>    _boids{};
     // ShapesType              _shape{};
 };

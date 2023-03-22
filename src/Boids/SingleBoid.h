@@ -14,25 +14,26 @@ struct BehaviorConfig {
 
 struct ForcesConfig {
     float _separationRadius = .1f;
-    float _avoidFactor      = .1f;
+    float _separationFactor = .1f;
     float _alignmentRadius  = .2f;
-    float _matchingFactor   = .1f;
+    float _alignmentFactor  = .1f;
     float _cohesionRadius   = .1f;
-    float _centeringFactor  = .1f;
+    float _cohesionFactor   = .1f;
 };
 
 class SingleBoid {
 public:
-    explicit SingleBoid(std::string species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit SingleBoid(std::string  species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<SingleBoid> const&, Obstacles const&, FoodProvider&);
     void draw(p6::Context&);
 
-    [[nodiscard]] std::string           getSpecies() const { return _species; };
+    [[nodiscard]] std::string                getSpecies() const { return _species; };
     [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec2                  getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec2                  getVelocity() const { return _transformAttributes._velocity; };
     [[nodiscard]] glm::vec2                  getAcceleration() const { return _transformAttributes._acceleration; };
     [[nodiscard]] ShapesType const&          getShape() const { return _shape; };
+    [[nodiscard]] float                      getRadius() const;
 
     void resetForces() { _transformAttributes._acceleration = glm::vec2{0}; };
     void setForcesConfig(ForcesConfig config) { _forcesConfig = config; };
@@ -51,7 +52,7 @@ private:
     [[nodiscard]] std::vector<SingleBoid> getNearbyAndSameBoids(std::vector<SingleBoid> const& boids, double radius) const;
 
 private:
-    std::string           _species;
+    std::string                _species;
     utils::TransformAttributes _transformAttributes{};
     ShapesType                 _shape{};
     BehaviorConfig             _behaviorConfig{};
@@ -59,8 +60,8 @@ private:
 };
 
 std::vector<SingleBoid> getNearbyBoidsFromBoid(
-    SingleBoid const&                      scannedBoid,
-    std::vector<SingleBoid> const&         closeShape,
-    double                                 maxDistance,
+    SingleBoid const&                 scannedBoid,
+    std::vector<SingleBoid> const&    closeShape,
+    double                            maxDistance,
     std::optional<std::string> const& species
 );
