@@ -18,11 +18,11 @@ void load_forces_helper(Boids& boids, ForcesConfig& forcesConfig)
     if (ImGui::CollapsingHeader("Boids forces"))
     {
         if (ImGui::DragFloat("Separation Radius", &forcesConfig._separationRadius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Separation Factor", &forcesConfig._avoidFactor, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Separation Factor", &forcesConfig._separationFactor, 0.01f, 0, 1.f)
             || ImGui::DragFloat("Alignment Radius", &forcesConfig._alignmentRadius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Alignment Factor", &forcesConfig._matchingFactor, 0.01f, 0, 1.f)
+            || ImGui::DragFloat("Alignment Factor", &forcesConfig._alignmentFactor, 0.01f, 0, 1.f)
             || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesionRadius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Cohesion Factor", &forcesConfig._centeringFactor, 0.01f, 0, 1.f))
+            || ImGui::DragFloat("Cohesion Factor", &forcesConfig._cohesionFactor, 0.01f, 0, 1.f))
         {
             boids.updateForcesConfig(forcesConfig);
         }

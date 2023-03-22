@@ -4,7 +4,7 @@ void Boids::addSpecies(p6::Context& ctx, Species& species)
 {
     for (int i = 0; i < species._quantity; i++)
         _boids.emplace_back(
-            std::string(1, i) + "species",
+            std::string(1, _speciesNumber) + "species",
             utils::TransformAttributes{
                 ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
                 ._velocity = glm::vec2{p6::random::number(-0.001, 0.001), p6::random::number(-0.01, 0.01)},
@@ -13,6 +13,8 @@ void Boids::addSpecies(p6::Context& ctx, Species& species)
             species._behaviorConfig,
             species._forcesConfig
         );
+
+    _speciesNumber++;
 }
 
 void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles, FoodProvider& foodProvider)
