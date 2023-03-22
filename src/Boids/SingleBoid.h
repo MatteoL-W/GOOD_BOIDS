@@ -23,10 +23,11 @@ struct ForcesConfig {
 
 class SingleBoid {
 public:
-    explicit SingleBoid(utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit SingleBoid(std::string species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<SingleBoid> const&, Obstacles const&, FoodProvider&);
     void draw(p6::Context&);
 
+    [[nodiscard]] std::string           getSpecies() const { return _species; };
     [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec2                  getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec2                  getVelocity() const { return _transformAttributes._velocity; };
@@ -46,13 +47,20 @@ private:
     void addObstaclesAvoidance(Obstacles const&);
     void addClassicBoidsForces(std::vector<SingleBoid> const&);
 
+    [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const;
     [[nodiscard]] std::vector<SingleBoid> getNearbyAndSameBoids(std::vector<SingleBoid> const& boids, double radius) const;
 
 private:
+    std::string           _species;
     utils::TransformAttributes _transformAttributes{};
     ShapesType                 _shape{};
     BehaviorConfig             _behaviorConfig{};
     ForcesConfig               _forcesConfig{};
 };
 
-std::vector<SingleBoid> getNearbyBoidsFromPosition(glm::vec2 const& position, std::vector<SingleBoid> const& boids, double radius, ShapesType const& shape);
+std::vector<SingleBoid> getNearbyBoidsFromBoid(
+    SingleBoid const&                      scannedBoid,
+    std::vector<SingleBoid> const&         closeShape,
+    double                                 maxDistance,
+    std::optional<std::string> const& species
+);
