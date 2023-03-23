@@ -7,10 +7,11 @@ namespace utils::vec {
 template<typename Vec>
 void constrain(Vec& vector, float min, float max)
 {
-    if (glm::length(vector) > min)
-        vector = glm::normalize(vector) * min;
+    float current_speed = glm::length(vector);
 
-    if (glm::length(vector) > max)
+    if (current_speed < min)
+        vector = glm::normalize(vector) * min;
+    else if (current_speed > max)
         vector = glm::normalize(vector) * max;
 }
 
