@@ -4,10 +4,10 @@ void Boids::addSpecies(p6::Context& ctx, Species& species)
 {
     for (int i = 0; i < species._quantity; i++)
         _boids.emplace_back(
-            std::string(1, _speciesNumber) + "species",
+            std::to_string(_speciesNumber) + "species",
             utils::TransformAttributes{
                 ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
-                ._velocity = glm::vec2{p6::random::number(-0.001, 0.001), p6::random::number(-0.01, 0.01)},
+                ._velocity = glm::vec2{p6::random::number(-0.001f, 0.001f), p6::random::number(-0.001f, 0.001f)},
             },
             species._shape,
             species._behaviorConfig,
@@ -37,12 +37,3 @@ void Boids::updateBehaviorConfig(BehaviorConfig const& config)
     for (auto& boid : _boids)
         boid.setBehaviorConfig(config);
 }
-
-/*
-void Boids::updateRadius(float radius)
-{
-    std::visit([&](auto& shape) {
-        shape.setRadius(radius);
-    },
-               _shape);
-}*/

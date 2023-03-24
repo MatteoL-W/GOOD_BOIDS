@@ -66,16 +66,14 @@ int main(int argc, char* argv[])
         if (ImGui::Button("Reload flock"))
             load_boids();
 
-        // ToDo
-        // if (ImGui::Button("Reset settings"))
-
+        // ToDo : Reset settings
         // ImGui::ShowDemoWindow();
         ImGui::End();
     };
 
     auto obstacles = ObstaclesManager{};
     obstacles.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    obstacles.addOne({0, 0}, 0.1);
+    obstacles.addOne({0, 0}, 0.1f);
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);

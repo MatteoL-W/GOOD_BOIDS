@@ -26,6 +26,6 @@ public:
     void reset() { _boids.clear(); };
 
 private:
-    inline static unsigned int _speciesNumber = 0;
-    std::vector<SingleBoid>    _boids{};
+    inline static int       _speciesNumber = 0;
+    std::vector<SingleBoid> _boids{};
 };
