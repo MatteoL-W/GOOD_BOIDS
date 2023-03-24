@@ -5,6 +5,8 @@
 #include "Food/FoodProvider.h"
 
 namespace BoidsHelper {
+void create_species_helper(std::string speciesName, Species&, Boids&);
+
 void load_boids_helper(Boids&, int& numberOfBoids, float& radius);
 void load_forces_helper(Boids&, ForcesConfig&);
 void load_behaviour_helper(Boids&, BehaviorConfig&);

@@ -8,7 +8,6 @@
 #include "SingleBoid.h"
 
 struct Species {
-    std::string    _name;
     ShapesType     _shape;
     int            _quantity;
     BehaviorConfig _behaviorConfig;
