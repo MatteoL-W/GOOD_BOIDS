@@ -7,3 +7,5 @@ TEST_CASE("Addition is commutative")
     CHECK(1 + 2 == 2 + 1);
     CHECK(4 + 7 == 7 + 4);
 }
+
+// ToDo : constrain ?
