@@ -24,11 +24,8 @@ public:
     void updateForcesConfig(ForcesConfig const&);
     void updateBehaviorConfig(BehaviorConfig const&);
     void reset() { _boids.clear(); };
-    // void updateShape(ShapesType const& shape) { _shape = shape; };
-    // void updateRadius(float radius);
 
 private:
     inline static unsigned int _speciesNumber = 0;
     std::vector<SingleBoid>    _boids{};
-    // ShapesType              _shape{};
 };

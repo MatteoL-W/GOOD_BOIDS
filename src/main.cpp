@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include "Boids/Boids.h"
 #include "Food/FoodProvider.h"
-#include "Helper/ImGuiHelper.hpp"
+#include "GUI/ImGui.hpp"
 #include "Obstacles/Obstacles.h"
 #include "Shapes/2D.h"
 
@@ -23,39 +23,34 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
-    // Lil Fish
-    float lilFishRadius   = .01f;
-    int   lilFishQuantity = 30;
-    auto  lilFishShape    = Shapes::TwoDimensions::Fish{lilFishRadius};
-    auto  lilFishForces   = ForcesConfig{._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f};
-    auto  lilFishBehavior = BehaviorConfig{._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f};
-    auto  lilFishInit     = Species{._shape = lilFishShape, ._quantity = lilFishQuantity, ._behaviorConfig = lilFishBehavior, ._forcesConfig = lilFishForces};
+    auto firstSpecies = Species{
+        ._shape          = Shapes::TwoDimensions::Fish{.01f},
+        ._quantity       = 30,
+        ._behaviorConfig = {._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f},
+        ._forcesConfig   = {._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f},
+    };
 
-    // Mid Fish
-    float midFishRadius   = .03f;
-    int   midFishQuantity = 7;
-    auto  midFishShape    = Shapes::TwoDimensions::Fish{midFishRadius};
-    auto  midFishForces   = ForcesConfig{._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f};
-    auto  midFishBehavior = BehaviorConfig{._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f};
-    auto  midFishInit     = Species{._shape = midFishShape, ._quantity = midFishQuantity, ._behaviorConfig = midFishBehavior, ._forcesConfig = midFishForces};
+    auto secondSpecies = Species{
+        ._shape          = Shapes::TwoDimensions::Fish{.03f},
+        ._quantity       = 7,
+        ._behaviorConfig = {._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f},
+        ._forcesConfig   = {._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f},
+    };
 
-    // Big Fish
-    float bigFishRadius   = .07f;
-    int   bigFishQuantity = 3;
-    auto  bigFishShape    = Shapes::TwoDimensions::Fish{bigFishRadius};
-    auto  bigFishForces   = ForcesConfig{._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f};
-    auto  bigFishBehavior = BehaviorConfig{._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f};
-    auto  bigFishInit     = Species{._shape = bigFishShape, ._quantity = bigFishQuantity, ._behaviorConfig = bigFishBehavior, ._forcesConfig = bigFishForces};
+    auto bigFishInit = Species{
+        ._shape          = Shapes::TwoDimensions::Fish{.07f},
+        ._quantity       = 3,
+        ._behaviorConfig = {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
+        ._forcesConfig   = {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
+    };
 
-    auto foodConfig   = FoodConfig{};
-    auto foodProvider = FoodProvider{foodConfig};
-    foodProvider.enableRandomFood();
+    auto foodProvider = FoodProvider{FoodConfig{}, true};
 
     Boids boids{};
     auto  load_boids = [&]() {
         boids.reset();
-        boids.addSpecies(ctx, lilFishInit);
-        boids.addSpecies(ctx, midFishInit);
+        boids.addSpecies(ctx, firstSpecies);
+        boids.addSpecies(ctx, secondSpecies);
         boids.addSpecies(ctx, bigFishInit);
     };
     load_boids();
@@ -63,27 +58,10 @@ int main(int argc, char* argv[])
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
-        if (ImGui::CollapsingHeader("Lil boids"))
-        {
-            // BoidsHelper::load_boids_helper(boids, lilFishQuantity, lilFishRadius);
-            BoidsHelper::load_forces_helper(boids, lilFishForces);
-            BoidsHelper::load_behaviour_helper(boids, lilFishBehavior);
-            // BoidsHelper::load_shapes_helper(boids, shape, radius);
-        }
-
-        if (ImGui::CollapsingHeader("Mid boids"))
-        {
-            BoidsHelper::load_forces_helper(boids, midFishForces);
-            BoidsHelper::load_behaviour_helper(boids, midFishBehavior);
-        }
-
-        if (ImGui::CollapsingHeader("Big boids"))
-        {
-            BoidsHelper::load_forces_helper(boids, bigFishForces);
-            BoidsHelper::load_behaviour_helper(boids, bigFishBehavior);
-        }
-
-        BoidsHelper::load_food_helper(foodProvider, foodConfig);
+        GUI::showSpeciesGUI("Little boids", firstSpecies, boids);
+        GUI::showSpeciesGUI("Middle boids", secondSpecies, boids);
+        GUI::showSpeciesGUI("Big boids", bigFishInit, boids);
+        GUI::showFoodGUI(foodProvider);
 
         if (ImGui::Button("Reload flock"))
             load_boids();
