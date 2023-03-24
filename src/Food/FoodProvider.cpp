@@ -2,6 +2,13 @@
 #include <chrono>
 #include "Shapes/2D.h"
 
+FoodProvider::FoodProvider(FoodConfig const& foodConfig, bool enableDrops)
+    : _config(foodConfig)
+{
+    if (enableDrops)
+        enableRandomFood();
+};
+
 void FoodProvider::enableRandomFood()
 {
     _randomFoodStartTime = Clock::now();
