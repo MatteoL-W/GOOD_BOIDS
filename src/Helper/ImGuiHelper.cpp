@@ -2,6 +2,17 @@
 #include <p6/p6.h>
 
 namespace BoidsHelper {
+
+void create_species_helper(std::string speciesName, Species& species, Boids& boids) {
+    if (ImGui::CollapsingHeader(speciesName.c_str()))
+    {
+        // BoidsHelper::load_boids_helper(boids, lilFishQuantity, lilFishRadius);
+        BoidsHelper::load_forces_helper(boids, species._forcesConfig);
+        BoidsHelper::load_behaviour_helper(boids, species._behaviorConfig);
+        // BoidsHelper::load_shapes_helper(boids, shape, radius);
+    }
+}
+
 void load_boids_helper(Boids& boids, int& numberOfBoids, float& radius)
 {
     if (ImGui::CollapsingHeader("Customize boids"))
@@ -34,7 +45,8 @@ void load_behaviour_helper(Boids& boids, BehaviorConfig& behaviorConfig)
     if (ImGui::CollapsingHeader("Boids behaviour"))
     {
         if (ImGui::DragFloat("Boids min speed", &behaviorConfig._minSpeed, .001f, 0.f, 2.f)
-            || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, 0.001f, 0.f, 5.f))
+            || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, .001f, 0.f, 5.f)
+            || ImGui::DragFloat("Food attraction radius", &behaviorConfig._foodAttractionRadius, 0.01f, 0.f, 5.f))
         {
             boids.updateBehaviorConfig(behaviorConfig);
         }
