@@ -5,7 +5,7 @@
 #include "Boids/Boids.h"
 #include "Food/FoodProvider.h"
 #include "GUI/ImGui.hpp"
-#include "Obstacles/Obstacles.h"
+#include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
 
 int main(int argc, char* argv[])
@@ -73,12 +73,8 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
-    auto        obstacles      = Obstacles{};
-    float const obstacleRadius = .1f;
-    obstacles.addRange({-ctx.aspect_ratio(), 1 + obstacleRadius}, {ctx.aspect_ratio(), 1 + obstacleRadius}, obstacleRadius);
-    obstacles.addRange({-ctx.aspect_ratio(), -1 - obstacleRadius}, {ctx.aspect_ratio(), -1 - obstacleRadius}, obstacleRadius);
-    obstacles.addRange({-ctx.aspect_ratio() - obstacleRadius, -1}, {-ctx.aspect_ratio() - obstacleRadius, 1}, obstacleRadius);
-    obstacles.addRange({ctx.aspect_ratio() + obstacleRadius, -1}, {ctx.aspect_ratio() + obstacleRadius, 1}, obstacleRadius);
+    auto obstacles = ObstaclesManager{};
+    obstacles.add2DMapDelimiters(ctx.aspect_ratio(), 1);
     obstacles.addOne({0, 0}, 0.1);
 
     ctx.update = [&]() {
