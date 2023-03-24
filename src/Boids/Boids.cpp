@@ -17,7 +17,7 @@ void Boids::addSpecies(p6::Context& ctx, Species& species)
     _speciesNumber++;
 }
 
-void Boids::updateAndDraw(p6::Context& ctx, Obstacles const& obstacles, FoodProvider& foodProvider)
+void Boids::updateAndDraw(p6::Context& ctx, ObstaclesManager const& obstacles, FoodProvider& foodProvider)
 {
     for (auto& boid : _boids)
     {

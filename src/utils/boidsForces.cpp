@@ -2,12 +2,12 @@
 
 namespace utils::boidsForces {
 
-glm::vec2 computeObstaclesAvoidance(SingleBoid const& boid, Obstacles const& obstacles)
+glm::vec2 computeObstaclesAvoidance(SingleBoid const& boid, ObstaclesManager const& obstacles)
 {
     auto force = glm::vec2{};
 
     // ToDo : It sometimes overflow when the flock is big
-    for (auto const& obstacle : obstacles.getAll())
+    for (auto const& obstacle : obstacles.getObstacles())
     {
         auto toObstacle      = obstacle._position - boid.getPosition();
         auto distance        = glm::length(toObstacle);

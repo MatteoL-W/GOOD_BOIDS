@@ -2,7 +2,7 @@
 #include <utility>
 #include <variant>
 #include "utils/boidsForces.h"
-#include "utils/vec.hpp"
+#include "utils/vec.h"
 
 SingleBoid::SingleBoid(std::string species, utils::TransformAttributes const& transformAttributes, ShapesType const& shape, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _species(std::move(species)), _transformAttributes(transformAttributes), _shape(shape), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
@@ -15,7 +15,7 @@ float SingleBoid::getRadius() const
     return radius;
 }
 
-void SingleBoid::update(std::vector<SingleBoid> const& boids, Obstacles const& obstacles, FoodProvider& foodProvider)
+void SingleBoid::update(std::vector<SingleBoid> const& boids, ObstaclesManager const& obstacles, FoodProvider& foodProvider)
 {
     // Add forces to acceleration
     addFoodAttraction(foodProvider);
@@ -46,7 +46,7 @@ void SingleBoid::addFoodAttraction(FoodProvider& foodProvider)
     addToAcceleration(utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); //  * _config._food_attraction_strength;);
 }
 
-void SingleBoid::addObstaclesAvoidance(Obstacles const& obstacles)
+void SingleBoid::addObstaclesAvoidance(ObstaclesManager const& obstacles)
 {
     addToAcceleration(utils::boidsForces::computeObstaclesAvoidance(*this, obstacles)); //  * _config._food_attraction_strength;);
 }

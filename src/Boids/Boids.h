@@ -3,7 +3,7 @@
 #include <p6/p6.h>
 #include <variant>
 #include "Food/FoodProvider.h"
-#include "Obstacles/Obstacles.h"
+#include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
 #include "SingleBoid.h"
 
@@ -20,7 +20,7 @@ public:
 
     void addSpecies(p6::Context&, Species&);
 
-    void updateAndDraw(p6::Context&, Obstacles const&, FoodProvider&);
+    void updateAndDraw(p6::Context&, ObstaclesManager const&, FoodProvider&);
     void updateForcesConfig(ForcesConfig const&);
     void updateBehaviorConfig(BehaviorConfig const&);
     void reset() { _boids.clear(); };

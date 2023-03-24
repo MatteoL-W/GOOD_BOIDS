@@ -2,7 +2,7 @@
 
 #include <p6/p6.h>
 #include "Food/FoodProvider.h"
-#include "Obstacles/Obstacles.h"
+#include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
 #include "utils/TransformAttributes.h"
 
@@ -24,7 +24,7 @@ struct ForcesConfig {
 class SingleBoid {
 public:
     explicit SingleBoid(std::string species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
-    void update(std::vector<SingleBoid> const&, Obstacles const&, FoodProvider&);
+    void update(std::vector<SingleBoid> const&, ObstaclesManager const&, FoodProvider&);
     void draw(p6::Context&);
 
     [[nodiscard]] std::string                getSpecies() const { return _species; };
@@ -45,7 +45,7 @@ public:
 
 private:
     void addFoodAttraction(FoodProvider&);
-    void addObstaclesAvoidance(Obstacles const&);
+    void addObstaclesAvoidance(ObstaclesManager const&);
     void addClassicBoidsForces(std::vector<SingleBoid> const&);
 
     [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const;
