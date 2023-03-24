@@ -6,21 +6,30 @@ glm::vec2 computeObstaclesAvoidance(SingleBoid const& boid, Obstacles const& obs
 {
     auto force = glm::vec2{};
 
+    // ToDo : It sometimes overflow when the flock is big
     for (auto const& obstacle : obstacles.getAll())
     {
-        const float distanceToObstacle = glm::distance(obstacle._position, boid.getPosition());
-        const float avoidanceRadius    = obstacle._radius * 2.f;
-        if (distanceToObstacle > avoidanceRadius)
+        auto toObstacle      = obstacle._position - boid.getPosition();
+        auto distance        = glm::length(toObstacle);
+        auto avoidanceRadius = boid.getRadius() + obstacle._radius * 2;
+
+        if (distance > avoidanceRadius)
             continue;
 
-        // Calculate a avoidanceStrength value based on how close the boid is to the obstacle
-        const float avoidanceStrength           = glm::clamp((avoidanceRadius - distanceToObstacle) / avoidanceRadius, 0.0f, 1.0f) / 2.f;
-        const auto  directionToObstacle         = glm::normalize(boid.getPosition() - obstacle._position);
-        const auto  fartherPositionFromObstacle = boid.getPosition() + directionToObstacle * avoidanceRadius;
-        const auto  avoidanceVelocity           = glm::normalize(fartherPositionFromObstacle - boid.getPosition());
-        const auto  steeringForceFromAvoidance  = avoidanceVelocity - boid.getVelocity();
+        if (distance < obstacle._radius) {
+            // The boid is inside the obstacle, push it away drastically
+            force -= glm::normalize(toObstacle);
+            continue;
+        }
 
-        force += glm::normalize(steeringForceFromAvoidance + directionToObstacle * avoidanceStrength) * avoidanceStrength;
+        // Smoother bend when the obstacle is pretty close
+        auto tangentPoint         = boid.getPosition() + glm::normalize(toObstacle) * obstacle._radius;
+        auto awayFromTangentForce = boid.getPosition() - tangentPoint;
+        auto distanceFactor       = (avoidanceRadius - distance) / avoidanceRadius;
+        auto smoothFactor         = glm::smoothstep(0.0f, 1.0f, distanceFactor);
+        awayFromTangentForce *= smoothFactor;
+
+        force += awayFromTangentForce;
     }
 
     return force;
@@ -61,7 +70,7 @@ glm::vec2 computeSeparationForce(SingleBoid const& boid, std::vector<SingleBoid>
     for (auto const& closeMember : closeBoids)
         force += glm::normalize(boid.getPosition() - closeMember.getPosition()) / glm::distance(boid.getPosition(), closeMember.getPosition());
 
-    return force;
+    return force - boid.getVelocity();
 }
 
 glm::vec2 computeAlignmentForce(SingleBoid const& boid, std::vector<SingleBoid> const& closeBoids)
