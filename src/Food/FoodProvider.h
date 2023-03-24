@@ -15,17 +15,16 @@ struct FoodConfig {
 
 class FoodProvider {
 public:
-    explicit FoodProvider(FoodConfig const& foodConfig)
-        : _config(foodConfig){};
+    explicit FoodProvider(FoodConfig const& foodConfig, bool enableDrops = true);
 
     void enableRandomFood();
     void update(p6::Context&);
     void draw(p6::Context&) const;
+    void erase(std::list<glm::vec2>::const_iterator it) { _foods.erase(it); };
 
-    void                        updateFoodConfig(FoodConfig& foodConfig) { _config = foodConfig; };
     std::list<glm::vec2> const& getFood() const { return _foods; };
     float                       getFoodRadius() const { return _config._radius; };
-    void                        erase(std::list<glm::vec2>::const_iterator it) { _foods.erase(it); };
+    FoodConfig&                 getConfig() { return _config; };
 
 private:
     void addFoodRandomly(p6::Context&);
