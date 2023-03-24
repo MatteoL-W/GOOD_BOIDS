@@ -8,22 +8,22 @@
 
 struct BehaviorConfig {
     float _minSpeed             = .005f;
-    float _maxSpeed             = .2f;
-    float _foodAttractionRadius = 0.3f;
+    float _maxSpeed             = .01f;
+    float _foodAttractionRadius = 0.6f;
 };
 
 struct ForcesConfig {
     float _separationRadius = .1f;
     float _separationFactor = .1f;
     float _alignmentRadius  = .2f;
-    float _alignmentFactor  = .1f;
-    float _cohesionRadius   = .1f;
-    float _cohesionFactor   = .1f;
+    float _alignmentFactor  = .4f;
+    float _cohesionRadius   = .2f;
+    float _cohesionFactor   = .4f;
 };
 
 class SingleBoid {
 public:
-    explicit SingleBoid(std::string  species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit SingleBoid(std::string species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<SingleBoid> const&, Obstacles const&, FoodProvider&);
     void draw(p6::Context&);
 
