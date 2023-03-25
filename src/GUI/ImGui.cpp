@@ -3,7 +3,7 @@
 
 namespace GUI {
 
-void showSpeciesGUI(std::string speciesName, Species& species, Boids& boids)
+void showSpeciesGUI(std::string speciesName, Species& species, BoidsManager& boids)
 {
     if (ImGui::CollapsingHeader(speciesName.c_str()))
     {
@@ -16,10 +16,10 @@ void showSpeciesGUI(std::string speciesName, Species& species, Boids& boids)
 void showParametersGUI(Species& species)
 {
     if (ImGui::CollapsingHeader("Customize boids"))
-        ImGui::DragInt("Number of Boids", &species._quantity, 1.f, 0, 500);
+        ImGui::DragInt("Number of BoidsManager", &species._quantity, 1.f, 0, 500);
 }
 
-void showForcesGUI(Boids& boids, ForcesConfig& forcesConfig)
+void showForcesGUI(BoidsManager& boids, ForcesConfig& forcesConfig)
 {
     if (ImGui::CollapsingHeader("Boids forces"))
     {
@@ -35,7 +35,7 @@ void showForcesGUI(Boids& boids, ForcesConfig& forcesConfig)
     }
 }
 
-void showBehaviorGUI(Boids& boids, BehaviorConfig& behaviorConfig)
+void showBehaviorGUI(BoidsManager& boids, BehaviorConfig& behaviorConfig)
 {
     if (ImGui::CollapsingHeader("Boids behaviour"))
     {

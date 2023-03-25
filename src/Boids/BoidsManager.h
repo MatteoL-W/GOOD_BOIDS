@@ -2,10 +2,10 @@
 
 #include <p6/p6.h>
 #include <variant>
+#include "Boid.h"
 #include "Food/FoodProvider.h"
 #include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
-#include "SingleBoid.h"
 
 struct Species {
     ShapesType     _shape;
@@ -14,18 +14,19 @@ struct Species {
     ForcesConfig   _forcesConfig;
 };
 
-class Boids {
+class BoidsManager {
 public:
-    Boids() = default;
-
+    BoidsManager() = default;
     void addSpecies(p6::Context&, Species&);
 
-    void updateAndDraw(p6::Context&, ObstaclesManager const&, FoodProvider&);
+    void update(ObstaclesManager const&, FoodProvider&);
+    void draw(p6::Context&);
+
     void updateForcesConfig(ForcesConfig const&);
     void updateBehaviorConfig(BehaviorConfig const&);
     void reset() { _boids.clear(); };
 
 private:
-    inline static int       _speciesNumber = 0;
-    std::vector<SingleBoid> _boids{};
+    inline static unsigned int _speciesCounter = 0;
+    std::vector<Boid>          _boids{};
 };

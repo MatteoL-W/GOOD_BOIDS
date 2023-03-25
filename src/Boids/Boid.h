@@ -6,6 +6,8 @@
 #include "Shapes/2D.h"
 #include "utils/TransformAttributes.h"
 
+// ToDo: Boid a deux reponsabilités. Peut-être que le draw ne devrait pas être ici.
+
 struct BehaviorConfig {
     float _minSpeed             = .005f;
     float _maxSpeed             = .01f;
@@ -21,18 +23,17 @@ struct ForcesConfig {
     float _cohesionFactor   = .4f;
 };
 
-class SingleBoid {
+class Boid {
 public:
-    explicit SingleBoid(std::string species, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
-    void update(std::vector<SingleBoid> const&, ObstaclesManager const&, FoodProvider&);
+    explicit Boid(unsigned int _speciesId, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
+    void update(std::vector<Boid> const&, ObstaclesManager const&, FoodProvider&);
     void draw(p6::Context&);
 
-    [[nodiscard]] std::string                getSpecies() const { return _species; };
+    [[nodiscard]] unsigned int               getSpeciesId() const { return _speciesId; };
     [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec2                  getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec2                  getVelocity() const { return _transformAttributes._velocity; };
     [[nodiscard]] glm::vec2                  getAcceleration() const { return _transformAttributes._acceleration; };
-    [[nodiscard]] ShapesType const&          getShape() const { return _shape; };
     [[nodiscard]] float                      getRadius() const;
 
     void resetForces() { _transformAttributes._acceleration = glm::vec2{0}; };
@@ -46,22 +47,15 @@ public:
 private:
     void addFoodAttraction(FoodProvider&);
     void addObstaclesAvoidance(ObstaclesManager const&);
-    void addClassicBoidsForces(std::vector<SingleBoid> const&);
+    void addClassicBoidsForces(std::vector<Boid> const&);
 
-    [[nodiscard]] std::vector<SingleBoid> getNearbyBoids(std::vector<SingleBoid> const& boids, double radius) const;
-    [[nodiscard]] std::vector<SingleBoid> getNearbyAndSameBoids(std::vector<SingleBoid> const& boids, double radius) const;
+    [[nodiscard]] std::vector<Boid> getNearbyBoids(std::vector<Boid> const& boids, double radius) const;
+    [[nodiscard]] std::vector<Boid> getNearbyAndSameBoids(std::vector<Boid> const& boids, double radius) const;
 
 private:
-    std::string                _species;
+    unsigned int               _speciesId;
     utils::TransformAttributes _transformAttributes{};
     ShapesType                 _shape{};
     BehaviorConfig             _behaviorConfig{};
     ForcesConfig               _forcesConfig{};
 };
-
-std::vector<SingleBoid> getNearbyBoidsFromBoid(
-    SingleBoid const&                 scannedBoid,
-    std::vector<SingleBoid> const&    closeShape,
-    double                            maxDistance,
-    std::optional<std::string> const& species
-);

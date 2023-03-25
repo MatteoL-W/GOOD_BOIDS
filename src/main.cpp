@@ -2,7 +2,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <cstdlib>
-#include "Boids/Boids.h"
+#include "Boids/BoidsManager.h"
 #include "Food/FoodProvider.h"
 #include "GUI/ImGui.hpp"
 #include "Obstacles/ObstaclesManager.h"
@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
 
     auto foodProvider = FoodProvider{FoodConfig{}, true};
 
-    Boids boids{};
-    auto  load_boids = [&]() {
+    BoidsManager boids{};
+    auto const load_boids = [&]() {
         boids.reset();
         boids.addSpecies(ctx, firstSpecies);
         boids.addSpecies(ctx, secondSpecies);
@@ -71,9 +71,9 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
-    auto obstacles = ObstaclesManager{};
-    obstacles.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    obstacles.addOne({0, 0}, 0.1f);
+    auto obstaclesManager = ObstaclesManager{};
+    obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
+    obstaclesManager.addOne({0, 0}, 0.1f);
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
@@ -81,9 +81,10 @@ int main(int argc, char* argv[])
         foodProvider.update(ctx);
         foodProvider.draw(ctx);
 
-        boids.updateAndDraw(ctx, obstacles, foodProvider);
+        boids.update(obstaclesManager, foodProvider);
+        boids.draw(ctx);
 
-        obstacles.draw(ctx);
+        obstaclesManager.draw(ctx);
     };
 
     ctx.start();

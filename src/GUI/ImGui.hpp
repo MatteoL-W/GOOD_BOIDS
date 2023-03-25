@@ -1,16 +1,18 @@
 #pragma once
 
-#include "Boids/Boids.h"
-#include "Boids/SingleBoid.h"
+#include "Boids/Boid.h"
+#include "Boids/BoidsManager.h"
 #include "Food/FoodProvider.h"
+
+// ToDo "separator text" pour imgui
 
 namespace GUI {
 
-void showSpeciesGUI(std::string speciesName, Species&, Boids&);
+void showSpeciesGUI(std::string speciesName, Species&, BoidsManager&);
 
 void showParametersGUI(Species&);
-void showForcesGUI(Boids&, ForcesConfig&);
-void showBehaviorGUI(Boids&, BehaviorConfig&);
+void showForcesGUI(BoidsManager&, ForcesConfig&);
+void showBehaviorGUI(BoidsManager&, BehaviorConfig&);
 // ToDo : showShapeGUI ? avec radius ?
 void showFoodGUI(FoodProvider&);
 

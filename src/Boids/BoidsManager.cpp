@@ -1,10 +1,10 @@
-#include "Boids.h"
+#include "BoidsManager.h"
 
-void Boids::addSpecies(p6::Context& ctx, Species& species)
+void BoidsManager::addSpecies(p6::Context& ctx, Species& species)
 {
     for (int i = 0; i < species._quantity; i++)
         _boids.emplace_back(
-            std::to_string(_speciesNumber) + "species",
+            _speciesCounter,
             utils::TransformAttributes{
                 ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
                 ._velocity = glm::vec2{p6::random::number(-0.001f, 0.001f), p6::random::number(-0.001f, 0.001f)},
@@ -14,25 +14,26 @@ void Boids::addSpecies(p6::Context& ctx, Species& species)
             species._forcesConfig
         );
 
-    _speciesNumber++;
+    _speciesCounter++;
 }
 
-void Boids::updateAndDraw(p6::Context& ctx, ObstaclesManager const& obstacles, FoodProvider& foodProvider)
-{
+void BoidsManager::update(ObstaclesManager const& obstacles, FoodProvider& foodProvider) {
     for (auto& boid : _boids)
-    {
         boid.update(_boids, obstacles, foodProvider);
-        boid.draw(ctx);
-    }
 }
 
-void Boids::updateForcesConfig(ForcesConfig const& config)
+void BoidsManager::draw(p6::Context& ctx) {
+    for (auto& boid : _boids)
+        boid.draw(ctx);
+}
+
+void BoidsManager::updateForcesConfig(ForcesConfig const& config)
 {
     for (auto& boid : _boids)
         boid.setForcesConfig(config);
 }
 
-void Boids::updateBehaviorConfig(BehaviorConfig const& config)
+void BoidsManager::updateBehaviorConfig(BehaviorConfig const& config)
 {
     for (auto& boid : _boids)
         boid.setBehaviorConfig(config);
