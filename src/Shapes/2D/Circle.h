@@ -12,7 +12,7 @@ public:
     explicit Circle(float radius)
         : _radius(radius){};
 
-    void draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const
+    void draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
     {
         ctx.circle(
             p6::Center{transformAttributes._position},

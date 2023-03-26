@@ -7,6 +7,8 @@
 #include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
 
+// ToDo: Pourquoi ne pas stocker directement un Species dans Boid.hpp ?
+
 struct Species {
     ShapesType     _shape;
     int            _quantity;
