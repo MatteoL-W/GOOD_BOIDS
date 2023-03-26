@@ -1,6 +1,6 @@
 #include "boidsForces.h"
 
-namespace utils::boidsForces {
+namespace Utils::boidsForces {
 
 glm::vec2 computeObstaclesAvoidance(Boid const& boid, ObstaclesManager const& obstacles)
 {
@@ -16,13 +16,14 @@ glm::vec2 computeObstaclesAvoidance(Boid const& boid, ObstaclesManager const& ob
         if (distance > avoidanceRadius)
             continue;
 
-        if (distance < obstacle._radius) {
-            // The boid is inside the obstacle, push it away drastically
+        if (distance < obstacle._radius)
+        {
+            /// The boid is inside the obstacle, push it away drastically
             force -= glm::normalize(toObstacle);
             continue;
         }
 
-        // Smoother bend when the obstacle is pretty close
+        /// Smoother bend when the obstacle is pretty close
         auto tangentPoint         = boid.getPosition() + glm::normalize(toObstacle) * obstacle._radius;
         auto awayFromTangentForce = boid.getPosition() - tangentPoint;
         auto distanceFactor       = (avoidanceRadius - distance) / avoidanceRadius;
@@ -60,7 +61,7 @@ glm::vec2 computeFoodAttraction(Boid const& boid, FoodProvider& foodProvider, fl
     if (minDistance < foodProvider.getFoodRadius())
         foodProvider.erase(closestFood);
 
-    return glm::normalize(*closestFood - boid.getPosition()); //  * _config._food_attraction_strength;
+    return glm::normalize(*closestFood - boid.getPosition()); //  ToDo : * _config._food_attraction_strength;
 }
 
 glm::vec2 computeSeparationForce(Boid const& boid, std::vector<Boid> const& closeBoids)

@@ -25,12 +25,12 @@ struct ForcesConfig {
 
 class Boid {
 public:
-    explicit Boid(unsigned int _speciesId, utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit Boid(unsigned int _speciesId, Utils::TransformAttributes const&, ShapesType const&, BehaviorConfig const&, ForcesConfig const&);
     void update(std::vector<Boid> const&, ObstaclesManager const&, FoodProvider&);
     void draw(p6::Context&);
 
     [[nodiscard]] unsigned int               getSpeciesId() const { return _speciesId; };
-    [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
+    [[nodiscard]] Utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec2                  getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec2                  getVelocity() const { return _transformAttributes._velocity; };
     [[nodiscard]] glm::vec2                  getAcceleration() const { return _transformAttributes._acceleration; };
@@ -49,12 +49,13 @@ private:
     void addObstaclesAvoidance(ObstaclesManager const&);
     void addClassicBoidsForces(std::vector<Boid> const&);
 
-    [[nodiscard]] std::vector<Boid> getNearbyBoids(std::vector<Boid> const& boids, double radius) const;
+    /// Return a vector containing all the boids nearby that share the same species
     [[nodiscard]] std::vector<Boid> getNearbyAndSameBoids(std::vector<Boid> const& boids, double radius) const;
+    [[nodiscard]] std::vector<Boid> getNearbyBoids(std::vector<Boid> const& boids, double radius) const;
 
 private:
     unsigned int               _speciesId;
-    utils::TransformAttributes _transformAttributes{};
+    Utils::TransformAttributes _transformAttributes{};
     ShapesType                 _shape{};
     BehaviorConfig             _behaviorConfig{};
     ForcesConfig               _forcesConfig{};

@@ -6,7 +6,7 @@ void ObstaclesManager::draw(p6::Context& ctx)
     for (auto const& obstacle : _obstacles)
     {
         auto obstacleShape = Shapes::TwoDimensions::Circle{obstacle._radius};
-        obstacleShape.draw(ctx, utils::TransformAttributes{obstacle._position});
+        obstacleShape.draw(ctx, Utils::TransformAttributes{obstacle._position});
     }
 }
 
@@ -24,7 +24,7 @@ void ObstaclesManager::addRange(glm::vec2 start, glm::vec2 end, float radius)
 
 void ObstaclesManager::add2DMapDelimiters(float screenHalfWidth, float screenHalfHeight)
 {
-    float const obstacleRadius = .1f;
+    static float constexpr obstacleRadius = .1f;
     addRange({-screenHalfWidth, screenHalfHeight + obstacleRadius}, {screenHalfWidth, screenHalfHeight + obstacleRadius}, obstacleRadius);
     addRange({-screenHalfWidth, -screenHalfHeight - obstacleRadius}, {screenHalfWidth, -screenHalfHeight - obstacleRadius}, obstacleRadius);
     addRange({-screenHalfWidth - obstacleRadius, -screenHalfHeight}, {-screenHalfWidth - obstacleRadius, screenHalfHeight}, obstacleRadius);

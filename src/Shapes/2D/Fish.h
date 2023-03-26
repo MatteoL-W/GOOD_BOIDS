@@ -12,7 +12,7 @@ public:
     explicit Fish(float radius)
         : _radius(radius){};
 
-    void draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const
+    void draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
     {
         ctx.equilateral_triangle(
             // Position in the inverse direction multiplied to be approximately 80% of the circle

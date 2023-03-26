@@ -1,9 +1,9 @@
 #include "Boid.h"
 #include <variant>
-#include "utils/boidsForces.h"
-#include "utils/vec.h"
+#include "Utils/boidsForces.h"
+#include "Utils/vec.h"
 
-Boid::Boid(unsigned int speciesId, utils::TransformAttributes const& transformAttributes, ShapesType const& shape, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+Boid::Boid(unsigned int speciesId, Utils::TransformAttributes const& transformAttributes, ShapesType const& shape, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _speciesId(speciesId), _transformAttributes(transformAttributes), _shape(shape), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
@@ -22,7 +22,7 @@ void Boid::update(std::vector<Boid> const& boids, ObstaclesManager const& obstac
     addClassicBoidsForces(boids);
 
     addToVelocity(getAcceleration());
-    utils::vec::constrain(_transformAttributes._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
+    Utils::vec::constrain(_transformAttributes._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
 
     addToPosition(getVelocity());
     resetForces();
@@ -42,19 +42,19 @@ void Boid::draw(p6::Context& ctx)
 
 void Boid::addFoodAttraction(FoodProvider& foodProvider)
 {
-    addToAcceleration(utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); // ToDo : * _config._food_attraction_strength;);
+    addToAcceleration(Utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); // ToDo : * _config._food_attraction_strength;);
 }
 
 void Boid::addObstaclesAvoidance(ObstaclesManager const& obstacles)
 {
-    addToAcceleration(utils::boidsForces::computeObstaclesAvoidance(*this, obstacles)); // ToDo : * _config._food_attraction_strength;);
+    addToAcceleration(Utils::boidsForces::computeObstaclesAvoidance(*this, obstacles)); // ToDo : * _config._food_attraction_strength;);
 }
 
 void Boid::addClassicBoidsForces(std::vector<Boid> const& boids)
 {
-    auto const separation = utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._separationFactor;
-    auto const alignment  = utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._alignmentRadius)) * _forcesConfig._alignmentFactor;
-    auto const cohesion   = utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._cohesionRadius)) * _forcesConfig._cohesionFactor;
+    auto const separation = Utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separationRadius)) * _forcesConfig._separationFactor;
+    auto const alignment  = Utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._alignmentRadius)) * _forcesConfig._alignmentFactor;
+    auto const cohesion   = Utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._cohesionRadius)) * _forcesConfig._cohesionFactor;
 
     addToAcceleration(separation);
     addToAcceleration(alignment);
@@ -74,8 +74,8 @@ static std::vector<Boid> getNearbyBoidsFromBoid(
         if (boid.getPosition() == scannedBoid.getPosition())
             continue;
 
-        // If no species is specified, we add every close boids.
-        // If a species is specified, we add close boids having this species.
+        /// If no species is specified, we add every close boids.
+        /// If a species is specified, we add close boids having this species.
         float const actualDistance = glm::distance(scannedBoid.getPosition(), boid.getPosition()) - boid.getRadius() - scannedBoid.getRadius();
         bool const  hasSameSpecies = speciesId.has_value() && boid.getSpeciesId() == speciesId.value();
         if (actualDistance < maxDistance && (!speciesId.has_value() || hasSameSpecies))
