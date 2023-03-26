@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
         ._forcesConfig   = {._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f},
     };
 
-    auto bigFishInit = Species{
+    auto thirdSpecies = Species{
         ._shape          = Shapes::TwoDimensions::Fish{.07f},
         ._quantity       = 3,
         ._behaviorConfig = {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
@@ -47,11 +47,11 @@ int main(int argc, char* argv[])
     auto foodProvider = FoodProvider{FoodConfig{}, true};
 
     BoidsManager boids{};
-    auto const load_boids = [&]() {
+    auto const   load_boids = [&]() {
         boids.reset();
         boids.addSpecies(ctx, firstSpecies);
         boids.addSpecies(ctx, secondSpecies);
-        boids.addSpecies(ctx, bigFishInit);
+        boids.addSpecies(ctx, thirdSpecies);
     };
     load_boids();
 
@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
         GUI::showSpeciesGUI("Little boids", firstSpecies, boids);
         GUI::showSpeciesGUI("Middle boids", secondSpecies, boids);
-        GUI::showSpeciesGUI("Big boids", bigFishInit, boids);
+        GUI::showSpeciesGUI("Big boids", thirdSpecies, boids);
         GUI::showFoodGUI(foodProvider);
 
         if (ImGui::Button("Reload flock"))

@@ -16,7 +16,7 @@ void showSpeciesGUI(std::string speciesName, Species& species, BoidsManager& boi
 void showParametersGUI(Species& species)
 {
     if (ImGui::CollapsingHeader("Customize boids"))
-        ImGui::DragInt("Number of BoidsManager", &species._quantity, 1.f, 0, 500);
+        ImGui::DragInt("Number of Boids", &species._quantity, 1.f, 0, 500);
 }
 
 void showForcesGUI(BoidsManager& boids, ForcesConfig& forcesConfig)

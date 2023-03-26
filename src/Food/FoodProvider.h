@@ -7,17 +7,22 @@
 using Clock = std::chrono::high_resolution_clock;
 
 struct FoodConfig {
-    float _radius             = 0.05f;
+    /// The food providing interval in seconds.
     int   _providing_interval = 5;
+
+    /// The number of food dropping every interval
     int   _drops              = 5;
-    // Not unsigned for ImGui
+
+    /// The radius of the food
+    float _radius             = 0.05f;
 };
 
 class FoodProvider {
 public:
-    explicit FoodProvider(FoodConfig const& foodConfig, bool enableDrops = true);
+    explicit FoodProvider(FoodConfig const& foodConfig, bool enableDropsInstantly = true);
 
-    void enableRandomFood();
+    /// Enable the food dropping randomly in the map
+    void enableDrop();
     void update(p6::Context&);
     void draw(p6::Context&) const;
     void erase(std::list<glm::vec2>::const_iterator it) { _foods.erase(it); };
@@ -27,6 +32,8 @@ public:
     FoodConfig&                 getConfig() { return _config; };
 
 private:
+    // ToDo : Don't use ctx but screen values
+    /// Add a new food randomly inside the map
     void addFoodRandomly(p6::Context&);
 
 private:

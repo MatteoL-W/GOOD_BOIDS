@@ -2,14 +2,14 @@
 #include <chrono>
 #include "Shapes/2D.h"
 
-FoodProvider::FoodProvider(FoodConfig const& foodConfig, bool enableDrops)
+FoodProvider::FoodProvider(FoodConfig const& foodConfig, bool enableDropsInstantly)
     : _config(foodConfig)
 {
-    if (enableDrops)
-        enableRandomFood();
+    if (enableDropsInstantly)
+        enableDrop();
 };
 
-void FoodProvider::enableRandomFood()
+void FoodProvider::enableDrop()
 {
     _randomFoodStartTime = Clock::now();
 }
@@ -34,7 +34,7 @@ void FoodProvider::draw(p6::Context& ctx) const
     {
         ctx.fill       = {1.f, .5f, .2f, 1.f};
         auto foodShape = Shapes::TwoDimensions::Circle{_config._radius};
-        foodShape.draw(ctx, utils::TransformAttributes{food});
+        foodShape.draw(ctx, Utils::TransformAttributes{food});
     }
 }
 
