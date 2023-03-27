@@ -3,11 +3,10 @@
 #include <p6/p6.h>
 #include <variant>
 #include "Boid.h"
+#include "Boids/Configs.h"
 #include "Food/FoodProvider.h"
 #include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
-
-// ToDo: Pourquoi ne pas stocker directement un Species dans Boid.hpp ?
 
 struct Species {
     ShapesType     _shape;
