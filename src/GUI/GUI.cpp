@@ -1,4 +1,4 @@
-#include "ImGui.hpp"
+#include "GUI.hpp"
 #include <p6/p6.h>
 
 namespace GUI {

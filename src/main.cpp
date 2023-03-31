@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include "Boids/BoidsManager.h"
 #include "Food/FoodProvider.h"
-#include "GUI/ImGui.hpp"
+#include "GUI/GUI.hpp"
 #include "Obstacles/ObstaclesManager.h"
 #include "Shapes/2D.h"
 
@@ -44,8 +44,6 @@ int main(int argc, char* argv[])
         ._forcesConfig   = {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
     };
 
-    auto foodProvider = FoodProvider{FoodConfig{}, true};
-
     BoidsManager boids{};
     auto const   load_boids = [&]() {
         boids.reset();
@@ -54,6 +52,12 @@ int main(int argc, char* argv[])
         boids.addSpecies(ctx, thirdSpecies);
     };
     load_boids();
+
+    auto foodProvider = FoodProvider{FoodConfig{}, true};
+
+    auto obstaclesManager = ObstaclesManager{};
+    obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
+    obstaclesManager.addOne({0, 0}, 0.1f);
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
@@ -70,10 +74,6 @@ int main(int argc, char* argv[])
         // ImGui::ShowDemoWindow();
         ImGui::End();
     };
-
-    auto obstaclesManager = ObstaclesManager{};
-    obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    obstaclesManager.addOne({0, 0}, 0.1f);
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
