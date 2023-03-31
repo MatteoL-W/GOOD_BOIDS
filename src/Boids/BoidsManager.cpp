@@ -31,12 +31,14 @@ void BoidsManager::draw(p6::Context& ctx)
 
 void BoidsManager::updateForcesConfig(ForcesConfig const& config)
 {
+    // ToDo: Verify species
     for (auto& boid : _boids)
         boid.setForcesConfig(config);
 }
 
 void BoidsManager::updateBehaviorConfig(BehaviorConfig const& config)
 {
+    // ToDo: Verify species
     for (auto& boid : _boids)
         boid.setBehaviorConfig(config);
 }
