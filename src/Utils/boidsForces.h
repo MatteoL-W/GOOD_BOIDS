@@ -6,8 +6,8 @@
 /// These functions should be call every frame and with every boid in the map.
 namespace Utils::boidsForces {
 
-glm::vec3 computeObstaclesAvoidance(BoidMovement const&, ObstaclesManager const&, float boidRadius);
-glm::vec3 computeFoodAttraction(BoidMovement const&, FoodProvider&, float foodAttractionRadius);
+glm::vec3 computeObstaclesAvoidance(BoidMovement const&, Features::ObstaclesManager const&, float boidRadius);
+glm::vec3 computeFoodAttraction(BoidMovement const&, Features::FoodProvider&, float foodAttractionRadius);
 
 /// Note that std::vector<Boid> should only contains closeBoids.
 glm::vec3 computeSeparationForce(BoidMovement const&, std::vector<BoidMovement> const&);

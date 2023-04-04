@@ -48,7 +48,7 @@ void showBehaviorGUI(BoidsManager& boids, unsigned int speciesId, BehaviorConfig
     }
 }
 
-void showFoodGUI(FoodProvider& foodProvider)
+void showFoodGUI(Features::FoodProvider& foodProvider)
 {
     if (ImGui::CollapsingHeader("Food Provider"))
     {

@@ -1,7 +1,9 @@
 #pragma once
 
-#include <p6/p6.h>
 #include <vector>
+#include "p6/p6.h"
+
+namespace Features {
 
 struct Obstacle {
     glm::vec3 _position;
@@ -16,10 +18,12 @@ public:
     void draw(p6::Context&);
     void addOne(glm::vec3 pos, float radius = 0.1f);
     void addRange(glm::vec3 start, glm::vec3 end, float radius = 0.1f);
-    //void add2DMapDelimiters(float screenHalfWidth, float screenHalfHeight);
+    // void add2DMapDelimiters(float screenHalfWidth, float screenHalfHeight);
 
     std::vector<Obstacle> const& getObstacles() const { return _obstacles; };
 
 private:
     std::vector<Obstacle> _obstacles;
 };
+
+} // namespace Features
