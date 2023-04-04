@@ -12,4 +12,4 @@ struct TransformAttributes {
     glm::vec2 _acceleration{};
 };
 
-} // namespace utils
+} // namespace Utils

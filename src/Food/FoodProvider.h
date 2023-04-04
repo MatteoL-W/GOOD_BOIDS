@@ -8,13 +8,13 @@ using Clock = std::chrono::high_resolution_clock;
 
 struct FoodConfig {
     /// The food providing interval in seconds.
-    int   _providing_interval = 5;
+    int _providing_interval = 5;
 
     /// The number of food dropping every interval
-    int   _drops              = 5;
+    int _drops = 5;
 
     /// The radius of the food
-    float _radius             = 0.05f;
+    float _radius = 0.05f;
 };
 
 class FoodProvider {

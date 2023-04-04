@@ -16,4 +16,4 @@ void constrain(Vec& vector, float min, float max)
         vector = glm::normalize(vector) * max;
 }
 
-} // namespace utils::vec
+} // namespace Utils::vec

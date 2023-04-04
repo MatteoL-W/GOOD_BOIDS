@@ -14,4 +14,4 @@ glm::vec2 computeSeparationForce(BoidMovement const&, std::vector<BoidMovement> 
 glm::vec2 computeAlignmentForce(BoidMovement const&, std::vector<BoidMovement> const&);
 glm::vec2 computeCohesionForce(BoidMovement const&, std::vector<BoidMovement> const&);
 
-}  // namespace Utils::boidsForces
+} // namespace Utils::boidsForces
