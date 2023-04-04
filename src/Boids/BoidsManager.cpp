@@ -15,7 +15,7 @@ void BoidsManager::addSpecies(p6::Context& ctx, Species& species)
         );
 }
 
-void BoidsManager::update(ObstaclesManager const& obstacles, FoodProvider& foodProvider)
+void BoidsManager::update(Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider)
 {
     for (auto& boid : _boids)
         boid.update(_boids, obstacles, foodProvider);

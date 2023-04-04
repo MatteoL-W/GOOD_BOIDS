@@ -4,18 +4,14 @@
 #include <variant>
 #include "Boid.h"
 #include "Boids/Configs.h"
-#include "Food/FoodProvider.h"
-#include "Obstacles/ObstaclesManager.h"
+#include "Features/FoodProvider.h"
+#include "Features/ObstaclesManager.h"
 #include "Shapes/3D.h"
 
 struct Species {
     // ToDo: Can do better ? We do that to increment the _id
     Species(ShapesType shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
-        : _id(_speciesCounter++),
-        _shape(shape),
-        _quantity(quantity),
-        _behaviorConfig(behaviorConfig),
-        _forcesConfig(forcesConfig)
+        : _id(_speciesCounter++), _shape(shape), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
     {}
 
     unsigned int   _id;
@@ -32,7 +28,7 @@ public:
     BoidsManager() = default;
     void addSpecies(p6::Context&, Species&);
 
-    void update(ObstaclesManager const&, FoodProvider&);
+    void update(Features::ObstaclesManager const&, Features::FoodProvider&);
     void draw(p6::Context&);
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);

@@ -2,6 +2,8 @@
 #include <chrono>
 #include "Shapes/3D.h"
 
+namespace Features {
+
 FoodProvider::FoodProvider(FoodConfig const& foodConfig, bool enableDropsInstantly)
     : _config(foodConfig)
 {
@@ -43,3 +45,5 @@ void FoodProvider::addFoodRandomly(p6::Context& ctx)
     for (int i = 0; i < _config._drops; i++)
         _foods.emplace_back(p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1), p6::random::number(-1, 1));
 }
+
+} // namespace Features

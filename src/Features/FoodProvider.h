@@ -1,9 +1,10 @@
 #pragma once
 
-#include <p6/p6.h>
 #include <iterator>
 #include <list>
+#include "p6/p6.h"
 
+namespace Features {
 using Clock = std::chrono::high_resolution_clock;
 
 struct FoodConfig {
@@ -41,3 +42,5 @@ private:
     std::list<glm::vec3>             _foods{};
     FoodConfig                       _config{};
 };
+
+} // namespace Features

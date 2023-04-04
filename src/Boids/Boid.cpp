@@ -7,7 +7,7 @@ Boid::Boid(unsigned int speciesId, ShapesType const& shape, Utils::TransformAttr
     : _speciesId(speciesId), _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
 {}
 
-void Boid::update(std::vector<Boid> const& boids, ObstaclesManager const& obstacles, FoodProvider& foodProvider)
+void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider)
 {
     auto const boidsIterator = ForEachBoidMovement<Boid>{boids};
     _movement.update(boidsIterator, obstacles, foodProvider, getRadius());

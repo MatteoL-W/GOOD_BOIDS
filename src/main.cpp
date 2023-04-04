@@ -3,9 +3,9 @@
 #include <doctest/doctest.h>
 #include <cstdlib>
 #include "Boids/BoidsManager.h"
-#include "Food/FoodProvider.h"
+#include "Features/FoodProvider.h"
+#include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
-#include "Obstacles/ObstaclesManager.h"
 #include "Shapes/3D.h"
 
 int main(int argc, char* argv[])
@@ -53,11 +53,11 @@ int main(int argc, char* argv[])
     };
     load_boids();
 
-    auto foodProvider = FoodProvider{FoodConfig{}, true};
+    auto foodProvider = Features::FoodProvider{Features::FoodConfig{}, true};
 
-    auto obstaclesManager = ObstaclesManager{};
-    //obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    //obstaclesManager.addOne({0, 0}, 0.1f);
+    auto obstaclesManager = Features::ObstaclesManager{};
+    // obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
+    // obstaclesManager.addOne({0, 0}, 0.1f);
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");

@@ -2,7 +2,7 @@
 
 namespace Utils::boidsForces {
 
-glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, ObstaclesManager const& obstacles, float boidRadius)
+glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, Features::ObstaclesManager const& obstacles, float boidRadius)
 {
     auto force = glm::vec3{};
 
@@ -35,7 +35,7 @@ glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, ObstaclesManager c
     return force;
 }
 
-glm::vec3 computeFoodAttraction(BoidMovement const& boid, FoodProvider& foodProvider, float foodAttractionRadius)
+glm::vec3 computeFoodAttraction(BoidMovement const& boid, Features::FoodProvider& foodProvider, float foodAttractionRadius)
 {
     auto const& allFood = foodProvider.getFood();
     if (allFood.empty())

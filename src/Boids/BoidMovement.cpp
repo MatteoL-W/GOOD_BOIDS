@@ -6,7 +6,7 @@ BoidMovement::BoidMovement(unsigned int speciesId, Utils::TransformAttributes co
     : _speciesId(speciesId), _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
-void BoidMovement::update(IForEachBoidMovement const& boids, ObstaclesManager const& obstacles, FoodProvider& foodProvider, float boidRadius)
+void BoidMovement::update(IForEachBoidMovement const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float boidRadius)
 {
     // Add forces to acceleration
     addFoodAttraction(foodProvider);
@@ -20,12 +20,12 @@ void BoidMovement::update(IForEachBoidMovement const& boids, ObstaclesManager co
     resetForces();
 }
 
-void BoidMovement::addFoodAttraction(FoodProvider& foodProvider)
+void BoidMovement::addFoodAttraction(Features::FoodProvider& foodProvider)
 {
     addToAcceleration(Utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); // ToDo : * _config._food_attraction_strength;);
 }
 
-void BoidMovement::addObstaclesAvoidance(ObstaclesManager const& obstacles, float boidRadius)
+void BoidMovement::addObstaclesAvoidance(Features::ObstaclesManager const& obstacles, float boidRadius)
 {
     addToAcceleration(Utils::boidsForces::computeObstaclesAvoidance(*this, obstacles, boidRadius)); // ToDo : * _config._food_attraction_strength;);
 }
