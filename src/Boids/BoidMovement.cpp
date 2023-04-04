@@ -56,8 +56,9 @@ static std::vector<BoidMovement> getNearbyBoidsFromBoid(
 
         /// If no species is specified, we add every close boids.
         /// If a species is specified, we add close boids having this species.
-        float const actualDistance = glm::distance(scannedBoid.getPosition(), boid.getPosition()) - boidRadius - boidRadius; // ToDo: - scannedBoid.getRadius();
-        bool const  hasSameSpecies = speciesId.has_value() && boid.getSpeciesId() == speciesId.value();
+        // ToDo: Ca devrait être scannedBoid.getRadius() à la place du 2eme boidRadius. Comment fix ?
+        float const actualDistance = glm::distance(scannedBoid.getPosition(), boid.getPosition()) - boidRadius - boidRadius;
+        bool const  hasSameSpecies = speciesId.has_value() && boid.getSpeciesId() == speciesId;
         if (actualDistance < proximityRadius && (!speciesId.has_value() || hasSameSpecies))
             nearbyBoids.push_back(boid);
     });
