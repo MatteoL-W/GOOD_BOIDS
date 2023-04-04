@@ -4,7 +4,7 @@
 #include <vector>
 
 struct Obstacle {
-    glm::vec2 _position;
+    glm::vec3 _position;
     float     _radius;
 };
 
@@ -14,9 +14,9 @@ public:
         : _obstacles(obstacles){};
 
     void draw(p6::Context&);
-    void addOne(glm::vec2 pos, float radius = 0.1f);
-    void addRange(glm::vec2 start, glm::vec2 end, float radius = 0.1f);
-    void add2DMapDelimiters(float screenHalfWidth, float screenHalfHeight);
+    void addOne(glm::vec3 pos, float radius = 0.1f);
+    void addRange(glm::vec3 start, glm::vec3 end, float radius = 0.1f);
+    //void add2DMapDelimiters(float screenHalfWidth, float screenHalfHeight);
 
     std::vector<Obstacle> const& getObstacles() const { return _obstacles; };
 

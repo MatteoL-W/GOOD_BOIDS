@@ -7,8 +7,8 @@ void BoidsManager::addSpecies(p6::Context& ctx, Species& species)
             species._id,
             species._shape,
             Utils::TransformAttributes{
-                ._position = glm::vec2{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1)},
-                ._velocity = glm::vec2{p6::random::number(-0.001f, 0.001f), p6::random::number(-0.001f, 0.001f)},
+                ._position = glm::vec3{p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1), p6::random::number(-1, 1)},
+                ._velocity = glm::vec3{p6::random::number(-0.001f, 0.001f), p6::random::number(-0.001f, 0.001f), p6::random::number(-1, 1)},
             },
             species._behaviorConfig,
             species._forcesConfig
@@ -29,7 +29,6 @@ void BoidsManager::draw(p6::Context& ctx)
 
 void BoidsManager::updateForcesConfig(unsigned int speciesId, ForcesConfig const& config)
 {
-    // ToDo: Verify species
     for (auto& boid : _boids)
         if (boid.getSpeciesId() == speciesId)
             boid.setForcesConfig(config);
@@ -37,7 +36,6 @@ void BoidsManager::updateForcesConfig(unsigned int speciesId, ForcesConfig const
 
 void BoidsManager::updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const& config)
 {
-    // ToDo: Verify species
     for (auto& boid : _boids)
         if (boid.getSpeciesId() == speciesId)
             boid.setBehaviorConfig(config);

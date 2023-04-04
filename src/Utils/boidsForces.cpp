@@ -2,9 +2,9 @@
 
 namespace Utils::boidsForces {
 
-glm::vec2 computeObstaclesAvoidance(BoidMovement const& boid, ObstaclesManager const& obstacles, float boidRadius)
+glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, ObstaclesManager const& obstacles, float boidRadius)
 {
-    auto force = glm::vec2{};
+    auto force = glm::vec3{};
 
     for (auto const& obstacle : obstacles.getObstacles())
     {
@@ -35,11 +35,11 @@ glm::vec2 computeObstaclesAvoidance(BoidMovement const& boid, ObstaclesManager c
     return force;
 }
 
-glm::vec2 computeFoodAttraction(BoidMovement const& boid, FoodProvider& foodProvider, float foodAttractionRadius)
+glm::vec3 computeFoodAttraction(BoidMovement const& boid, FoodProvider& foodProvider, float foodAttractionRadius)
 {
     auto const& allFood = foodProvider.getFood();
     if (allFood.empty())
-        return glm::vec2{};
+        return glm::vec3{};
 
     auto closestFood = allFood.begin();
 
@@ -55,7 +55,7 @@ glm::vec2 computeFoodAttraction(BoidMovement const& boid, FoodProvider& foodProv
     }
 
     if (foodAttractionRadius < minDistance)
-        return glm::vec2{};
+        return glm::vec3{};
 
     if (minDistance < foodProvider.getFoodRadius())
         foodProvider.erase(closestFood);
@@ -63,9 +63,9 @@ glm::vec2 computeFoodAttraction(BoidMovement const& boid, FoodProvider& foodProv
     return glm::normalize(*closestFood - boid.getPosition()); //  ToDo : * _config._food_attraction_strength;
 }
 
-glm::vec2 computeSeparationForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
+glm::vec3 computeSeparationForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
 {
-    auto force = glm::vec2{};
+    auto force = glm::vec3{};
 
     for (auto const& closeMember : closeBoids)
         force += glm::normalize(boid.getPosition() - closeMember.getPosition()) / glm::distance(boid.getPosition(), closeMember.getPosition());
@@ -73,12 +73,12 @@ glm::vec2 computeSeparationForce(BoidMovement const& boid, std::vector<BoidMovem
     return force - boid.getVelocity();
 }
 
-glm::vec2 computeAlignmentForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
+glm::vec3 computeAlignmentForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
 {
     if (closeBoids.empty())
-        return glm::vec2{};
+        return glm::vec3{};
 
-    auto averageVelocity = glm::vec2{};
+    auto averageVelocity = glm::vec3{};
     for (auto const& closeMember : closeBoids)
         averageVelocity += glm::normalize(closeMember.getVelocity());
 
@@ -86,12 +86,12 @@ glm::vec2 computeAlignmentForce(BoidMovement const& boid, std::vector<BoidMoveme
     return averageVelocity - boid.getVelocity();
 }
 
-glm::vec2 computeCohesionForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
+glm::vec3 computeCohesionForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
 {
     if (closeBoids.empty())
-        return glm::vec2{};
+        return glm::vec3{};
 
-    auto averagePosition = glm::vec2{};
+    auto averagePosition = glm::vec3{};
     for (auto const& closeMember : closeBoids)
         averagePosition += glm::normalize(closeMember.getPosition());
 
