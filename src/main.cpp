@@ -6,7 +6,7 @@
 #include "Food/FoodProvider.h"
 #include "GUI/GUI.hpp"
 #include "Obstacles/ObstaclesManager.h"
-#include "Shapes/2D.h"
+#include "Shapes/3D.h"
 
 int main(int argc, char* argv[])
 {
@@ -24,21 +24,21 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     auto firstSpecies = Species{
-        Shapes::TwoDimensions::Fish{.01f},
+        Shapes::ThreeDimensions::Sphere{.01f},
         30,
         {._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f},
     };
 
     auto secondSpecies = Species{
-        Shapes::TwoDimensions::Fish{.03f},
+        Shapes::ThreeDimensions::Sphere{.03f},
         7,
         {._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f},
         {._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f},
     };
 
     auto thirdSpecies = Species{
-        Shapes::TwoDimensions::Fish{.07f},
+        Shapes::ThreeDimensions::Sphere{.07f},
         3,
         {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
         {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
