@@ -33,8 +33,8 @@ private:
     void addClassicBoidsForces(IForEachBoidMovement const&, float boidRadius);
 
     /// Return a vector containing all the boids nearby that share the same species
-    [[nodiscard]] std::vector<BoidMovement> getNearbyAndSameBoids(IForEachBoidMovement const& boids, float proximityRadius, float boidRadius) const;
-    [[nodiscard]] std::vector<BoidMovement> getNearbyBoids(IForEachBoidMovement const& boids, float proximityRadius, float boidRadius) const;
+    [[nodiscard]] std::vector<BoidMovement> getNearbyAndSameBoids(IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;
+    [[nodiscard]] std::vector<BoidMovement> getNearbyBoids(IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;
 
 private:
     unsigned int               _speciesId{};

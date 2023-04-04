@@ -32,9 +32,9 @@ void BoidMovement::addObstaclesAvoidance(ObstaclesManager const& obstacles, floa
 
 void BoidMovement::addClassicBoidsForces(IForEachBoidMovement const& boids, float boidRadius)
 {
-    auto const separation = Utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, _forcesConfig._separationRadius, boidRadius)) * _forcesConfig._separationFactor;
-    auto const alignment  = Utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._alignmentRadius, boidRadius)) * _forcesConfig._alignmentFactor;
-    auto const cohesion   = Utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, _forcesConfig._cohesionRadius, boidRadius)) * _forcesConfig._cohesionFactor;
+    auto const separation = Utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, boidRadius, _forcesConfig._separationRadius)) * _forcesConfig._separationFactor;
+    auto const alignment  = Utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, boidRadius, _forcesConfig._alignmentRadius)) * _forcesConfig._alignmentFactor;
+    auto const cohesion   = Utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, boidRadius, _forcesConfig._cohesionRadius)) * _forcesConfig._cohesionFactor;
 
     addToAcceleration(separation);
     addToAcceleration(alignment);
@@ -42,11 +42,11 @@ void BoidMovement::addClassicBoidsForces(IForEachBoidMovement const& boids, floa
 }
 
 static std::vector<BoidMovement> getNearbyBoidsFromBoid(
+    std::optional<unsigned int> const& speciesId,
     BoidMovement const&                scannedBoid,
     IForEachBoidMovement const&        boidsIterator,
-    float                              maxDistance,
-    std::optional<unsigned int> const& speciesId,
-    float                              boidRadius
+    float                              boidRadius,
+    float                              proximityRadius
 )
 {
     std::vector<BoidMovement> nearbyBoids{};
@@ -58,18 +58,18 @@ static std::vector<BoidMovement> getNearbyBoidsFromBoid(
         /// If a species is specified, we add close boids having this species.
         float const actualDistance = glm::distance(scannedBoid.getPosition(), boid.getPosition()) - boidRadius - boidRadius; // ToDo: - scannedBoid.getRadius();
         bool const  hasSameSpecies = speciesId.has_value() && boid.getSpeciesId() == speciesId.value();
-        if (actualDistance < maxDistance && (!speciesId.has_value() || hasSameSpecies))
+        if (actualDistance < proximityRadius && (!speciesId.has_value() || hasSameSpecies))
             nearbyBoids.push_back(boid);
     });
     return nearbyBoids;
 }
 
-std::vector<BoidMovement> BoidMovement::getNearbyBoids(IForEachBoidMovement const& boids, float proximityRadius, float boidRadius) const
+std::vector<BoidMovement> BoidMovement::getNearbyBoids(IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const
 {
-    return getNearbyBoidsFromBoid(*this, boids, proximityRadius, std::nullopt, boidRadius);
+    return getNearbyBoidsFromBoid(std::nullopt, *this, boids, boidRadius, proximityRadius);
 }
 
-std::vector<BoidMovement> BoidMovement::getNearbyAndSameBoids(IForEachBoidMovement const& boids, float proximityRadius, float boidRadius) const
+std::vector<BoidMovement> BoidMovement::getNearbyAndSameBoids(IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const
 {
-    return getNearbyBoidsFromBoid(*this, boids, proximityRadius, getSpeciesId(), boidRadius);
+    return getNearbyBoidsFromBoid(getSpeciesId(), *this, boids, boidRadius, proximityRadius);
 }
