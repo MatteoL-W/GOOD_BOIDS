@@ -15,17 +15,17 @@ public:
 
     [[nodiscard]] unsigned int               getSpeciesId() const { return _speciesId; };
     [[nodiscard]] Utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
-    [[nodiscard]] glm::vec2                  getPosition() const { return _transformAttributes._position; };
-    [[nodiscard]] glm::vec2                  getVelocity() const { return _transformAttributes._velocity; };
-    [[nodiscard]] glm::vec2                  getAcceleration() const { return _transformAttributes._acceleration; };
+    [[nodiscard]] glm::vec3                  getPosition() const { return _transformAttributes._position; };
+    [[nodiscard]] glm::vec3                  getVelocity() const { return _transformAttributes._velocity; };
+    [[nodiscard]] glm::vec3                  getAcceleration() const { return _transformAttributes._acceleration; };
 
-    void resetForces() { _transformAttributes._acceleration = glm::vec2{0}; };
+    void resetForces() { _transformAttributes._acceleration = glm::vec3{0}; };
     void setForcesConfig(ForcesConfig& config) { _forcesConfig = config; };
     void setBehaviorConfig(BehaviorConfig& config) { _behaviorConfig = config; };
 
-    void addToPosition(glm::vec2 position) { _transformAttributes._position += position; };
-    void addToVelocity(glm::vec2 velocity) { _transformAttributes._velocity += velocity; };
-    void addToAcceleration(glm::vec2 velocity) { _transformAttributes._velocity += velocity; };
+    void addToPosition(glm::vec3 position) { _transformAttributes._position += position; };
+    void addToVelocity(glm::vec3 velocity) { _transformAttributes._velocity += velocity; };
+    void addToAcceleration(glm::vec3 velocity) { _transformAttributes._velocity += velocity; };
 
 private:
     void addFoodAttraction(FoodProvider&);

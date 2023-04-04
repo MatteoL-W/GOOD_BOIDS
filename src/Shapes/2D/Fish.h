@@ -16,7 +16,7 @@ public:
     {
         ctx.equilateral_triangle(
             // Position in the inverse direction multiplied to be approximately 80% of the circle
-            p6::Center{transformAttributes._position - 2.f * glm::vec2(_radius * 80) * (transformAttributes._velocity)},
+            p6::Center{transformAttributes._position - 2.f * glm::vec3(_radius * 80) * (transformAttributes._velocity)},
             p6::Radius{static_cast<float>(_radius)},
             p6::Rotation{p6::Angle{transformAttributes._velocity}}
         );

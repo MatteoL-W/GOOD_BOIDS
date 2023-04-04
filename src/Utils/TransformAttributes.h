@@ -5,11 +5,11 @@
 namespace Utils {
 
 struct TransformAttributes {
-    glm::vec2 _position{};
-    glm::vec2 _velocity{};
+    glm::vec3 _position{};
+    glm::vec3 _velocity{};
 
     // Where we add our forces
-    glm::vec2 _acceleration{};
+    glm::vec3 _acceleration{};
 };
 
 } // namespace Utils

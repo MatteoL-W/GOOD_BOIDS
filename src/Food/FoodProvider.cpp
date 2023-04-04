@@ -41,5 +41,5 @@ void FoodProvider::draw(p6::Context& ctx) const
 void FoodProvider::addFoodRandomly(p6::Context& ctx)
 {
     for (int i = 0; i < _config._drops; i++)
-        _foods.emplace_back(p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1));
+        _foods.emplace_back(p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1), p6::random::number(-1, 1));
 }

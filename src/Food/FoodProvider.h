@@ -25,9 +25,9 @@ public:
     void enableDrop();
     void update(p6::Context&);
     void draw(p6::Context&) const;
-    void erase(std::list<glm::vec2>::const_iterator it) { _foods.erase(it); };
+    void erase(std::list<glm::vec3>::const_iterator it) { _foods.erase(it); };
 
-    std::list<glm::vec2> const& getFood() const { return _foods; };
+    std::list<glm::vec3> const& getFood() const { return _foods; };
     float                       getFoodRadius() const { return _config._radius; };
     FoodConfig&                 getConfig() { return _config; };
 
@@ -38,6 +38,6 @@ private:
 
 private:
     std::optional<Clock::time_point> _randomFoodStartTime;
-    std::list<glm::vec2>             _foods{};
+    std::list<glm::vec3>             _foods{};
     FoodConfig                       _config{};
 };
