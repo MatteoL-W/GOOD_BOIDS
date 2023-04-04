@@ -24,24 +24,24 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     auto firstSpecies = Species{
-        ._shape          = Shapes::TwoDimensions::Fish{.01f},
-        ._quantity       = 30,
-        ._behaviorConfig = {._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f},
-        ._forcesConfig   = {._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f},
+        Shapes::TwoDimensions::Fish{.01f},
+        30,
+        {._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f},
+        {._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f},
     };
 
     auto secondSpecies = Species{
-        ._shape          = Shapes::TwoDimensions::Fish{.03f},
-        ._quantity       = 7,
-        ._behaviorConfig = {._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f},
-        ._forcesConfig   = {._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f},
+        Shapes::TwoDimensions::Fish{.03f},
+        7,
+        {._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f},
+        {._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f},
     };
 
     auto thirdSpecies = Species{
-        ._shape          = Shapes::TwoDimensions::Fish{.07f},
-        ._quantity       = 3,
-        ._behaviorConfig = {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
-        ._forcesConfig   = {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
+        Shapes::TwoDimensions::Fish{.07f},
+        3,
+        {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
+        {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
     };
 
     BoidsManager boids{};

@@ -2,8 +2,9 @@
 #include <variant>
 #include "Boids/ForEachBoidMovement.h"
 
-Boid::Boid(ShapesType const& shape, unsigned int speciesId, Utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
+// ToDo : Doublon speciesId ?
+Boid::Boid(unsigned int speciesId, ShapesType const& shape, Utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+    : _speciesId(speciesId), _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
 {}
 
 void Boid::update(std::vector<Boid> const& boids, ObstaclesManager const& obstacles, FoodProvider& foodProvider)

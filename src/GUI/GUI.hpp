@@ -11,8 +11,8 @@ namespace GUI {
 void showSpeciesGUI(std::string speciesName, Species&, BoidsManager&);
 
 void showParametersGUI(Species&);
-void showForcesGUI(BoidsManager&, ForcesConfig&);
-void showBehaviorGUI(BoidsManager&, BehaviorConfig&);
+void showForcesGUI(BoidsManager&, unsigned int speciesId, ForcesConfig&);
+void showBehaviorGUI(BoidsManager&, unsigned int speciesId, BehaviorConfig&);
 // ToDo : showShapeGUI ? avec radius ?
 void showFoodGUI(FoodProvider&);
 

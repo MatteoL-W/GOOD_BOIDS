@@ -8,8 +8,8 @@ void showSpeciesGUI(std::string speciesName, Species& species, BoidsManager& boi
     if (ImGui::CollapsingHeader(speciesName.c_str()))
     {
         GUI::showParametersGUI(species);
-        GUI::showForcesGUI(boids, species._forcesConfig);
-        GUI::showBehaviorGUI(boids, species._behaviorConfig);
+        GUI::showForcesGUI(boids, species._id, species._forcesConfig);
+        GUI::showBehaviorGUI(boids, species._id, species._behaviorConfig);
     }
 }
 
@@ -19,7 +19,7 @@ void showParametersGUI(Species& species)
         ImGui::DragInt("Number of Boids", &species._quantity, 1.f, 0, 500);
 }
 
-void showForcesGUI(BoidsManager& boids, ForcesConfig& forcesConfig)
+void showForcesGUI(BoidsManager& boids, unsigned int speciesId, ForcesConfig& forcesConfig)
 {
     if (ImGui::CollapsingHeader("Boids forces"))
     {
@@ -30,12 +30,12 @@ void showForcesGUI(BoidsManager& boids, ForcesConfig& forcesConfig)
             || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesionRadius, 0.01f, 0, 1.f)
             || ImGui::DragFloat("Cohesion Factor", &forcesConfig._cohesionFactor, 0.01f, 0, 1.f))
         {
-            boids.updateForcesConfig(forcesConfig);
+            boids.updateForcesConfig(speciesId, forcesConfig);
         }
     }
 }
 
-void showBehaviorGUI(BoidsManager& boids, BehaviorConfig& behaviorConfig)
+void showBehaviorGUI(BoidsManager& boids, unsigned int speciesId, BehaviorConfig& behaviorConfig)
 {
     if (ImGui::CollapsingHeader("Boids behaviour"))
     {
@@ -43,7 +43,7 @@ void showBehaviorGUI(BoidsManager& boids, BehaviorConfig& behaviorConfig)
             || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, .001f, 0.f, 5.f)
             || ImGui::DragFloat("Food attraction radius", &behaviorConfig._foodAttractionRadius, 0.01f, 0.f, 5.f))
         {
-            boids.updateBehaviorConfig(behaviorConfig);
+            boids.updateBehaviorConfig(speciesId, behaviorConfig);
         }
     }
 }
