@@ -1,6 +1,6 @@
 #include "FoodProvider.h"
 #include <chrono>
-#include "Shapes/2D.h"
+#include "Shapes/3D.h"
 
 FoodProvider::FoodProvider(FoodConfig const& foodConfig, bool enableDropsInstantly)
     : _config(foodConfig)
@@ -33,7 +33,7 @@ void FoodProvider::draw(p6::Context& ctx) const
     for (auto const& food : _foods)
     {
         ctx.fill       = {1.f, .5f, .2f, 1.f};
-        auto foodShape = Shapes::TwoDimensions::Circle{_config._radius};
+        auto foodShape = Shapes::ThreeDimensions::Sphere{_config._radius};
         foodShape.draw(ctx, Utils::TransformAttributes{food});
     }
 }

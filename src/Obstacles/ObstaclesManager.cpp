@@ -1,11 +1,11 @@
 #include "ObstaclesManager.h"
-#include "Shapes/2D.h"
+#include "Shapes/3D.h"
 
 void ObstaclesManager::draw(p6::Context& ctx)
 {
     for (auto const& obstacle : _obstacles)
     {
-        auto obstacleShape = Shapes::TwoDimensions::Circle{obstacle._radius};
+        auto obstacleShape = Shapes::ThreeDimensions::Sphere{obstacle._radius};
         obstacleShape.draw(ctx, Utils::TransformAttributes{obstacle._position});
     }
 }

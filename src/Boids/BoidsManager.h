@@ -6,7 +6,7 @@
 #include "Boids/Configs.h"
 #include "Food/FoodProvider.h"
 #include "Obstacles/ObstaclesManager.h"
-#include "Shapes/2D.h"
+#include "Shapes/3D.h"
 
 struct Species {
     // ToDo: Can do better ? We do that to increment the _id
