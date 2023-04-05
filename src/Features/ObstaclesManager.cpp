@@ -8,7 +8,7 @@ void ObstaclesManager::draw(p6::Context& ctx)
     for (auto const& obstacle : _obstacles)
     {
         auto obstacleShape = Shapes::ThreeDimensions::Sphere{obstacle._radius};
-        obstacleShape.draw(ctx, Utils::TransformAttributes{obstacle._position});
+        //obstacleShape.draw(ctx, Utils::TransformAttributes{obstacle._position});
     }
 }
 

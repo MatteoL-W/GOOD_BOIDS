@@ -75,16 +75,18 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
+    auto testShader = p6::load_shader("../src/Shaders/3D.vs.glsl", "../src/Shaders/normal.fs.glsl");
+
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
 
         foodProvider.update(ctx);
-        foodProvider.draw(ctx);
+        //foodProvider.draw(ctx, testShader);
 
         boidsManager.update(obstaclesManager, foodProvider);
-        boidsManager.draw(ctx);
+        boidsManager.draw(ctx, testShader);
 
-        obstaclesManager.draw(ctx);
+        //obstaclesManager.draw(ctx, testShader);
     };
 
     ctx.start();

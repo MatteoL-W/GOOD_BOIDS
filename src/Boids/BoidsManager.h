@@ -29,7 +29,7 @@ public:
     void addSpecies(p6::Context&, Species&);
 
     void update(Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(p6::Context&);
+    void draw(p6::Context&, p6::Shader&);
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);
     void updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const&);

@@ -34,9 +34,10 @@ void FoodProvider::draw(p6::Context& ctx) const
 {
     for (auto const& food : _foods)
     {
+        //ToDo: Les perfs wsh
         ctx.fill       = {1.f, .5f, .2f, 1.f};
         auto foodShape = Shapes::ThreeDimensions::Sphere{_config._radius};
-        foodShape.draw(ctx, Utils::TransformAttributes{food});
+        //foodShape.draw(ctx, Utils::TransformAttributes{food});
     }
 }
 

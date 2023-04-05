@@ -21,10 +21,10 @@ void BoidsManager::update(Features::ObstaclesManager const& obstacles, Features:
         boid.update(_boids, obstacles, foodProvider);
 }
 
-void BoidsManager::draw(p6::Context& ctx)
+void BoidsManager::draw(p6::Context& ctx, p6::Shader& shader)
 {
     for (auto& boid : _boids)
-        boid.draw(ctx);
+        boid.draw(ctx, shader);
 }
 
 void BoidsManager::updateForcesConfig(unsigned int speciesId, ForcesConfig const& config)
