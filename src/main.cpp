@@ -24,8 +24,8 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     auto firstSpecies = Species{
-        Shapes::ThreeDimensions::Sphere{.01f},
-        30,
+        Shapes::ThreeDimensions::Sphere{.1f},
+        10,
         {._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f},
     };
@@ -48,8 +48,8 @@ int main(int argc, char* argv[])
     auto const load_boids   = [&]() {
         boidsManager.reset();
         boidsManager.addSpecies(ctx, firstSpecies);
-        boidsManager.addSpecies(ctx, secondSpecies);
-        boidsManager.addSpecies(ctx, thirdSpecies);
+        //boidsManager.addSpecies(ctx, secondSpecies);
+        //boidsManager.addSpecies(ctx, thirdSpecies);
     };
     load_boids();
 
