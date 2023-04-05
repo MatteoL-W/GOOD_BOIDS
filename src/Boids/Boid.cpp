@@ -13,13 +13,13 @@ void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager con
     _movement.update(boidsIterator, obstacles, foodProvider, getRadius());
 }
 
-void Boid::draw(p6::Context& ctx)
+void Boid::draw(p6::Context& ctx, p6::Shader& shader)
 {
     std::visit(
         [&](auto shape) {
             ctx.use_stroke = false;
             ctx.fill       = {1, 1, 1, 1};
-            shape.draw(ctx, _movement.getTransformAttributes());
+            shape.draw(ctx, _movement.getTransformAttributes(), shader);
         },
         _shape
     );
