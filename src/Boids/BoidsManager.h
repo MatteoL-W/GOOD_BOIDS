@@ -1,6 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
+#include <utility>
 #include <variant>
 #include "Boid.h"
 #include "Boids/Configs.h"
@@ -11,7 +12,7 @@
 struct Species {
     // ToDo: Can do better ? We do that to increment the _id
     Species(ShapesType shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
-        : _id(_speciesCounter++), _shape(shape), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+        : _id(_speciesCounter++), _shape(std::move(shape)), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
     {}
 
     unsigned int   _id;
