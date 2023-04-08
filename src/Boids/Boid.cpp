@@ -16,7 +16,7 @@ void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager con
 void Boid::draw(p6::Context& ctx)
 {
     std::visit(
-        [&](auto shape) {
+        [&](auto const& shape) {
             shape.draw(ctx, _movement.getTransformAttributes());
         },
         _shape
@@ -26,6 +26,6 @@ void Boid::draw(p6::Context& ctx)
 float Boid::getRadius() const
 {
     float radius = 0.f;
-    std::visit([&](auto shape) { radius = shape.getRadius(); }, _shape);
+    std::visit([&](auto const& shape) { radius = shape.getRadius(); }, _shape);
     return radius;
 }

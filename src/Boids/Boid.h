@@ -24,7 +24,7 @@ private:
     [[nodiscard]] float getRadius() const;
 
 private:
-    unsigned int _speciesId{};
-    ShapesType   _shape{};
-    BoidMovement _movement{};
+    unsigned int      _speciesId{};
+    ShapesType const& _shape;
+    BoidMovement      _movement{};
 };
