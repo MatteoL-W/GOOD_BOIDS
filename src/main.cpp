@@ -23,24 +23,26 @@ int main(int argc, char* argv[])
     ctx.maximize_window();
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
+    glEnable(GL_DEPTH_TEST);
+
     auto firstSpecies = Species{
-        Shapes::ThreeDimensions::get_sphere_instance(),
+        Shapes::ThreeDimensions::get_sphere_instance(0.1f),
         10,
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
 
-    /*auto secondSpecies = Species{
-        Shapes::ThreeDimensions::Sphere{.03f},
-        7,
-        {._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f},
-        {._separationRadius = 0.06f, ._alignmentRadius = 0.23f, ._cohesionRadius = 0.1f},
+    auto secondSpecies = Species{
+        Shapes::ThreeDimensions::get_cone_instance(0.2f),
+        5,
+        {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
+        {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
     };
 
-    auto thirdSpecies = Species{
-        Shapes::ThreeDimensions::Sphere{.07f},
+    /*auto thirdSpecies = Species{
+        Shapes::ThreeDimensions::get_sphere_instance(3.f),
         3,
-        {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
+        {._minSpeed = .010f, ._maxSpeed = .015f, ._foodAttractionRadius = 0.4f},
         {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
     };*/
 
@@ -48,7 +50,7 @@ int main(int argc, char* argv[])
     auto const load_boids   = [&]() {
         boidsManager.reset();
         boidsManager.addSpecies(ctx, firstSpecies);
-        //boidsManager.addSpecies(ctx, secondSpecies);
+        boidsManager.addSpecies(ctx, secondSpecies);
         //boidsManager.addSpecies(ctx, thirdSpecies);
     };
     load_boids();
@@ -63,8 +65,8 @@ int main(int argc, char* argv[])
         ImGui::Begin("My super GUI");
 
         GUI::showSpeciesGUI("Little boids", firstSpecies, boidsManager);
-        //GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
-        //GUI::showSpeciesGUI("Big boids", thirdSpecies, boidsManager);
+        GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
+        // GUI::showSpeciesGUI("Big boids", thirdSpecies, boidsManager);
         GUI::showFoodGUI(foodProvider);
 
         if (ImGui::Button("Reload flock"))
@@ -75,18 +77,17 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
-    auto testShader = p6::load_shader("../src/Program/Shaders/3D.vs.glsl", "../src/Program/Shaders/normal.fs.glsl");
-
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         foodProvider.update(ctx);
-        //foodProvider.draw(ctx, testShader);
+        // foodProvider.draw(ctx, testShader);
 
         boidsManager.update(obstaclesManager, foodProvider);
         boidsManager.draw(ctx);
 
-        //obstaclesManager.draw(ctx, testShader);
+        // obstaclesManager.draw(ctx, testShader);
     };
 
     ctx.start();
