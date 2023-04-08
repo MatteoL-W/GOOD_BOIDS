@@ -3,11 +3,12 @@
 #include <p6/p6.h>
 #include <cstddef> // For offsetof()
 #include "Program/Normal.h"
-#include "Utils/sphere_vertices.hpp"
+#include "Utils/Mesh.h"
+#include "Utils/TransformAttributes.h"
+#include "Utils/geometriesVertices.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "utils/TransformAttributes.h"
 
 namespace Shapes::ThreeDimensions {
 
@@ -20,10 +21,8 @@ public:
     Sphere& operator=(const Sphere& other) = delete;
 
     // Move constructors
-    Sphere(Sphere&& other) noexcept;
-    Sphere& operator=(Sphere&& other) noexcept;
-
-    ~Sphere();
+    Sphere(Sphere&& other) noexcept = default;
+    Sphere& operator=(Sphere&& other) noexcept = default;
 
 public:
     void  draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const;
@@ -32,10 +31,9 @@ public:
 
 private:
     float                        _radius{};
-    GLuint                       _vbo = 0;
-    GLuint                       _vao = 0;
     Program::Normal              _shader{};
     std::vector<Utils::Vertex3D> _vertices{};
+    RenderEngine::Mesh           _mesh;
 };
 
 } // namespace Shapes::ThreeDimensions
