@@ -24,13 +24,13 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     auto firstSpecies = Species{
-        Shapes::ThreeDimensions::Sphere{.1f},
+        Shapes::ThreeDimensions::get_sphere_instance(),
         10,
-        {._minSpeed = .008f, ._maxSpeed = 0.011f, ._foodAttractionRadius = 0.6f},
-        {._separationRadius = 0.05f, ._separationFactor = 0.01f, ._alignmentRadius = .2f, ._alignmentFactor = .5f, ._cohesionRadius = .2f, ._cohesionFactor = .5f},
+        {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
+        {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
 
-    auto secondSpecies = Species{
+    /*auto secondSpecies = Species{
         Shapes::ThreeDimensions::Sphere{.03f},
         7,
         {._minSpeed = .005f, ._maxSpeed = .008f, ._foodAttractionRadius = 0.8f},
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         3,
         {._minSpeed = .003f, ._maxSpeed = .004f, ._foodAttractionRadius = 0.4f},
         {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
-    };
+    };*/
 
     auto       boidsManager = BoidsManager{};
     auto const load_boids   = [&]() {
@@ -63,8 +63,8 @@ int main(int argc, char* argv[])
         ImGui::Begin("My super GUI");
 
         GUI::showSpeciesGUI("Little boids", firstSpecies, boidsManager);
-        GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
-        GUI::showSpeciesGUI("Big boids", thirdSpecies, boidsManager);
+        //GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
+        //GUI::showSpeciesGUI("Big boids", thirdSpecies, boidsManager);
         GUI::showFoodGUI(foodProvider);
 
         if (ImGui::Button("Reload flock"))
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
         ImGui::End();
     };
 
-    auto testShader = p6::load_shader("../src/Shaders/3D.vs.glsl", "../src/Shaders/normal.fs.glsl");
+    auto testShader = p6::load_shader("../src/Program/Shaders/3D.vs.glsl", "../src/Program/Shaders/normal.fs.glsl");
 
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
         //foodProvider.draw(ctx, testShader);
 
         boidsManager.update(obstaclesManager, foodProvider);
-        boidsManager.draw(ctx, testShader);
+        boidsManager.draw(ctx);
 
         //obstaclesManager.draw(ctx, testShader);
     };
