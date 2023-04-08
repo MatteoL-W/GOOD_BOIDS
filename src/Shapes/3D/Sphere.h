@@ -53,28 +53,33 @@ public:
         /** FIN VAO **/
     };
 
-    Sphere(const Sphere& other)
-        : _radius(other._radius)
+    Sphere(Sphere&& other)
+        : _radius(other._radius), _vbo(std::exchange(other._vbo, 0)), _vao(std::exchange(other._vao, 0))
     {}
 
-    Sphere(Sphere&& other) noexcept
-        : _radius(std::move(other._radius))
-    {}
-
-    Sphere& operator=(Sphere&& other) noexcept
+    Sphere& operator=(Sphere&& other)
     {
-        if (this != &other)
-            _radius = std::move(other._radius);
+        if (this != &other) {
+            // Clean up existing resources
+            glDeleteBuffers(1, &_vbo);
+            glDeleteVertexArrays(1, &_vao);
 
+            // Move resources from other
+            _radius = other._radius;
+            _vbo = std::exchange(other._vbo, 0);
+            _vao = std::exchange(other._vao, 0);
+        }
         return *this;
     }
 
-    // ToDo: This destructor causes heavy lags.
-    /*~Sphere()
+    ~Sphere()
     {
-        glDeleteBuffers(1, &_VBO); // 1 car 1 seul vbo
-        glDeleteVertexArrays(1, &_VAO);
-    }*/
+        glDeleteBuffers(1, &_vbo); // 1 car 1 seul vbo
+        glDeleteVertexArrays(1, &_vao);
+    }
+
+    Sphere(const Sphere& other)                = delete;
+    Sphere& operator=(const Sphere& other)     = delete;
 
     void draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
     {
@@ -101,8 +106,8 @@ public:
 
 private:
     float                                            _radius{};
-    static inline GLuint                             _vbo = 0;
-    static inline GLuint                             _vao = 0;
+    GLuint                                           _vbo = 0;
+    GLuint                                           _vao = 0;
     Program::Normal                                  _shader{};
     static inline const std::vector<Utils::Vertex3D> __vertices{glimac::sphere_vertices(1.f, 32, 16)};
 };
