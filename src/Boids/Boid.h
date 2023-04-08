@@ -13,7 +13,7 @@ public:
     explicit Boid(unsigned int _speciesId, ShapesType const&, Utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
 
     void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(p6::Context&, p6::Shader&);
+    void draw(p6::Context&);
 
     void         setForcesConfig(ForcesConfig config) { _movement.setForcesConfig(config); };
     void         setBehaviorConfig(BehaviorConfig config) { _movement.setBehaviorConfig(config); };

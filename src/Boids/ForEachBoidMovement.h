@@ -3,12 +3,10 @@
 #include "Boids/BoidMovement.h"
 #include "IForEachBoidMovement.h"
 
-class Boid;
-
 template<typename T>
 class ForEachBoidMovement : public IForEachBoidMovement {
 public:
-    explicit ForEachBoidMovement(std::vector<T> boids)
+    explicit ForEachBoidMovement(std::vector<T> const& boids)
         : _boids(boids){};
 
     void loop(std::function<void(const BoidMovement&)> boidUpdate) const override

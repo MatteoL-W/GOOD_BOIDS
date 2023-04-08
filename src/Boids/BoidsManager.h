@@ -11,15 +11,15 @@
 
 struct Species {
     // ToDo: Can do better ? We do that to increment the _id
-    Species(ShapesType shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
-        : _id(_speciesCounter++), _shape(std::move(shape)), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
+    Species(ShapesType const& shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
+        : _id(_speciesCounter++), _shape(shape), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
     {}
 
-    unsigned int   _id;
-    ShapesType     _shape;
-    int            _quantity;
-    BehaviorConfig _behaviorConfig;
-    ForcesConfig   _forcesConfig;
+    unsigned int      _id;
+    ShapesType const& _shape;
+    int               _quantity;
+    BehaviorConfig    _behaviorConfig;
+    ForcesConfig      _forcesConfig;
 
     inline static unsigned int _speciesCounter = 0;
 };
@@ -30,7 +30,7 @@ public:
     void addSpecies(p6::Context&, Species&);
 
     void update(Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(p6::Context&, p6::Shader&);
+    void draw(p6::Context&);
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);
     void updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const&);
