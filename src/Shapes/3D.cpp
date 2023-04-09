@@ -2,13 +2,13 @@
 
 namespace Shapes::ThreeDimensions {
 
-ShapesType const& get_sphere_instance(float radius)
+ShapesType const& getSphereInstance(float radius)
 {
     static ShapesType const sphere = Sphere{radius};
     return sphere;
 }
 
-ShapesType const& get_cone_instance(float radius)
+ShapesType const& getConeInstance(float radius)
 {
     static ShapesType const cone = Cone{radius};
     return cone;

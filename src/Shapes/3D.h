@@ -7,7 +7,7 @@ using ShapesType = std::variant<Shapes::ThreeDimensions::Sphere, Shapes::ThreeDi
 
 namespace Shapes::ThreeDimensions {
 
-ShapesType const& get_sphere_instance(float radius);
-ShapesType const& get_cone_instance(float radius);
+ShapesType const& getSphereInstance(float radius);
+ShapesType const& getConeInstance(float radius);
 
 } // namespace Shapes::ThreeDimensions

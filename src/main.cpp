@@ -26,32 +26,24 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST);
 
     auto firstSpecies = Species{
-        Shapes::ThreeDimensions::get_sphere_instance(0.1f),
+        Shapes::ThreeDimensions::getSphereInstance(0.1f),
         10,
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
 
     auto secondSpecies = Species{
-        Shapes::ThreeDimensions::get_cone_instance(0.2f),
+        Shapes::ThreeDimensions::getConeInstance(0.2f),
         5,
         {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
         {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
     };
-
-    /*auto thirdSpecies = Species{
-        Shapes::ThreeDimensions::get_sphere_instance(3.f),
-        3,
-        {._minSpeed = .010f, ._maxSpeed = .015f, ._foodAttractionRadius = 0.4f},
-        {._separationRadius = 0.13f, ._alignmentRadius = 0.25f, ._cohesionRadius = 0.3f},
-    };*/
 
     auto       boidsManager = BoidsManager{};
     auto const load_boids   = [&]() {
         boidsManager.reset();
         boidsManager.addSpecies(ctx, firstSpecies);
         boidsManager.addSpecies(ctx, secondSpecies);
-        //boidsManager.addSpecies(ctx, thirdSpecies);
     };
     load_boids();
 
