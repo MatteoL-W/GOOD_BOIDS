@@ -51,7 +51,8 @@ int main(int argc, char* argv[])
 
     auto obstaclesManager = Features::ObstaclesManager{};
     // obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    obstaclesManager.addOne({0.f, 0.f, 0.f}, 0.1f);
+    //obstaclesManager.addRange({-2.f, 0.f, 0.f}, {2.f, 2.f, 0.f}, 0.1f);
+    obstaclesManager.add3DMapDelimiters();
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
