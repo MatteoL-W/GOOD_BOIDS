@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
     auto obstaclesManager = Features::ObstaclesManager{};
     // obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    // obstaclesManager.addOne({0, 0}, 0.1f);
+    obstaclesManager.addOne({0.f, 0.f, 0.f}, 0.1f);
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
         boidsManager.update(obstaclesManager, foodProvider);
         boidsManager.draw(ctx);
 
-        // obstaclesManager.draw(ctx, testShader);
+        obstaclesManager.draw(ctx);
     };
 
     ctx.start();
