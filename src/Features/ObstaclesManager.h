@@ -6,8 +6,9 @@
 namespace Features {
 
 struct Obstacle {
-    glm::vec3 _position;
-    float     _radius;
+    glm::vec3 _position{};
+    float     _radius{};
+    bool      _visible = true;
 };
 
 class ObstaclesManager {
