@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         foodProvider.update(ctx);
-        // foodProvider.draw(ctx, testShader);
+        foodProvider.draw(ctx);
 
         boidsManager.update(obstaclesManager, foodProvider);
         boidsManager.draw(ctx);
