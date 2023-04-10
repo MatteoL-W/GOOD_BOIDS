@@ -1,5 +1,6 @@
 #include "Sphere.h"
 
+#include "Camera/CameraManager.h"
 #include "Utils/Mesh.h"
 
 namespace Shapes::ThreeDimensions {
@@ -11,8 +12,9 @@ Sphere::Sphere(float radius)
 void Sphere::draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
 {
     _shader._program.use();
+    auto cameraManager = Camera::getCameraInstance();
 
-    auto modelViewMatrix = glm::translate(glm::mat4{1}, glm::vec3(0.f, 0.f, -5.f));
+    auto modelViewMatrix = cameraManager.getViewMatrix();
     modelViewMatrix      = glm::translate(modelViewMatrix, transformAttributes._position);
 
     auto projectionMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), .1f, 100.f);
