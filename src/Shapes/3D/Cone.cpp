@@ -1,4 +1,6 @@
 #include "Cone.h"
+
+#include "Camera/CameraManager.h"
 #include "Utils/Mesh.h"
 
 namespace Shapes::ThreeDimensions {
@@ -10,12 +12,13 @@ Cone::Cone(float radius)
 void Cone::draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
 {
     _shader._program.use();
+    auto cameraManager = Camera::getCameraInstance();
 
     glm::vec3 up            = glm::vec3(0.f, 1.f, 0.f);
     glm::vec3 rotationAxis  = glm::cross(up, transformAttributes._velocity);
     float     rotationAngle = acos(glm::dot(up, transformAttributes._velocity));
 
-    auto modelViewMatrix = glm::translate(glm::mat4{1}, glm::vec3(0.f, 0.f, -5.f));
+    auto modelViewMatrix = cameraManager.getViewMatrix();
     modelViewMatrix      = glm::translate(modelViewMatrix, transformAttributes._position);
     modelViewMatrix      = glm::rotate(modelViewMatrix, rotationAngle, rotationAxis);
 
