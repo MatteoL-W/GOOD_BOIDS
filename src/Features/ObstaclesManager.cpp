@@ -48,7 +48,7 @@ void ObstaclesManager::addRange(glm::vec3 start, glm::vec3 end, float radius)
 //     addRange({screenHalfWidth + obstacleRadius, -screenHalfHeight}, {screenHalfWidth + obstacleRadius, screenHalfHeight}, obstacleRadius);
 // }
 
-void ObstaclesManager::addRectangle(glm::vec3 topLeft, glm::vec3 bottomRight, float radius)
+/*void ObstaclesManager::addRectangle(glm::vec3 topLeft, glm::vec3 bottomRight, float radius)
 {
     auto topRight = glm::vec3{bottomRight.x, topLeft.y, bottomRight.z};
 
@@ -81,6 +81,6 @@ void ObstaclesManager::add3DMapDelimiters()
 
     // Y
     addRectangle({-5.f, 5.f, 5.f}, {5.f, 5.f, -5.f}, .2f);
-}
+}*/
 
 } // namespace Features

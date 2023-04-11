@@ -13,29 +13,29 @@ target_include_directories(${PROJECT_NAME} PRIVATE src)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 
 # ---Choose warning level---
-if(MSVC)
+if (MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4)
-else()
+else ()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -pedantic-errors)
-endif()
+endif ()
 
 # ---Maybe enable warnings as errors---
 set(WARNINGS_AS_ERRORS OFF CACHE BOOL "ON iff you want to treat warnings as errors")
 
-if(WARNINGS_AS_ERRORS)
-    if(MSVC)
+if (WARNINGS_AS_ERRORS)
+    if (MSVC)
         target_compile_options(${PROJECT_NAME} PRIVATE /WX)
-    else()
+    else ()
         target_compile_options(${PROJECT_NAME} PRIVATE -Werror)
-    endif()
-endif()
+    endif ()
+endif ()
 
 # ---Setup Testing---
 include(FetchContent)
 FetchContent_Declare(
-    doctest
-    GIT_REPOSITORY https://github.com/doctest/doctest
-    GIT_TAG b7c21ec5ceeadb4951b00396fc1e4642dd347e5f
+        doctest
+        GIT_REPOSITORY https://github.com/doctest/doctest
+        GIT_TAG b7c21ec5ceeadb4951b00396fc1e4642dd347e5f
 )
 FetchContent_MakeAvailable(doctest)
 target_link_libraries(${PROJECT_NAME} PRIVATE doctest::doctest)
@@ -48,3 +48,18 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(p6)
 target_link_libraries(${PROJECT_NAME} PRIVATE p6::p6)
+
+# ---Add tinygltf library---
+include_directories(lib lib)
+us
+
+set(TINYGLTF_HEADER_ONLY OFF CACHE INTERNAL "" FORCE)
+set(TINYGLTF_INSTALL OFF CACHE INTERNAL "" FORCE)
+add_subdirectory(lib/tinygltf)
+target_link_libraries(${PROJECT_NAME} PRIVATE tinygltf)
+
+# Copy assets folder after a build
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets/
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+        )

@@ -3,10 +3,12 @@
 #include <doctest/doctest.h>
 #include <cstdlib>
 #include "Boids/BoidsManager.h"
+#include "Camera/CameraManager.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
 #include "Shapes/3D.h"
+#include "tiny_gltf.h"
 
 int main(int argc, char* argv[])
 {
@@ -51,8 +53,38 @@ int main(int argc, char* argv[])
 
     auto obstaclesManager = Features::ObstaclesManager{};
     // obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    //obstaclesManager.addRange({-2.f, 0.f, 0.f}, {2.f, 2.f, 0.f}, 0.1f);
-    obstaclesManager.add3DMapDelimiters();
+    // obstaclesManager.addRange({-2.f, 0.f, 0.f}, {2.f, 2.f, 0.f}, 0.1f);
+    // obstaclesManager.add3DMapDelimiters();
+
+    auto cameraManager = Camera::getCameraInstance();
+
+    // Test tinygltf
+    tinygltf::Model    model{};
+    tinygltf::TinyGLTF loader{};
+    std::string        err;
+    std::string        warn;
+
+    bool ret = loader.LoadASCIIFromFile(&model, &err, &warn, "assets/models/Fox/Fox.gltf");
+    // bool ret = loader.LoadBinaryFromFile(&model, &err, &warn, argv[1]); // for binary glTF(.glb)
+
+    if (!warn.empty())
+    {
+        throw std::runtime_error(warn.c_str());
+        printf("Warn: %s\n", warn.c_str());
+    }
+    if (!err.empty())
+    {
+        throw std::runtime_error(err.c_str());
+        printf("Err: %s\n", err.c_str());
+    }
+    if (!ret)
+    {
+        throw std::runtime_error("Failed to parse gltf");
+        printf("Failed to parse glTF\n");
+        return -1;
+    }
+    // https://gltf-viewer-tutorial.gitlab.io/initialization/
+    //  Assume the model is loaded and stored in a variable named `model`
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
@@ -73,6 +105,8 @@ int main(int argc, char* argv[])
     ctx.update = [&]() {
         ctx.background(p6::NamedColor::Gray);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        cameraManager.handleEvents(ctx);
 
         foodProvider.update(ctx);
         foodProvider.draw(ctx);
