@@ -19,8 +19,8 @@ public:
     void draw(p6::Context&);
     void addOne(glm::vec3 pos, float radius = 0.1f);
     void addRange(glm::vec3 start, glm::vec3 end, float radius = 0.1f);
-    void addRectangle(glm::vec3 topLeft, glm::vec3 bottomRight, float radius = 0.1f);
-    void add3DMapDelimiters();
+    //void addGrid(glm::vec3 topLeft, glm::vec3 bottomRight, float radius = 0.1f);
+    //void add3DMapDelimiters();
     // void add2DMapDelimiters(float screenHalfWidth, float screenHalfHeight);
 
     std::vector<SphereObstacle> const& getObstacles() const { return _obstacles; };
