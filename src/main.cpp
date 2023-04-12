@@ -84,12 +84,12 @@ int main(int argc, char* argv[])
         cameraManager.handleEvents(ctx);
 
         foodProvider.update(ctx);
-        foodProvider.draw(ctx);
+        //foodProvider.draw(ctx);
 
         boidsManager.update(obstaclesManager, foodProvider);
-        boidsManager.draw(ctx);
+        //boidsManager.draw(ctx);
 
-        obstaclesManager.draw(ctx);
+        //obstaclesManager.draw(ctx);
 
         foxModel.draw();
     };
