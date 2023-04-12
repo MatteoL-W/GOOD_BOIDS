@@ -1,0 +1,29 @@
+#pragma once
+
+#include <p6/p6.h>
+#include "string"
+#include "tiny_gltf.h"
+
+class Model {
+public:
+    Model(std::string path);
+    void draw();
+
+private:
+    void loadModel(std::string path);
+    void bindModel();
+    void bindModelNodes(tinygltf::Node &node);
+    void bindMesh(tinygltf::Mesh &mesh);
+
+    void drawNode(tinygltf::Node &node);
+    void drawMesh(tinygltf::Mesh &mesh);
+
+private:
+    tinygltf::Model    _model{};
+    tinygltf::TinyGLTF _loader{};
+
+    GLuint _vao{};
+    std::map<int, GLuint> _vbos;
+
+    std::pair<GLuint, std::map<int, GLuint>> _vaoAndEbos{};
+};

@@ -8,6 +8,7 @@
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
 #include "Shapes/3D.h"
+#include "Utils/Model.h"
 #include "tiny_gltf.h"
 
 int main(int argc, char* argv[])
@@ -58,40 +59,14 @@ int main(int argc, char* argv[])
 
     auto cameraManager = Camera::getCameraInstance();
 
-    // Test tinygltf
-    tinygltf::Model    model{};
-    tinygltf::TinyGLTF loader{};
-    std::string        err;
-    std::string        warn;
-
-    bool ret = loader.LoadASCIIFromFile(&model, &err, &warn, "assets/models/Fox/Fox.gltf");
-    // bool ret = loader.LoadBinaryFromFile(&model, &err, &warn, argv[1]); // for binary glTF(.glb)
-
-    if (!warn.empty())
-    {
-        throw std::runtime_error(warn.c_str());
-        printf("Warn: %s\n", warn.c_str());
-    }
-    if (!err.empty())
-    {
-        throw std::runtime_error(err.c_str());
-        printf("Err: %s\n", err.c_str());
-    }
-    if (!ret)
-    {
-        throw std::runtime_error("Failed to parse gltf");
-        printf("Failed to parse glTF\n");
-        return -1;
-    }
-    // https://gltf-viewer-tutorial.gitlab.io/initialization/
-    //  Assume the model is loaded and stored in a variable named `model`
+    auto foxModel = Model("assets/models/Fox/Fox.gltf");
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
         GUI::showSpeciesGUI("Little boids", firstSpecies, boidsManager);
         GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
-        // GUI::showSpeciesGUI("Big boids", thirdSpecies, boidsManager);
+
         GUI::showFoodGUI(foodProvider);
 
         if (ImGui::Button("Reload flock"))
@@ -115,6 +90,8 @@ int main(int argc, char* argv[])
         boidsManager.draw(ctx);
 
         obstaclesManager.draw(ctx);
+
+        foxModel.draw();
     };
 
     ctx.start();
