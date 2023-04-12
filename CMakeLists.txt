@@ -51,7 +51,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE p6::p6)
 
 # ---Add tinygltf library---
 include_directories(lib lib)
-us
 
 set(TINYGLTF_HEADER_ONLY OFF CACHE INTERNAL "" FORCE)
 set(TINYGLTF_INSTALL OFF CACHE INTERNAL "" FORCE)
@@ -59,7 +58,8 @@ add_subdirectory(lib/tinygltf)
 target_link_libraries(${PROJECT_NAME} PRIVATE tinygltf)
 
 # Copy assets folder after a build
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
+add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/assets/
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
-        )
+)
