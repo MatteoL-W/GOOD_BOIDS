@@ -50,8 +50,6 @@ FetchContent_MakeAvailable(p6)
 target_link_libraries(${PROJECT_NAME} PRIVATE p6::p6)
 
 # ---Add tinygltf library---
-include_directories(lib lib)
-
 set(TINYGLTF_HEADER_ONLY OFF CACHE INTERNAL "" FORCE)
 set(TINYGLTF_INSTALL OFF CACHE INTERNAL "" FORCE)
 add_subdirectory(lib/tinygltf)

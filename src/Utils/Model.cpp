@@ -1,14 +1,16 @@
 #include "Model.h"
 #include <stdexcept>
 #include <utility>
+#include "Camera/CameraManager.h"
+#include "glm/ext/matrix_clip_space.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
-Model::Model(std::string path)
+Model::Model(const std::string& path)
 {
-    loadModel(std::move(path));
+    loadModel(path);
     bindModel();
-
 }
 void Model::loadModel(const std::string& path)
 {
@@ -38,19 +40,22 @@ void Model::bindModel()
     const tinygltf::Scene& scene = _model.scenes[_model.defaultScene];
     for (int const node : scene.nodes)
     {
-        //assert((node >= 0) && (node < _model.nodes.size()));
+        // assert((node >= 0) && (node < _model.nodes.size()));
         bindModelNodes(_model.nodes[node]);
     }
 
     glBindVertexArray(0);
 
-    for (auto it = _vbos.cbegin(); it != _vbos.cend();) {
+    for (auto it = _vbos.cbegin(); it != _vbos.cend();)
+    {
         tinygltf::BufferView bufferView = _model.bufferViews[it->first];
-        if (bufferView.target != GL_ELEMENT_ARRAY_BUFFER) {
+        if (bufferView.target != GL_ELEMENT_ARRAY_BUFFER)
+        {
             glDeleteBuffers(1, &_vbos[it->first]);
             _vbos.erase(it++);
         }
-        else {
+        else
+        {
             ++it;
         }
     }
@@ -67,7 +72,7 @@ void Model::bindModelNodes(tinygltf::Node& node)
 
     for (int const i : node.children)
     {
-        //assert((node.children[i] >= 0) && (node.children[i] < _model.nodes.size()));
+        // assert((node.children[i] >= 0) && (node.children[i] < _model.nodes.size()));
         bindModelNodes(_model.nodes[i]);
     }
 }
@@ -101,9 +106,6 @@ void Model::bindMesh(tinygltf::Mesh& mesh)
     for (size_t i = 0; i < mesh.primitives.size(); ++i)
     {
         tinygltf::Primitive primitive = mesh.primitives[i];
-        if (primitive.indices < 0)
-            continue;
-
         tinygltf::Accessor indexAccessor = _model.accessors[primitive.indices];
 
         for (auto& attrib : primitive.attributes)
@@ -118,16 +120,17 @@ void Model::bindMesh(tinygltf::Mesh& mesh)
 
             int vaa = -1;
             if (attrib.first.compare("POSITION") == 0)
-                vaa = 10;
+                vaa = 0;
             if (attrib.first.compare("NORMAL") == 0)
-                vaa = 11;
+                vaa = 1;
             if (attrib.first.compare("TEXCOORD_0") == 0)
-                vaa = 12;
+                vaa = 2;
 
             if (vaa > -1)
             {
                 glEnableVertexAttribArray(vaa);
                 glVertexAttribPointer(vaa, size, accessor.componentType, accessor.normalized ? GL_TRUE : GL_FALSE, byteStride, BUFFER_OFFSET(accessor.byteOffset));
+
             }
             else
                 std::cout << "vaa missing: " << attrib.first << std::endl;
@@ -153,78 +156,88 @@ void Model::bindMesh(tinygltf::Mesh& mesh)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
                 GLenum format = GL_RGBA;
-//
-//                if (image.component == 1)
-//                {
-//                    format = GL_RED;
-//                }
-//                else if (image.component == 2)
-//                {
-//                    format = GL_RG;
-//                }
-//                else if (image.component == 3)
-//                {
-//                    format = GL_RGB;
-//                }
-//                else
-//                {
-//                    // ???
-//                }
+                //
+                //                if (image.component == 1)
+                //                {
+                //                    format = GL_RED;
+                //                }
+                //                else if (image.component == 2)
+                //                {
+                //                    format = GL_RG;
+                //                }
+                //                else if (image.component == 3)
+                //                {
+                //                    format = GL_RGB;
+                //                }
+                //                else
+                //                {
+                //                    // ???
+                //                }
 
                 GLenum type = GL_UNSIGNED_BYTE;
-//                if (image.bits == 8)
-//                {
-//                    // ok
-//                }
-//                else if (image.bits == 16)
-//                {
-//                    type = GL_UNSIGNED_SHORT;
-//                }
-//                else
-//                {
-//                    // ???
-//                }
+                //                if (image.bits == 8)
+                //                {
+                //                    // ok
+                //                }
+                //                else if (image.bits == 16)
+                //                {
+                //                    type = GL_UNSIGNED_SHORT;
+                //                }
+                //                else
+                //                {
+                //                    // ???
+                //                }
 
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, format, type, &image.image.at(0));
             }
         }
-
     }
 }
-void Model::draw()
+
+void Model::draw(p6::Context& ctx)
 {
     _shader._program.use();
+
+    auto cameraManager = Camera::getCameraInstance();
+    auto modelViewMatrix = cameraManager.getViewMatrix();
+    auto projectionMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), .1f, 100.f);
+    auto normalMatrix     = glm::transpose(glm::inverse(modelViewMatrix));
+
+    glUniformMatrix4fv(_shader.uMVMatrix, 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
+    glUniformMatrix4fv(_shader.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * modelViewMatrix));
+    glUniformMatrix4fv(_shader.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+
     glBindVertexArray(_vaoAndEbos.first);
 
-    const tinygltf::Scene &scene = _model.scenes[_model.defaultScene];
-    for (int node : scene.nodes) {
+    const tinygltf::Scene& scene = _model.scenes[_model.defaultScene];
+    for (int node : scene.nodes)
+    {
         drawNode(_model.nodes[node]);
     }
 
     glBindVertexArray(0);
 }
+
 void Model::drawNode(tinygltf::Node& node)
 {
-    if ((node.mesh >= 0) && (node.mesh < _model.meshes.size())) {
+    if ((node.mesh >= 0) && (node.mesh < _model.meshes.size()))
+    {
         drawMesh(_model.meshes[node.mesh]);
     }
-    for (int const i : node.children) {
+    for (int const i : node.children)
+    {
         drawNode(_model.nodes[i]);
     }
 }
 
 void Model::drawMesh(tinygltf::Mesh& mesh)
 {
-    for (const auto& primitive : mesh.primitives) {
-        if (primitive.indices < 0)
-            continue;
-
+    for (const auto& primitive : mesh.primitives)
+    {
         tinygltf::Accessor const indexAccessor = _model.accessors[primitive.indices];
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbos.at(indexAccessor.bufferView));
 
-        glDrawElements(primitive.mode, indexAccessor.count,
-                       indexAccessor.componentType,
-                       BUFFER_OFFSET(indexAccessor.byteOffset));
+        glDrawElements(primitive.mode, indexAccessor.count, indexAccessor.componentType, BUFFER_OFFSET(indexAccessor.byteOffset));
     }
 }

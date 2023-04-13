@@ -7,8 +7,8 @@
 
 class Model {
 public:
-    Model(std::string path);
-    void draw();
+    Model(const std::string& path);
+    void draw(p6::Context& ctx);
 
 private:
     void loadModel(const std::string& path);
