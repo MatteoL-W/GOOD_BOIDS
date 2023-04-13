@@ -1,7 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "Program/Normal.h"
+#include "Program/Texture.h"
 #include "string"
 #include "tiny_gltf.h"
 
@@ -19,10 +19,12 @@ private:
     void drawNode(tinygltf::Node& node);
     void drawMesh(tinygltf::Mesh& mesh);
 
+    void cleanVbos();
+
 private:
     tinygltf::Model    _model{};
     tinygltf::TinyGLTF _loader{};
-    Program::Normal    _shader{};
+    Program::Texture   _shader{};
 
     GLuint                _vao{};
     std::map<int, GLuint> _vbos;
