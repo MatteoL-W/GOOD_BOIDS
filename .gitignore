@@ -33,6 +33,9 @@
 build
 .cache
 
+# Lib
+lib
+
 # CLion
 .idea
 cmake-build-debug

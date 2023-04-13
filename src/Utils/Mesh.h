@@ -20,9 +20,9 @@ private:
     void generateVao();
 
 private:
-    const GLuint VERTEX_ATTR_POSITION   = 10;
-    const GLuint VERTEX_ATTR_NORMAL     = 11;
-    const GLuint VERTEX_ATTR_TEX_COORDS = 12;
+    const GLuint VERTEX_ATTR_POSITION   = 0;
+    const GLuint VERTEX_ATTR_NORMAL     = 1;
+    const GLuint VERTEX_ATTR_TEX_COORDS = 2;
 
     GLuint _vbo = 0;
     GLuint _vao = 0;

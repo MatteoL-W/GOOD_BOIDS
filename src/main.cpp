@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
 
     auto cameraManager = Camera::getCameraInstance();
 
-    auto foxModel = Model("assets/models/Fox/Fox.gltf");
+    auto foxModel = Model("assets/models/Cube/Cube.gltf");
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
@@ -87,11 +87,11 @@ int main(int argc, char* argv[])
         //foodProvider.draw(ctx);
 
         boidsManager.update(obstaclesManager, foodProvider);
-        //boidsManager.draw(ctx);
+        boidsManager.draw(ctx);
 
         //obstaclesManager.draw(ctx);
 
-        foxModel.draw();
+        foxModel.draw(ctx);
     };
 
     ctx.start();
