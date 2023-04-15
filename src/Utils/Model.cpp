@@ -17,8 +17,8 @@ void Model::loadModel(std::string const& path, bool const isBinaryGltf)
     std::string err;
     std::string warn;
 
-    bool hasLoaded = isBinaryGltf ? _loader.LoadBinaryFromFile(&_model, &err, &warn, path)
-                                  : _loader.LoadASCIIFromFile(&_model, &err, &warn, path);
+    bool const hasLoaded = isBinaryGltf ? _loader.LoadBinaryFromFile(&_model, &err, &warn, path)
+                                        : _loader.LoadASCIIFromFile(&_model, &err, &warn, path);
 
     if (!warn.empty() || !err.empty())
         throw std::runtime_error((warn.empty() ? warn.c_str() : err.c_str()));
@@ -40,8 +40,6 @@ void Model::bindModel()
     glBindVertexArray(0);
 
     cleanVbos();
-
-    _vaoAndEbos = {_vao, _vbos};
 }
 
 void Model::cleanVbos()
@@ -105,7 +103,7 @@ void Model::createAndBindTexture(const tinygltf::Texture& texture)
     GLuint textureId{};
     glGenTextures(1, &textureId);
 
-    tinygltf::Image& image = _model.images[texture.source];
+    auto& image = _model.images[texture.source];
 
     glBindTexture(GL_TEXTURE_2D, textureId);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -141,7 +139,7 @@ void Model::bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive)
         if (accessor.type != TINYGLTF_TYPE_SCALAR)
             size = accessor.type;
 
-        std::optional<int> vaa{};
+        std::optional<int> vaa = std::nullopt;
         if (attrib.first == "POSITION")
             vaa = 0;
         if (attrib.first == "NORMAL")
@@ -177,20 +175,9 @@ void Model::createEachVbos()
     }
 }
 
-void Model::draw(p6::Context& ctx)
+void Model::draw() const
 {
-    _shader._program.use();
-
-    auto cameraManager    = Camera::getCameraInstance();
-    auto modelViewMatrix  = cameraManager.getViewMatrix() * glm::scale(glm::mat4(1), glm::vec3(0.10f));
-    auto projectionMatrix = glm::perspective(glm::radians(70.f), ctx.aspect_ratio(), .1f, 100.f);
-    auto normalMatrix     = glm::transpose(glm::inverse(modelViewMatrix));
-
-    glUniformMatrix4fv(_shader.uMVMatrix, 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
-    glUniformMatrix4fv(_shader.uMVPMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * modelViewMatrix));
-    glUniformMatrix4fv(_shader.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
-
-    glBindVertexArray(_vaoAndEbos.first);
+    glBindVertexArray(_vao);
 
     auto const& scene = _model.scenes[_model.defaultScene];
     for (int const node : scene.nodes)
@@ -199,7 +186,7 @@ void Model::draw(p6::Context& ctx)
     glBindVertexArray(0);
 }
 
-void Model::drawNode(tinygltf::Node& node)
+void Model::drawNode(tinygltf::Node const & node) const
 {
     if ((node.mesh >= 0) && (node.mesh < static_cast<int>(_model.meshes.size())))
         drawMesh(_model.meshes[node.mesh]);
@@ -208,7 +195,7 @@ void Model::drawNode(tinygltf::Node& node)
         drawNode(_model.nodes[i]);
 }
 
-void Model::drawMesh(tinygltf::Mesh& mesh)
+void Model::drawMesh(tinygltf::Mesh const& mesh) const
 {
     for (const auto& primitive : mesh.primitives)
     {

@@ -14,4 +14,9 @@ ShapesType const& getConeInstance(float radius)
     return cone;
 }
 
+ShapesType const& getDuckInstance() {
+    static ShapesType const cone = Duck{};
+    return cone;
+}
+
 } // namespace Shapes::ThreeDimensions
