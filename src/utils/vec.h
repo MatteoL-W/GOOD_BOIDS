@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Utils::vec {
+namespace utils::vec {
 
 /// Constrain the vector speed between a min and a max.
 template<typename Vec>
@@ -16,4 +16,4 @@ void constrain(Vec& vector, float min, float max)
         vector = glm::normalize(vector) * max;
 }
 
-} // namespace Utils::vec
+} // namespace utils::vec

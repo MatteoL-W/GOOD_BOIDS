@@ -1,8 +1,8 @@
 #include "forcesCalculator.h"
 
-namespace Utils::forcesCalculator {
+namespace Boids::Calculator {
 
-glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, Features::ObstaclesManager const& obstacles, float boidRadius)
+glm::vec3 computeObstaclesAvoidance(Movement const& boid, Features::ObstaclesManager const& obstacles, float boidRadius)
 {
     auto force = glm::vec3{};
 
@@ -35,7 +35,7 @@ glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, Features::Obstacle
     return force;
 }
 
-glm::vec3 computeFoodAttraction(BoidMovement const& boid, Features::FoodProvider& foodProvider, float foodAttractionRadius)
+glm::vec3 computeFoodAttraction(Movement const& boid, Features::FoodProvider& foodProvider, float foodAttractionRadius)
 {
     auto const& allFood = foodProvider.getFood();
     if (allFood.empty())
@@ -63,7 +63,7 @@ glm::vec3 computeFoodAttraction(BoidMovement const& boid, Features::FoodProvider
     return glm::normalize(*closestFood - boid.getPosition()); //  ToDo : * _config._food_attraction_strength;
 }
 
-glm::vec3 computeSeparationForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
+glm::vec3 computeSeparationForce(Movement const& boid, std::vector<Movement> const& closeBoids)
 {
     auto force = glm::vec3{};
 
@@ -73,7 +73,7 @@ glm::vec3 computeSeparationForce(BoidMovement const& boid, std::vector<BoidMovem
     return force - boid.getVelocity();
 }
 
-glm::vec3 computeAlignmentForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
+glm::vec3 computeAlignmentForce(Movement const& boid, std::vector<Movement> const& closeBoids)
 {
     if (closeBoids.empty())
         return glm::vec3{};
@@ -86,7 +86,7 @@ glm::vec3 computeAlignmentForce(BoidMovement const& boid, std::vector<BoidMoveme
     return averageVelocity - boid.getVelocity();
 }
 
-glm::vec3 computeCohesionForce(BoidMovement const& boid, std::vector<BoidMovement> const& closeBoids)
+glm::vec3 computeCohesionForce(Movement const& boid, std::vector<Movement> const& closeBoids)
 {
     if (closeBoids.empty())
         return glm::vec3{};
@@ -99,4 +99,4 @@ glm::vec3 computeCohesionForce(BoidMovement const& boid, std::vector<BoidMovemen
     return averagePosition - boid.getPosition();
 }
 
-}; // namespace Utils::boidsForces
+}; // namespace Boids::Calculator

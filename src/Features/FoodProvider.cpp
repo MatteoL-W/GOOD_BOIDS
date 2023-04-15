@@ -37,7 +37,7 @@ void FoodProvider::draw(p6::Context& ctx) const
     {
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(ctx, Utils::TransformAttributes{food});
+                sphereShape.draw(ctx, utils::TransformAttributes{food});
             },
             sphereShape
         );

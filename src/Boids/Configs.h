@@ -1,5 +1,7 @@
 #pragma once
 
+namespace Boids {
+
 struct BehaviorConfig {
     float _minSpeed             = .005f;
     float _maxSpeed             = .01f;
@@ -14,3 +16,5 @@ struct ForcesConfig {
     float _cohesionRadius   = .2f;
     float _cohesionFactor   = .4f;
 };
+
+} // namespace Boids

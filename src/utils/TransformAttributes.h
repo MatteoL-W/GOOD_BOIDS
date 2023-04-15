@@ -2,7 +2,7 @@
 
 #include <p6/p6.h>
 
-namespace Utils {
+namespace utils {
 
 struct TransformAttributes {
     glm::vec3 _position{};
@@ -12,4 +12,4 @@ struct TransformAttributes {
     glm::vec3 _acceleration{};
 };
 
-} // namespace Utils
+} // namespace utils

@@ -2,19 +2,21 @@
 
 #include <p6/p6.h>
 #include "Boids/Configs.h"
-#include "Boids/IForEachBoidMovement.h"
+#include "Boids/Iterator/IForEachBoidMovement.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "utils/TransformAttributes.h"
 
-class BoidMovement {
+namespace Boids {
+
+class Movement {
 public:
-    BoidMovement() = default;
-    explicit BoidMovement(unsigned int _speciesId, Utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
-    void update(IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float boidRadius);
+    Movement() = default;
+    explicit Movement(unsigned int _speciesId, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
+    void update(Iterator::IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float boidRadius);
 
     [[nodiscard]] unsigned int               getSpeciesId() const { return _speciesId; };
-    [[nodiscard]] Utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
+    [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
     [[nodiscard]] glm::vec3                  getPosition() const { return _transformAttributes._position; };
     [[nodiscard]] glm::vec3                  getVelocity() const { return _transformAttributes._velocity; };
     [[nodiscard]] glm::vec3                  getAcceleration() const { return _transformAttributes._acceleration; };
@@ -30,15 +32,17 @@ public:
 private:
     void addFoodAttraction(Features::FoodProvider&);
     void addObstaclesAvoidance(Features::ObstaclesManager const&, float boidRadius);
-    void addClassicBoidsForces(IForEachBoidMovement const&, float boidRadius);
+    void addClassicBoidsForces(Iterator::IForEachBoidMovement const&, float boidRadius);
 
     /// Return a vector containing all the boids nearby that share the same species
-    [[nodiscard]] std::vector<BoidMovement> getNearbyAndSameBoids(IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;
-    [[nodiscard]] std::vector<BoidMovement> getNearbyBoids(IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;
+    [[nodiscard]] std::vector<Movement> getNearbyAndSameBoids(Iterator::IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;
+    [[nodiscard]] std::vector<Movement> getNearbyBoids(Iterator::IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;
 
 private:
     unsigned int               _speciesId{};
-    Utils::TransformAttributes _transformAttributes{};
+    utils::TransformAttributes _transformAttributes{};
     BehaviorConfig             _behaviorConfig{};
     ForcesConfig               _forcesConfig{};
 };
+
+} // namespace Boids
