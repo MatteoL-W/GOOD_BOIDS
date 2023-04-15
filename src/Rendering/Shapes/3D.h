@@ -1,8 +1,8 @@
 #pragma once
 
-#include "3D/Sphere.h"
-#include "3D/Cone.h"
-#include "3D/Duck.h"
+#include "Rendering/Shapes/3D/Cone.h"
+#include "Rendering/Shapes/3D/Duck.h"
+#include "Rendering/Shapes/3D/Sphere.h"
 
 using ShapesType = std::variant<Shapes::ThreeDimensions::Sphere, Shapes::ThreeDimensions::Cone, Shapes::ThreeDimensions::Duck>;
 

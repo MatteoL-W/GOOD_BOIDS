@@ -1,28 +1,28 @@
 #pragma once
 
-#include <p6/p6.h>
 #include <cstddef> // For offsetof()
-#include "Program/Normal.h"
-#include "Utils/Mesh.h"
+#include "Rendering/Programs/Normal.h"
+#include "Rendering/Engine3D/Mesh.h"
+#include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Utils/TransformAttributes.h"
-#include "Utils/geometriesVertices.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "p6/p6.h"
 
 namespace Shapes::ThreeDimensions {
 
-class Cone {
+class Sphere {
 public:
-    explicit Cone(float radius);
+    explicit Sphere(float radius);
 
     // We delete the copy constructors because the class has resources that cannot be copied
-    Cone(const Cone& other)            = delete;
-    Cone& operator=(const Cone& other) = delete;
+    Sphere(const Sphere& other)            = delete;
+    Sphere& operator=(const Sphere& other) = delete;
 
     // Move constructors
-    Cone(Cone&& other) noexcept = default;
-    Cone& operator=(Cone&& other) noexcept = default;
+    Sphere(Sphere&& other) noexcept = default;
+    Sphere& operator=(Sphere&& other) noexcept = default;
 
 public:
     void  draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const;

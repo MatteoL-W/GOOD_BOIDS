@@ -3,11 +3,11 @@
 #include <doctest/doctest.h>
 #include <cstdlib>
 #include "Boids/BoidsManager.h"
-#include "Camera/CameraManager.h"
+#include "Cameras/CameraManager.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
-#include "Shapes/3D.h"
+#include "Rendering/Shapes/3D.h"
 #include "tiny_gltf.h"
 
 int main(int argc, char* argv[])

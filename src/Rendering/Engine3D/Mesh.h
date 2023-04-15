@@ -1,7 +1,7 @@
 #pragma once
 
-#include <p6/p6.h>
-#include "Vertex3D.hpp"
+#include "Rendering/Geometries/Vertex3D.hpp"
+#include "p6/p6.h"
 
 namespace RenderEngine {
 

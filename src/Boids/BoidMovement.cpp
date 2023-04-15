@@ -1,6 +1,6 @@
 #include "BoidMovement.h"
-#include "Utils/boidsForces.h"
 #include "Utils/vec.h"
+#include "forcesCalculator.h"
 
 BoidMovement::BoidMovement(unsigned int speciesId, Utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _speciesId(speciesId), _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
@@ -22,19 +22,19 @@ void BoidMovement::update(IForEachBoidMovement const& boids, Features::Obstacles
 
 void BoidMovement::addFoodAttraction(Features::FoodProvider& foodProvider)
 {
-    addToAcceleration(Utils::boidsForces::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); // ToDo : * _config._food_attraction_strength;);
+    addToAcceleration(Utils::forcesCalculator::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); // ToDo : * _config._food_attraction_strength;);
 }
 
 void BoidMovement::addObstaclesAvoidance(Features::ObstaclesManager const& obstacles, float boidRadius)
 {
-    addToAcceleration(Utils::boidsForces::computeObstaclesAvoidance(*this, obstacles, boidRadius)); // ToDo : * _config._food_attraction_strength;);
+    addToAcceleration(Utils::forcesCalculator::computeObstaclesAvoidance(*this, obstacles, boidRadius)); // ToDo : * _config._food_attraction_strength;);
 }
 
 void BoidMovement::addClassicBoidsForces(IForEachBoidMovement const& boids, float boidRadius)
 {
-    auto const separation = Utils::boidsForces::computeSeparationForce(*this, getNearbyBoids(boids, boidRadius, _forcesConfig._separationRadius)) * _forcesConfig._separationFactor;
-    auto const alignment  = Utils::boidsForces::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, boidRadius, _forcesConfig._alignmentRadius)) * _forcesConfig._alignmentFactor;
-    auto const cohesion   = Utils::boidsForces::computeCohesionForce(*this, getNearbyAndSameBoids(boids, boidRadius, _forcesConfig._cohesionRadius)) * _forcesConfig._cohesionFactor;
+    auto const separation = Utils::forcesCalculator::computeSeparationForce(*this, getNearbyBoids(boids, boidRadius, _forcesConfig._separationRadius)) * _forcesConfig._separationFactor;
+    auto const alignment  = Utils::forcesCalculator::computeAlignmentForce(*this, getNearbyAndSameBoids(boids, boidRadius, _forcesConfig._alignmentRadius)) * _forcesConfig._alignmentFactor;
+    auto const cohesion   = Utils::forcesCalculator::computeCohesionForce(*this, getNearbyAndSameBoids(boids, boidRadius, _forcesConfig._cohesionRadius)) * _forcesConfig._cohesionFactor;
 
     addToAcceleration(separation);
     addToAcceleration(alignment);

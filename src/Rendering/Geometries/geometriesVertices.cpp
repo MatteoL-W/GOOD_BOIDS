@@ -1,8 +1,8 @@
 #include "geometriesVertices.hpp"
 #include <cmath>
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
 #include <vector>
+#include "glpp-extended/lib/glm/glm/glm.hpp"
+#include "glpp-extended/lib/glm/glm/gtc/constants.hpp"
 
 namespace glimac {
 

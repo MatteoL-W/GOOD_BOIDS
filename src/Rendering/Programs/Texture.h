@@ -1,6 +1,6 @@
 #pragma once
 
-#include <p6/p6.h>
+#include "p6/p6.h"
 
 namespace Program {
 
@@ -12,7 +12,7 @@ struct Texture {
     GLint uNormalMatrix{};
 
     Texture()
-        : _program{p6::load_shader("../src/Program/Shaders/3D.vs.glsl", "../src/Program/Shaders/texture.fs.glsl")}
+        : _program{p6::load_shader("../src/Rendering/Programs/Shaders/3D.vs.glsl", "../src/Rendering/Programs/Shaders/texture.fs.glsl")}
         , uMVPMatrix(glGetUniformLocation(_program.id(), "uMVPMatrix"))
         , uMVMatrix(glGetUniformLocation(_program.id(), "uMVMatrix"))
         , uNormalMatrix(glGetUniformLocation(_program.id(), "uNormalMatrix"))
