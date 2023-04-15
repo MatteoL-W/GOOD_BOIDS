@@ -1,6 +1,6 @@
 #include "FoodProvider.h"
 #include <chrono>
-#include "Rendering/Shapes/3D.h"
+#include "Rendering/Shapes/ShapesRegister.h"
 
 namespace Features {
 
@@ -32,7 +32,7 @@ void FoodProvider::update(p6::Context& ctx)
 
 void FoodProvider::draw(p6::Context& ctx) const
 {
-    auto const& sphereShape = Shapes::ThreeDimensions::getSphereInstance(_config._radius);
+    auto const& sphereShape = Rendering::Shapes::getSphereInstance(_config._radius);
     for (auto const& food : _foods)
     {
         std::visit(

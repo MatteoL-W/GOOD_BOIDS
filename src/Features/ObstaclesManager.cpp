@@ -1,5 +1,5 @@
 #include "ObstaclesManager.h"
-#include "Rendering/Shapes/3D.h"
+#include "Rendering/Shapes/ShapesRegister.h"
 
 namespace Features {
 
@@ -7,7 +7,7 @@ void ObstaclesManager::draw(p6::Context& ctx)
 {
     for (auto const& obstacle : _obstacles)
     {
-        auto const& sphereShape = Shapes::ThreeDimensions::getSphereInstance(obstacle._radius);
+        auto const& sphereShape = Rendering::Shapes::getSphereInstance(obstacle._radius);
         if (!obstacle._visible)
             return;
 

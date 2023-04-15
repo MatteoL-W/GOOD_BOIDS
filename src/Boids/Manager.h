@@ -7,7 +7,7 @@
 #include "Boids/Configs.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
-#include "Rendering/Shapes/3D.h"
+#include "Rendering/Shapes/ShapesRegister.h"
 
 namespace Boids {
 

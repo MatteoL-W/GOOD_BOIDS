@@ -2,13 +2,13 @@
 #include "Cameras/CameraManager.h"
 #include "Rendering/Engine3D/Mesh.h"
 
-namespace Shapes::ThreeDimensions {
+namespace Rendering::Shapes {
 
 Cone::Cone(float radius)
-    : _radius(radius), _vertices(glimac::cone_vertices(getRadius(), getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
+    : _radius(radius), _vertices(Rendering::Geometries::cone_vertices(getRadius(), getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
 {}
 
-void Cone::draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
+void Cone::draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const
 {
     _shader._program.use();
     auto cameraManager = Camera::getCameraInstance();
@@ -33,4 +33,4 @@ void Cone::draw(p6::Context& ctx, Utils::TransformAttributes const& transformAtt
     glBindVertexArray(0);
 }
 
-} // namespace Shapes::ThreeDimensions
+} // namespace Rendering::Shapes

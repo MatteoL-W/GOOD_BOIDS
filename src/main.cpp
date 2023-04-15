@@ -7,7 +7,7 @@
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
-#include "Rendering/Shapes/3D.h"
+#include "Rendering/Shapes/ShapesRegister.h"
 #include "tiny_gltf.h"
 
 int main(int argc, char* argv[])
@@ -30,14 +30,14 @@ int main(int argc, char* argv[])
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     auto firstSpecies = Boids::Species{
-        Shapes::ThreeDimensions::getDuckInstance(),
+        Rendering::Shapes::getDuckInstance(),
         10,
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
 
     auto secondSpecies = Boids::Species{
-        Shapes::ThreeDimensions::getConeInstance(0.2f),
+        Rendering::Shapes::getConeInstance(0.2f),
         5,
         {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
         {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
