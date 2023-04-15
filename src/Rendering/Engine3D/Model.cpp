@@ -1,8 +1,5 @@
 #include "Model.h"
 #include <stdexcept>
-#include "Camera/CameraManager.h"
-#include "glm/ext/matrix_clip_space.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 #define BUFFER_OFFSET(i) ((char*)NULL + (i))
 

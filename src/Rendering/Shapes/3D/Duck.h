@@ -1,15 +1,15 @@
 #pragma once
 
-#include <p6/p6.h>
 #include <cstddef> // For offsetof()
-#include "Program/Normal.h"
-#include "Utils/Mesh.h"
-#include "Utils/Model.h"
+#include "Rendering/Programs/Normal.h"
+#include "Rendering/Engine3D/Mesh.h"
+#include "Rendering/Engine3D/Model.h"
+#include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Utils/TransformAttributes.h"
-#include "Utils/geometriesVertices.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "p6/p6.h"
 
 namespace Shapes::ThreeDimensions {
 

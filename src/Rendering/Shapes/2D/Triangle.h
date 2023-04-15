@@ -1,22 +1,23 @@
 #pragma once
 
-#include <p6/p6.h>
-#include "utils/TransformAttributes.h"
+#include "Utils/TransformAttributes.h"
+#include "p6/p6.h"
 
 namespace Shapes::TwoDimensions {
 
-class Circle {
+class Triangle {
 public:
-    Circle() = default;
+    Triangle() = default;
 
-    explicit Circle(float radius)
+    explicit Triangle(float radius)
         : _radius(radius){};
 
     void draw(p6::Context& ctx, Utils::TransformAttributes const& transformAttributes) const
     {
-        ctx.circle(
+        ctx.equilateral_triangle(
             p6::Center{transformAttributes._position},
-            p6::Radius{_radius}
+            p6::Radius{_radius},
+            p6::Rotation{p6::Angle{transformAttributes._velocity}}
         );
     }
 

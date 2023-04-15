@@ -5,7 +5,7 @@
 #include "Boids/Configs.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
-#include "Shapes/3D.h"
+#include "Rendering/Shapes/3D.h"
 #include "utils/TransformAttributes.h"
 
 class Boid {

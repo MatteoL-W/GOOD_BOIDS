@@ -1,7 +1,7 @@
 #pragma once
 
-#include <p6/p6.h>
-#include "utils/TransformAttributes.h"
+#include "Utils/TransformAttributes.h"
+#include "p6/p6.h"
 
 namespace Shapes::TwoDimensions {
 

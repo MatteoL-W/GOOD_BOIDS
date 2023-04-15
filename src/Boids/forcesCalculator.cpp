@@ -1,6 +1,6 @@
-#include "boidsForces.h"
+#include "forcesCalculator.h"
 
-namespace Utils::boidsForces {
+namespace Utils::forcesCalculator {
 
 glm::vec3 computeObstaclesAvoidance(BoidMovement const& boid, Features::ObstaclesManager const& obstacles, float boidRadius)
 {

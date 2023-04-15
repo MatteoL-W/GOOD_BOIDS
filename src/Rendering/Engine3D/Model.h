@@ -1,7 +1,7 @@
 #pragma once
 
-#include <p6/p6.h>
-#include "Program/Texture.h"
+#include "Rendering/Programs/Texture.h"
+#include "p6/p6.h"
 #include "string"
 #include "tiny_gltf.h"
 
