@@ -7,32 +7,29 @@
 
 class Model {
 public:
-    Model(std::string const& path, bool isBinaryGltf = false);
-    void draw(p6::Context& ctx);
+    explicit Model(std::string const& path, bool isBinaryGltf = false);
+    void draw() const;
 
 private:
     void loadModel(std::string const& path, bool isBinaryGltf);
     void bindModel();
     void bindModelNodes(tinygltf::Node&);
     void bindMesh(tinygltf::Mesh&);
+    void bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive);
 
-    std::optional<const tinygltf::Texture*> getTexture(tinygltf::Model& model);
+    static std::optional<const tinygltf::Texture*> getTexture(tinygltf::Model& model);
 
-    void drawNode(tinygltf::Node&);
-    void drawMesh(tinygltf::Mesh&);
+    void drawNode(tinygltf::Node const&) const;
+    void drawMesh(tinygltf::Mesh const&) const;
 
+    void createAndBindTexture(const tinygltf::Texture& texture);
     void createEachVbos();
     void cleanVbos();
 
 private:
     tinygltf::Model    _model{};
     tinygltf::TinyGLTF _loader{};
-    Program::Texture   _shader{};
 
     GLuint                _vao{};
     std::map<int, GLuint> _vbos;
-
-    std::pair<GLuint, std::map<int, GLuint>> _vaoAndEbos{};
-    void                                     bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive);
-    void                                     createAndBindTexture(const tinygltf::Texture& texture);
 };

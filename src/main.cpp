@@ -8,7 +8,6 @@
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
 #include "Shapes/3D.h"
-#include "Utils/Model.h"
 #include "tiny_gltf.h"
 
 int main(int argc, char* argv[])
@@ -27,9 +26,11 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     auto firstSpecies = Species{
-        Shapes::ThreeDimensions::getSphereInstance(0.1f),
+        Shapes::ThreeDimensions::getDuckInstance(),
         10,
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
@@ -59,8 +60,6 @@ int main(int argc, char* argv[])
 
     auto cameraManager = Camera::getCameraInstance();
 
-    auto foxModel = Model("assets/models/Duck/Duck.gltf");
-
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
@@ -84,14 +83,12 @@ int main(int argc, char* argv[])
         cameraManager.handleEvents(ctx);
 
         foodProvider.update(ctx);
-        //foodProvider.draw(ctx);
+        foodProvider.draw(ctx);
 
         boidsManager.update(obstaclesManager, foodProvider);
-        //boidsManager.draw(ctx);
+        boidsManager.draw(ctx);
 
         //obstaclesManager.draw(ctx);
-
-        foxModel.draw(ctx);
     };
 
     ctx.start();
