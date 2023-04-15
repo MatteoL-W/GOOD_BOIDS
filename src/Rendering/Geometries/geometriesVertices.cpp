@@ -4,9 +4,9 @@
 #include "glpp-extended/lib/glm/glm/glm.hpp"
 #include "glpp-extended/lib/glm/glm/gtc/constants.hpp"
 
-namespace glimac {
+namespace Rendering::Geometries {
 
-std::vector<Utils::Vertex3D> sphere_vertices(float radius, size_t discLat, size_t discLong) // NOLINT(bugprone-easily-swappable-parameters, readability-inconsistent-declaration-parameter-name)
+std::vector<Rendering::Geometries::Vertex3D> sphere_vertices(float radius, size_t discLat, size_t discLong) // NOLINT(bugprone-easily-swappable-parameters, readability-inconsistent-declaration-parameter-name)
 {
     // ToDo: Attention ! dans cette implantation on duplique beaucoup de sommets. Une meilleur stratégie est de passer
     // par un Index Buffer Object, que nous verrons dans les prochains TDs
@@ -17,7 +17,7 @@ std::vector<Utils::Vertex3D> sphere_vertices(float radius, size_t discLat, size_
     const float phi   = 2.f * glm::pi<float>() / fDiscLat;
     const float theta = glm::pi<float>() / fDiscLong;
 
-    std::vector<Utils::Vertex3D> data;
+    std::vector<Rendering::Geometries::Vertex3D> data;
 
     // Construit l'ensemble des vertex
     for (size_t j = 0; j <= discLong; ++j)
@@ -29,8 +29,8 @@ std::vector<Utils::Vertex3D> sphere_vertices(float radius, size_t discLat, size_
 
         for (size_t i = 0; i <= discLat; ++i)
         {
-            const auto  fi = static_cast<float>(i);
-            Utils::Vertex3D vertex{};
+            const auto                      fi = static_cast<float>(i);
+            Rendering::Geometries::Vertex3D vertex{};
 
             vertex._texture.x = fi / fDiscLat;
             vertex._texture.y = 1.f - fj / fDiscLong;
@@ -45,7 +45,7 @@ std::vector<Utils::Vertex3D> sphere_vertices(float radius, size_t discLat, size_
         }
     }
 
-    std::vector<Utils::Vertex3D> vertices{};
+    std::vector<Rendering::Geometries::Vertex3D> vertices{};
     for (size_t j = 0; j < discLong; ++j)
     {
         const size_t offset = j * (discLat + 1);
@@ -63,7 +63,7 @@ std::vector<Utils::Vertex3D> sphere_vertices(float radius, size_t discLat, size_
     return vertices;
 }
 
-std::vector<Utils::Vertex3D> cone_vertices(float height, float radius, size_t discLat, size_t discHeight)
+std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float radius, size_t discLat, size_t discHeight)
 {
     // ToDo: Attention ! dans cette implantation on duplique beaucoup de sommets. Une meilleur stratégie est de passer
     // par un Index Buffer Object, que nous verrons dans les prochains TDs
@@ -74,7 +74,7 @@ std::vector<Utils::Vertex3D> cone_vertices(float height, float radius, size_t di
     const float phi = 2.f * glm::pi<float>() / fDiscLat;
     const float h   = height / fDiscHeight;
 
-    std::vector<Utils::Vertex3D> data;
+    std::vector<Rendering::Geometries::Vertex3D> data;
 
     // Construit l'ensemble des vertex
     for (size_t j = 0; j <= discHeight; ++j)
@@ -84,7 +84,7 @@ std::vector<Utils::Vertex3D> cone_vertices(float height, float radius, size_t di
             const auto fj = static_cast<float>(j);
             const auto fi = static_cast<float>(i);
 
-            Utils::Vertex3D vertex{};
+            Rendering::Geometries::Vertex3D vertex{};
 
             vertex._texture.x = fi / fDiscLat;
             vertex._texture.y = fj / fDiscHeight;
@@ -102,7 +102,7 @@ std::vector<Utils::Vertex3D> cone_vertices(float height, float radius, size_t di
         }
     }
 
-    std::vector<Utils::Vertex3D> vertices{};
+    std::vector<Rendering::Geometries::Vertex3D> vertices{};
     for (size_t j = 0; j < discHeight; ++j)
     {
         const size_t offset = j * discLat;
@@ -120,4 +120,4 @@ std::vector<Utils::Vertex3D> cone_vertices(float height, float radius, size_t di
     return vertices;
 }
 
-} // namespace glimac
+} // namespace Rendering::Geometries

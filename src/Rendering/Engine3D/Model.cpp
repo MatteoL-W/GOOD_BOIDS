@@ -183,7 +183,7 @@ void Model::draw() const
     glBindVertexArray(0);
 }
 
-void Model::drawNode(tinygltf::Node const & node) const
+void Model::drawNode(tinygltf::Node const& node) const
 {
     if ((node.mesh >= 0) && (node.mesh < static_cast<int>(_model.meshes.size())))
         drawMesh(_model.meshes[node.mesh]);

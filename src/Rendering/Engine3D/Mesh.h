@@ -7,7 +7,7 @@ namespace RenderEngine {
 
 class Mesh {
 public:
-    explicit Mesh(std::vector<Utils::Vertex3D>);
+    explicit Mesh(std::vector<Rendering::Geometries::Vertex3D>);
     Mesh(Mesh&& other) noexcept;
     Mesh& operator=(Mesh&& other) noexcept;
     ~Mesh();
@@ -16,7 +16,7 @@ public:
     GLuint getVao() const { return _vao; };
 
 private:
-    void generateVbo(std::vector<Utils::Vertex3D> vertices);
+    void generateVbo(std::vector<Rendering::Geometries::Vertex3D> vertices);
     void generateVao();
 
 private:

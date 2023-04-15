@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace Utils {
+namespace Rendering::Geometries {
 
 struct Vertex3D {
     glm::vec3 _position;
@@ -10,4 +10,4 @@ struct Vertex3D {
     glm::vec2 _texture;
 };
 
-} // namespace Utils
+} // namespace Rendering::Geometries

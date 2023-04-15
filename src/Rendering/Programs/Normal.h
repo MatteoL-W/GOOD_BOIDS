@@ -2,7 +2,7 @@
 
 #include "p6/p6.h"
 
-namespace Program {
+namespace Rendering::Programs {
 
 struct Normal {
     p6::Shader _program;
@@ -19,4 +19,4 @@ struct Normal {
     {}
 };
 
-} // namespace Program
+} // namespace Rendering::Programs

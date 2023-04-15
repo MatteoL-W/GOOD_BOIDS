@@ -1,17 +1,17 @@
 #pragma once
 
 #include <cstddef> // For offsetof()
-#include "Rendering/Programs/Normal.h"
 #include "Rendering/Engine3D/Mesh.h"
 #include "Rendering/Engine3D/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
+#include "Rendering/Programs/Normal.h"
 #include "Utils/TransformAttributes.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
 
-namespace Shapes::ThreeDimensions {
+namespace Rendering::Shapes {
 
 class Duck {
 public:
@@ -26,14 +26,14 @@ public:
     Duck& operator=(Duck&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context&, Utils::TransformAttributes const&) const;
+    void  draw(p6::Context&, utils::TransformAttributes const&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
-    float            _radius{};
-    Program::Texture _shader{};
-    Model            _model;
+    float                        _radius{};
+    Rendering::Programs::Texture _shader{};
+    Model                        _model;
 };
 
-} // namespace Shapes::ThreeDimensions
+} // namespace Rendering::Shapes

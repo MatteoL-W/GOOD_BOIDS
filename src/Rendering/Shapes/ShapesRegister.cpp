@@ -1,6 +1,6 @@
-#include "3D.h"
+#include "ShapesRegister.h"
 
-namespace Shapes::ThreeDimensions {
+namespace Rendering::Shapes {
 
 ShapesType const& getSphereInstance(float radius)
 {
@@ -14,9 +14,10 @@ ShapesType const& getConeInstance(float radius)
     return cone;
 }
 
-ShapesType const& getDuckInstance() {
+ShapesType const& getDuckInstance()
+{
     static ShapesType const cone = Duck{};
     return cone;
 }
 
-} // namespace Shapes::ThreeDimensions
+} // namespace Rendering::Shapes
