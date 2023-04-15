@@ -9,6 +9,8 @@
 #include "Features/ObstaclesManager.h"
 #include "Rendering/Shapes/3D.h"
 
+namespace Boids {
+
 struct Species {
     // ToDo: Can do better ? We do that to increment the _id
     Species(ShapesType const& shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
@@ -24,9 +26,9 @@ struct Species {
     inline static unsigned int _speciesCounter = 0;
 };
 
-class BoidsManager {
+class Manager {
 public:
-    BoidsManager() = default;
+    Manager() = default;
     void addSpecies(p6::Context&, Species&);
 
     void update(Features::ObstaclesManager const&, Features::FoodProvider&);
@@ -39,3 +41,5 @@ public:
 private:
     std::vector<Boid> _boids{};
 };
+
+} // namespace Boids

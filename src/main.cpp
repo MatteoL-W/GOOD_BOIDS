@@ -2,7 +2,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <cstdlib>
-#include "Boids/BoidsManager.h"
+#include "Boids/Manager.h"
 #include "Cameras/CameraManager.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
@@ -29,21 +29,21 @@ int main(int argc, char* argv[])
     glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    auto firstSpecies = Species{
+    auto firstSpecies = Boids::Species{
         Shapes::ThreeDimensions::getDuckInstance(),
         10,
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
 
-    auto secondSpecies = Species{
+    auto secondSpecies = Boids::Species{
         Shapes::ThreeDimensions::getConeInstance(0.2f),
         5,
         {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
         {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
     };
 
-    auto       boidsManager = BoidsManager{};
+    auto       boidsManager = Boids::Manager{};
     auto const load_boids   = [&]() {
         boidsManager.reset();
         boidsManager.addSpecies(ctx, firstSpecies);

@@ -1,23 +1,25 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "BoidMovement.h"
 #include "Boids/Configs.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
+#include "Movement.h"
 #include "Rendering/Shapes/3D.h"
 #include "utils/TransformAttributes.h"
 
+namespace Boids {
+
 class Boid {
 public:
-    explicit Boid(unsigned int _speciesId, ShapesType const&, Utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit Boid(unsigned int _speciesId, ShapesType const&, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
 
     void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&);
     void draw(p6::Context&);
 
     void         setForcesConfig(ForcesConfig config) { _movement.setForcesConfig(config); };
     void         setBehaviorConfig(BehaviorConfig config) { _movement.setBehaviorConfig(config); };
-    BoidMovement getMovement() const { return _movement; };
+    Movement     getMovement() const { return _movement; };
     unsigned int getSpeciesId() const { return _speciesId; };
 
 private:
@@ -26,5 +28,7 @@ private:
 private:
     unsigned int      _speciesId{};
     ShapesType const& _shape;
-    BoidMovement      _movement{};
+    Movement          _movement{};
 };
+
+} // namespace Boids
