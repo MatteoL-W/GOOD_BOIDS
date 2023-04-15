@@ -61,3 +61,5 @@ add_custom_command(
         ${CMAKE_SOURCE_DIR}/assets/
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
 )
+
+set(CMAKE_EXE_LINKER_FLAGS "-static")
