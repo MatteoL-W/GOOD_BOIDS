@@ -24,12 +24,12 @@ void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::Obs
 
 void Movement::addFoodAttraction(Features::FoodProvider& foodProvider)
 {
-    addToAcceleration(Boids::Calculator::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius)); // ToDo : * _config._food_attraction_strength;);
+    addToAcceleration(Boids::Calculator::computeFoodAttraction(*this, foodProvider, _behaviorConfig._foodAttractionRadius));
 }
 
 void Movement::addObstaclesAvoidance(Features::ObstaclesManager const& obstacles, float boidRadius)
 {
-    addToAcceleration(Boids::Calculator::computeObstaclesAvoidance(*this, obstacles, boidRadius)); // ToDo : * _config._food_attraction_strength;);
+    addToAcceleration(Boids::Calculator::computeObstaclesAvoidance(*this, obstacles, boidRadius));
 }
 
 void Movement::addClassicBoidsForces(Iterator::IForEachBoidMovement const& boids, float boidRadius)
@@ -58,7 +58,7 @@ static std::vector<Movement> getNearbyBoidsFromBoid(
 
         /// If no species is specified, we add every close boids.
         /// If a species is specified, we add close boids having this species.
-        // ToDo: Ca devrait être scannedBoid.getRadius() à la place du 2eme boidRadius. Comment fix ?
+        // ToDo: It should be scannedBoid.getRadius() instead of the second boidRadius. How to fix ?
         float const actualDistance = glm::distance(scannedBoid.getPosition(), boid.getPosition()) - boidRadius - boidRadius;
         bool const  hasSameSpecies = speciesId.has_value() && boid.getSpeciesId() == speciesId;
         if (actualDistance < proximityRadius && (!speciesId.has_value() || hasSameSpecies))

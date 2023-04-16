@@ -4,7 +4,6 @@
 
 namespace Boids {
 
-// ToDo : Doublon speciesId ?
 Boid::Boid(unsigned int speciesId, ShapesType const& shape, utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _speciesId(speciesId), _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
 {}
@@ -32,4 +31,4 @@ float Boid::getRadius() const
     return radius;
 }
 
-}
+} // namespace Boids

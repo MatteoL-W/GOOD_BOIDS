@@ -12,7 +12,7 @@
 namespace Boids {
 
 struct Species {
-    // ToDo: Can do better ? We do that to increment the _id
+    // We specify the constructor in order to increment speciesCounter.
     Species(ShapesType const& shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
         : _id(_speciesCounter++), _shape(shape), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
     {}
