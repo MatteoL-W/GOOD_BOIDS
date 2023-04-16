@@ -1,6 +1,6 @@
 #include "Movement.h"
 #include "Boids/Calculator/forcesCalculator.h"
-#include "Utils/vec.h"
+#include "utils/vec.h"
 
 namespace Boids {
 
