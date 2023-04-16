@@ -13,9 +13,9 @@ void Cone::draw(p6::Context& ctx, utils::TransformAttributes const& transformAtt
     _shader._program.use();
     auto cameraManager = Camera::getCameraInstance();
 
-    glm::vec3 up            = glm::vec3(0.f, 1.f, 0.f);
-    glm::vec3 rotationAxis  = glm::cross(up, transformAttributes._velocity);
-    float     rotationAngle = acos(glm::dot(up, transformAttributes._velocity));
+    auto const  up            = glm::vec3(0.f, 1.f, 0.f);
+    auto const  rotationAxis  = glm::cross(up, transformAttributes._velocity);
+    float const rotationAngle = glm::acos(glm::dot(up, transformAttributes._velocity));
 
     auto modelViewMatrix = cameraManager.getViewMatrix();
     modelViewMatrix      = glm::translate(modelViewMatrix, transformAttributes._position);
@@ -29,7 +29,7 @@ void Cone::draw(p6::Context& ctx, utils::TransformAttributes const& transformAtt
     glUniformMatrix4fv(_shader.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
     glBindVertexArray(_mesh.getVao());
-    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_vertices.size()));
     glBindVertexArray(0);
 }
 

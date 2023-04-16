@@ -24,7 +24,7 @@ void Sphere::draw(p6::Context& ctx, utils::TransformAttributes const& transformA
     glUniformMatrix4fv(_shader.uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
 
     glBindVertexArray(_mesh.getVao());
-    glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(_vertices.size()));
     glBindVertexArray(0);
 }
 
