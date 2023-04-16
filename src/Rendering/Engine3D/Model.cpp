@@ -1,7 +1,11 @@
 #include "Model.h"
 #include <stdexcept>
 
-#define BUFFER_OFFSET(i) ((char*)NULL + (i))
+template<typename T>
+inline constexpr T* bufferOffset(std::size_t offset)
+{
+    return reinterpret_cast<T*>(static_cast<std::uintptr_t>(offset));
+}
 
 Model::Model(std::string const& path, bool const isBinaryGltf)
 {
@@ -148,7 +152,7 @@ void Model::bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive)
         if (vaa.has_value())
         {
             glEnableVertexAttribArray(vaa.value());
-            glVertexAttribPointer(vaa.value(), size, accessor.componentType, accessor.normalized ? GL_TRUE : GL_FALSE, byteStride, BUFFER_OFFSET(accessor.byteOffset));
+            glVertexAttribPointer(vaa.value(), size, accessor.componentType, accessor.normalized ? GL_TRUE : GL_FALSE, byteStride, bufferOffset<char>(accessor.byteOffset));
         }
     }
 }
@@ -169,7 +173,7 @@ void Model::createEachVbos()
         _vbos[static_cast<int>(i)] = vbo;
 
         glBindBuffer(bufferView.target, vbo);
-        glBufferData(bufferView.target, static_cast<GLsizeiptr>(bufferView.byteLength), &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
+        glBufferData(bufferView.target, static_cast<GLsizeiptr>(bufferView.byteLength), std::next(std::data(buffer.data), static_cast<int>(bufferView.byteOffset)), GL_STATIC_DRAW);
     }
 }
 
@@ -199,6 +203,6 @@ void Model::drawMesh(tinygltf::Mesh const& mesh) const
     {
         auto const indexAccessor = _model.accessors[primitive.indices];
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbos.at(indexAccessor.bufferView));
-        glDrawElements(primitive.mode, indexAccessor.count, indexAccessor.componentType, BUFFER_OFFSET(indexAccessor.byteOffset));
+        glDrawElements(primitive.mode, static_cast<GLsizei>(indexAccessor.count), indexAccessor.componentType, bufferOffset<char>(indexAccessor.byteOffset));
     }
 }
