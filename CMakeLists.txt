@@ -54,6 +54,7 @@ set(TINYGLTF_HEADER_ONLY OFF CACHE INTERNAL "" FORCE)
 set(TINYGLTF_INSTALL OFF CACHE INTERNAL "" FORCE)
 add_subdirectory(lib/tinygltf)
 target_link_libraries(${PROJECT_NAME} PRIVATE tinygltf)
+add_compile_options(-DTINYGLTF_USE_CPP14)
 
 # Copy assets folder after a build
 add_custom_command(

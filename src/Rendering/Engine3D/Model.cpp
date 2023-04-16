@@ -124,6 +124,7 @@ void Model::createAndBindTexture(const tinygltf::Texture& texture)
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.width, image.height, 0, format, type, &image.image.at(0));
 }
+
 void Model::bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive)
 {
     for (auto const& attrib : primitive.attributes)
@@ -165,10 +166,10 @@ void Model::createEachVbos()
 
         GLuint vbo = 0;
         glGenBuffers(1, &vbo);
-        _vbos[i] = vbo;
+        _vbos[static_cast<int>(i)] = vbo;
 
         glBindBuffer(bufferView.target, vbo);
-        glBufferData(bufferView.target, bufferView.byteLength, &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
+        glBufferData(bufferView.target, static_cast<GLsizeiptr>(bufferView.byteLength), &buffer.data.at(0) + bufferView.byteOffset, GL_STATIC_DRAW);
     }
 }
 
