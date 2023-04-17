@@ -18,7 +18,7 @@ void main() {
 
     vPosition_vs = vec3(uMVMatrix * vertexPosition);
     vNormal_vs = vec3(uNormalMatrix * vertexNormal);
-    vTexCoords = aVertexTexCoords;
+    vTexCoords = vec2(aVertexTexCoords.x, 1-aVertexTexCoords.y);
 
     gl_Position = uMVPMatrix * vertexPosition;
 }
