@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Rendering/Programs/Texture.h"
-#include "p6/p6.h"
-#include "string"
-#include "tiny_gltf.h"
+#include <p6/p6.h>
+#include <string>
+#include <tiny_gltf.h>
 
 class Model {
 public:

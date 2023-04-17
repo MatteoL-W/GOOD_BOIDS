@@ -1,7 +1,7 @@
 #pragma once
 
-#include "glm/gtc/matrix_transform.hpp"
-#include "p6/p6.h"
+#include <p6/p6.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Camera {
 

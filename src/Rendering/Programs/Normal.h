@@ -1,6 +1,6 @@
 #pragma once
 
-#include "p6/p6.h"
+#include <p6/p6.h>
 
 namespace Rendering::Programs {
 

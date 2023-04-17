@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "p6/p6.h"
+#include <p6/p6.h>
 
 namespace Features {
 

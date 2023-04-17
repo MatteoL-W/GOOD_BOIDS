@@ -1,6 +1,7 @@
 #include <p6/p6.h>
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
+#include <tiny_gltf.h>
 #include <cstdlib>
 #include "Boids/Manager.h"
 #include "Cameras/CameraManager.h"
@@ -8,7 +9,6 @@
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
 #include "Rendering/Shapes/ShapesRegister.h"
-#include "tiny_gltf.h"
 
 int main(int argc, char* argv[])
 {
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
         boidsManager.update(obstaclesManager, foodProvider);
         boidsManager.draw(ctx);
 
-        //obstaclesManager.draw(ctx);
+        // obstaclesManager.draw(ctx);
     };
 
     ctx.start();

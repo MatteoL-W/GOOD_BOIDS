@@ -1,14 +1,14 @@
 #pragma once
 
+#include <p6/p6.h>
 #include <cstddef> // For offsetof()
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Engine3D/Mesh.h"
 #include "Rendering/Engine3D/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/Normal.h"
-#include "glm/ext/matrix_clip_space.hpp"
-#include "glm/ext/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.hpp"
-#include "p6/p6.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {

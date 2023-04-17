@@ -1,7 +1,7 @@
 #pragma once
 
+#include <p6/p6.h>
 #include "Boids/Movement.h"
-#include "p6/p6.h"
 
 /// These functions should be call every frame and with every boid in the map.
 namespace Boids::Calculator {
