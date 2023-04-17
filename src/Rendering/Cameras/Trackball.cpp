@@ -1,5 +1,5 @@
 #include "Trackball.h"
-#include <glm/gtc/type_ptr.hpp>
+#include "glpp-extended/lib/glm/glm/gtc/type_ptr.hpp"
 
 namespace Camera {
 
