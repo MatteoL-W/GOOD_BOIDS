@@ -5,7 +5,7 @@
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Rendering/Engine3D/Mesh.h"
+#include "Rendering/Engine/Mesh.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/Normal.h"
 #include "utils/TransformAttributes.h"

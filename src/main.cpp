@@ -4,7 +4,7 @@
 #include <tiny_gltf.h>
 #include <cstdlib>
 #include "Boids/Manager.h"
-#include "Cameras/CameraManager.h"
+#include "Rendering/Cameras/CameraManager.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"

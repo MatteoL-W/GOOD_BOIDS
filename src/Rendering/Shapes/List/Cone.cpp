@@ -1,6 +1,6 @@
 #include "Cone.h"
-#include "Cameras/CameraManager.h"
-#include "Rendering/Engine3D/Mesh.h"
+#include "Rendering/Cameras/CameraManager.h"
+#include "Rendering/Engine/Mesh.h"
 
 namespace Rendering::Shapes {
 
