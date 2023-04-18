@@ -40,4 +40,10 @@ CameraManager const& getCameraInstance()
     return cameraManager;
 }
 
+glm::mat4 getViewMatrix()
+{
+    auto camera = getCameraInstance();
+    return camera.getViewMatrix();
+}
+
 } // namespace Camera

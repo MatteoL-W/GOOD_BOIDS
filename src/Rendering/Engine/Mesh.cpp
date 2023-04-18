@@ -1,14 +1,15 @@
 #include "Mesh.h"
+#include <utility>
 
 namespace RenderEngine {
 
-Mesh::Mesh(std::vector<Rendering::Geometries::Vertex3D> vertices)
+Mesh::Mesh(std::vector<Rendering::Geometries::Vertex3D> const& vertices)
 {
     generateVbo(vertices);
     generateVao();
 }
 
-void Mesh::generateVbo(std::vector<Rendering::Geometries::Vertex3D> vertices)
+void Mesh::generateVbo(std::vector<Rendering::Geometries::Vertex3D> const& vertices)
 {
     glGenBuffers(1, &_vbo);
 
@@ -60,6 +61,13 @@ Mesh::~Mesh()
     // Clean up existing resources
     glDeleteBuffers(1, &_vbo);
     glDeleteVertexArrays(1, &_vao);
+}
+
+void Mesh::draw(GLsizei verticesSize) const
+{
+    glBindVertexArray(_vao);
+    glDrawArrays(GL_TRIANGLES, 0, verticesSize);
+    glBindVertexArray(0);
 }
 
 } // namespace RenderEngine

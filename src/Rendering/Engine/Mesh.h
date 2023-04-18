@@ -7,22 +7,22 @@ namespace RenderEngine {
 
 class Mesh {
 public:
-    explicit Mesh(std::vector<Rendering::Geometries::Vertex3D>);
+    explicit Mesh(std::vector<Rendering::Geometries::Vertex3D> const&);
     Mesh(Mesh&& other) noexcept;
     Mesh& operator=(Mesh&& other) noexcept;
+
     ~Mesh();
 
-    GLuint getVbo() const { return _vbo; };
-    GLuint getVao() const { return _vao; };
+    void draw(GLsizei verticesSize) const;
 
 private:
-    void generateVbo(std::vector<Rendering::Geometries::Vertex3D> vertices);
+    void generateVbo(std::vector<Rendering::Geometries::Vertex3D> const& vertices);
     void generateVao();
 
 private:
-    const GLuint VERTEX_ATTR_POSITION   = 0;
-    const GLuint VERTEX_ATTR_NORMAL     = 1;
-    const GLuint VERTEX_ATTR_TEX_COORDS = 2;
+    static const GLuint VERTEX_ATTR_POSITION   = 0;
+    static const GLuint VERTEX_ATTR_NORMAL     = 1;
+    static const GLuint VERTEX_ATTR_TEX_COORDS = 2;
 
     GLuint _vbo = 0;
     GLuint _vao = 0;

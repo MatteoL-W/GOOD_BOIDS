@@ -21,5 +21,6 @@ private:
 };
 
 CameraManager const& getCameraInstance();
+glm::mat4 getViewMatrix();
 
 } // namespace Camera
