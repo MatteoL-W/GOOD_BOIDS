@@ -4,6 +4,8 @@
 #include "Rendering/Shapes/List/Duck.h"
 #include "Rendering/Shapes/List/Sphere.h"
 
+#include "Rendering/Shapes/List/Plane.h"
+
 using ShapesType = std::variant<Rendering::Shapes::Sphere, Rendering::Shapes::Cone, Rendering::Shapes::Duck>;
 
 namespace Rendering::Shapes {

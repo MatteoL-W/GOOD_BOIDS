@@ -4,10 +4,10 @@
 #include <tiny_gltf.h>
 #include <cstdlib>
 #include "Boids/Manager.h"
-#include "Rendering/Cameras/CameraManager.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
+#include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Shapes/ShapesRegister.h"
 
 int main(int argc, char* argv[])
@@ -60,6 +60,9 @@ int main(int argc, char* argv[])
 
     auto cameraManager = Camera::getCameraInstance();
 
+    // ToDo: Dirty: don't call walls here
+    auto floor = Rendering::Shapes::Plane{0.1f};
+
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
@@ -88,6 +91,8 @@ int main(int argc, char* argv[])
         boidsManager.update(obstaclesManager, foodProvider);
         boidsManager.draw(ctx);
 
+        // ToDo: Dirty: don't call walls here
+        floor.draw(ctx, {});
         // obstaclesManager.draw(ctx);
     };
 
