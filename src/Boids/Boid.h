@@ -15,7 +15,7 @@ public:
     explicit Boid(unsigned int _speciesId, ShapesType const&, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
 
     void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(p6::Context&);
+    void draw(p6::Context&, bool isDepthRendering = false, glm::mat4 lightSpaceMatrix = glm::mat4{1});
 
     void         setForcesConfig(ForcesConfig config) { _movement.setForcesConfig(config); };
     void         setBehaviorConfig(BehaviorConfig config) { _movement.setBehaviorConfig(config); };

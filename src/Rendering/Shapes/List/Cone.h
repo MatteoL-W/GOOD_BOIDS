@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
+#include "Rendering/Programs/DepthMap.h"
 #include "Rendering/Programs/Normal.h"
 #include "utils/TransformAttributes.h"
 
@@ -25,13 +26,14 @@ public:
     Cone& operator=(Cone&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const;
+    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes, bool isDepthRendering = false, glm::mat4 lightSpaceMatrix = glm::mat4{1}) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
     float                                        _radius{};
     Rendering::Programs::Normal                  _shader{};
+    Rendering::Programs::DepthMap                _depthMap{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
     RenderEngine::Mesh                           _mesh;
 };

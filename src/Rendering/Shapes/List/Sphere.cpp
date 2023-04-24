@@ -8,7 +8,7 @@ Sphere::Sphere(float radius)
     : _radius(radius), _vertices(Rendering::Geometries::sphere_vertices(getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
 {}
 
-void Sphere::draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const
+void Sphere::draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes, bool isDepthRendering, glm::mat4 lightSpaceMatrix) const
 {
     _shader._program.use();
 

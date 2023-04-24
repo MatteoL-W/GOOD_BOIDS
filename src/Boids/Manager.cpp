@@ -23,10 +23,10 @@ void Manager::update(Features::ObstaclesManager const& obstacles, Features::Food
         boid.update(_boids, obstacles, foodProvider);
 }
 
-void Manager::draw(p6::Context& ctx)
+void Manager::draw(p6::Context& ctx, bool isDepthRendering, glm::mat4 lightSpaceMatrix)
 {
     for (auto& boid : _boids)
-        boid.draw(ctx);
+        boid.draw(ctx, isDepthRendering, lightSpaceMatrix);
 }
 
 void Manager::updateForcesConfig(unsigned int speciesId, ForcesConfig const& config)
@@ -42,5 +42,6 @@ void Manager::updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const&
         if (boid.getSpeciesId() == speciesId)
             boid.setBehaviorConfig(config);
 }
+
 
 } // namespace Boids

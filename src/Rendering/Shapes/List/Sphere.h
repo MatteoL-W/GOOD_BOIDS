@@ -1,5 +1,7 @@
 #pragma once
 
+//ToDo: Delete
+
 #include <p6/p6.h>
 #include <cstddef> // For offsetof()
 #include <glm/ext/matrix_clip_space.hpp>
@@ -25,7 +27,7 @@ public:
     Sphere& operator=(Sphere&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const;
+    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes, bool isDepthRendering = false, glm::mat4 lightSpaceMatrix = glm::mat4{1}) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

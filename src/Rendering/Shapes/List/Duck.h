@@ -8,6 +8,7 @@
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
+#include "Rendering/Programs/DepthMap.h"
 #include "Rendering/Programs/Normal.h"
 #include "utils/TransformAttributes.h"
 
@@ -26,14 +27,15 @@ public:
     Duck& operator=(Duck&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context&, utils::TransformAttributes const&) const;
+    void  draw(p6::Context&, utils::TransformAttributes const&, bool isDepthRendering = false, glm::mat4 lightSpaceMatrix = glm::mat4{1}) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
-    float                        _radius{};
-    Rendering::Programs::Texture _shader{};
-    Model                        _model;
+    float                         _radius{};
+    Rendering::Programs::Texture  _shader{};
+    Rendering::Programs::DepthMap _depthMap{};
+    Model                         _model;
 };
 
 } // namespace Rendering::Shapes
