@@ -9,40 +9,17 @@ void Scene::setupWorld(p6::Context& ctx)
 {
     initializeBoids(ctx);
 
+    auto& projectionMatrixHandler = utils::getProjectionMatrixHandlerInstance();
+    projectionMatrixHandler.setProjection(ctx.aspect_ratio());
+
+    ctx.main_canvas_resized = [&]() {
+        projectionMatrixHandler.setProjection(ctx.aspect_ratio());
+    };
+
     ctx.update = [&]() {
         updateMembers(ctx);
-        renderToDepthMap(ctx);
         render(ctx);
     };
-}
-
-void Scene::updateMembers(p6::Context& ctx)
-{
-    auto cameraManager = Camera::getCameraInstance();
-    cameraManager.handleEvents(ctx);
-
-    foodProvider.update(ctx);
-    boidsManager.update(obstaclesManager, foodProvider);
-}
-
-void Scene::renderToDepthMap(p6::Context& ctx)
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    auto renderCastersShadows = [&](glm::mat4 lightSpaceMatrix) {
-        boidsManager.draw(ctx, true, lightSpaceMatrix);
-    };
-    directional.renderDepthMap(renderCastersShadows);
-}
-
-void Scene::render(p6::Context& ctx)
-{
-    glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    ctx.background(p6::NamedColor::Gray);
-
-    foodProvider.draw(ctx);
-    boidsManager.draw(ctx);
-    floor.draw(ctx, {});
 }
 
 void Scene::initializeBoids(p6::Context& ctx)
@@ -62,29 +39,50 @@ void Scene::initializeBoids(p6::Context& ctx)
     };
 
     auto addSpeciesToGUI = [&]() {
-        GUI::showSpeciesGUI("Little boids", firstSpecies, boidsManager);
-        GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
+        GUI::showSpeciesGUI("Little boids", firstSpecies, _boidsManager);
+        GUI::showSpeciesGUI("Middle boids", secondSpecies, _boidsManager);
     };
 
     auto const load_boids = [&]() {
-        boidsManager.reset();
-        boidsManager.addSpecies(ctx, firstSpecies);
-        boidsManager.addSpecies(ctx, secondSpecies);
+        _boidsManager.reset();
+        _boidsManager.addSpecies(ctx, firstSpecies);
+        _boidsManager.addSpecies(ctx, secondSpecies);
     };
     load_boids();
 
-    initializeImGuiBoids(ctx, addSpeciesToGUI, load_boids);
+    initializeImGui(ctx, addSpeciesToGUI, load_boids);
 }
 
-void Scene::initializeImGuiBoids(p6::Context& ctx, auto addSpeciesFn, auto loadBoidsFn)
+void Scene::updateMembers(p6::Context& ctx)
+{
+    auto cameraManager = Camera::getCameraInstance();
+    cameraManager.handleEvents(ctx);
+
+    _foodProvider.update(ctx);
+    _boidsManager.update(_obstaclesManager, _foodProvider);
+}
+
+void Scene::render(p6::Context& ctx)
+{
+    glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    ctx.background(p6::NamedColor::Gray);
+
+    _foodProvider.draw();
+    _boidsManager.draw();
+    _floor.draw({});
+}
+
+// ToDo: Move this function away
+void Scene::initializeImGui(p6::Context& ctx, auto addSpeciesFn, auto loadBoidsFn)
 {
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
         addSpeciesFn();
-        GUI::showFoodGUI(foodProvider);
+        GUI::showFoodGUI(_foodProvider);
 
-        if (ImGui::Button("Reload flock"))
+        if (ImGui::Button("Reload boids"))
             loadBoidsFn();
 
         // ToDo : Reset settings

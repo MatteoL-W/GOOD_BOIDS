@@ -14,11 +14,11 @@ void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager con
     _movement.update(boidsIterator, obstacles, foodProvider, getRadius());
 }
 
-void Boid::draw(p6::Context& ctx, bool isDepthRendering, glm::mat4 lightSpaceMatrix)
+void Boid::draw()
 {
     std::visit(
         [&](auto const& shape) {
-            shape.draw(ctx, _movement.getTransformAttributes(), isDepthRendering, lightSpaceMatrix);
+            shape.draw(_movement.getTransformAttributes());
         },
         _shape
     );

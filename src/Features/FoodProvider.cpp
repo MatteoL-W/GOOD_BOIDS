@@ -30,14 +30,14 @@ void FoodProvider::update(p6::Context& ctx)
     }
 }
 
-void FoodProvider::draw(p6::Context& ctx) const
+void FoodProvider::draw() const
 {
     auto const& sphereShape = Rendering::Shapes::getSphereInstance(_config._radius);
     for (auto const& food : _foods)
     {
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(ctx, utils::TransformAttributes{food});
+                sphereShape.draw(utils::TransformAttributes{food});
             },
             sphereShape
         );

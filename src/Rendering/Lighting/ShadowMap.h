@@ -3,11 +3,11 @@
 #include <p6/p6.h>
 #include "Rendering/Programs/DepthMap.h"
 
-namespace Light {
+namespace Lighting {
 
-class Directional {
+class ShadowMap {
 public:
-    explicit Directional(glm::vec3 direction);
+    explicit ShadowMap(glm::vec3 direction);
     void renderDepthMap(std::function<void(glm::mat4)> renderCastersShadowsFn);
 
     glm::vec3 getDirection() const { return _direction; };

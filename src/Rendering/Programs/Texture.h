@@ -3,6 +3,7 @@
 #include <p6/p6.h>
 #include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Cameras/CameraManager.h"
+#include "utils/ProjectionMatrixHandler.h"
 
 namespace Rendering::Programs {
 
@@ -20,12 +21,12 @@ struct Texture {
         , uNormalMatrix(glGetUniformLocation(_program.id(), "uNormalMatrix"))
     {}
 
-    void setMatrices(glm::mat4 transformation, float aspect_ratio) const
+    void setMatrices(glm::mat4 transformation) const
     {
         auto modelViewMatrix = Camera::getViewMatrix();
         modelViewMatrix      = modelViewMatrix * transformation;
 
-        auto projectionMatrix = glm::perspective(glm::radians(70.f), aspect_ratio, .1f, 100.f);
+        auto projectionMatrix = utils::getProjectionMatrix();
         auto normalMatrix     = glm::transpose(glm::inverse(modelViewMatrix));
 
         glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(modelViewMatrix));

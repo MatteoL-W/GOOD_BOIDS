@@ -25,7 +25,7 @@ public:
     /// Enable the food dropping randomly in the map
     void enableDrop();
     void update(p6::Context&);
-    void draw(p6::Context&) const;
+    void draw() const;
     void erase(std::list<glm::vec3>::const_iterator it) { _foods.erase(it); };
 
     std::list<glm::vec3> const& getFood() const { return _foods; };

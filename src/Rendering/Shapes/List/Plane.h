@@ -26,7 +26,7 @@ public:
     Plane& operator=(Plane&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const;
+    void  draw(utils::TransformAttributes const& transformAttributes) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

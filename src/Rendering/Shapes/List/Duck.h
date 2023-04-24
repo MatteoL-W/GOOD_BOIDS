@@ -27,7 +27,7 @@ public:
     Duck& operator=(Duck&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context&, utils::TransformAttributes const&, bool isDepthRendering = false, glm::mat4 lightSpaceMatrix = glm::mat4{1}) const;
+    void  draw(utils::TransformAttributes const&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

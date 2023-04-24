@@ -2,7 +2,8 @@
 
 #include <p6/p6.h>
 #include "Boids/Manager.h"
-#include "Rendering/Lights/Directional.h"
+#include "Rendering/Lighting/ShadowMap.h"
+#include "utils/ProjectionMatrixHandler.h"
 
 class Scene {
 public:
@@ -10,17 +11,16 @@ public:
 
 private:
     void initializeBoids(p6::Context&);
-    void initializeImGuiBoids(p6::Context& ctx, auto addSpeciesFn, auto loadBoidsFn);
+    void initializeImGui(p6::Context&, auto addSpeciesFn, auto loadBoidsFn);
 
     void updateMembers(p6::Context&);
-    void renderToDepthMap(p6::Context&);
     void render(p6::Context&);
 
 private:
-    Boids::Manager             boidsManager{};
-    Features::FoodProvider     foodProvider{Features::FoodConfig{}, true};
-    Features::ObstaclesManager obstaclesManager{};
+    Boids::Manager             _boidsManager{};
+    Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
+    Features::ObstaclesManager _obstaclesManager{};
 
-    Light::Directional       directional{glm::vec3{1.f, 1.f, 1.f}};
-    Rendering::Shapes::Plane floor{0.1f};
+    Lighting::ShadowMap       _directional{glm::vec3{1.f, 1.f, 1.f}};
+    Rendering::Shapes::Plane _floor{0.1f};
 };

@@ -1,16 +1,16 @@
-#include "Directional.h"
 #include <p6/p6.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include "ShadowMap.h"
 
-namespace Light {
+namespace Lighting {
 
-Directional::Directional(glm::vec3 direction)
+ShadowMap::ShadowMap(glm::vec3 direction)
     : _direction(direction)
 {
     defineDepthMap();
 };
 
-void Directional::defineDepthMap()
+void ShadowMap::defineDepthMap()
 {
     // First we'll generate a framebuffer object for rendering the depth map:
     glGenFramebuffers(1, &depthMapFBO);
@@ -34,7 +34,7 @@ void Directional::defineDepthMap()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Directional::renderDepthMap(std::function<void(glm::mat4)> renderCastersShadowsFn)
+void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> renderCastersShadowsFn)
 {
     // 1. first render to depth map
     float     near_plane = 1.0f, far_plane = 7.5f;

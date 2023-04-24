@@ -32,7 +32,7 @@ public:
     void addSpecies(p6::Context&, Species&);
 
     void update(Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(p6::Context&, bool isDepthRendering = false, glm::mat4 lightSpaceMatrix = glm::mat4{1});
+    void draw();
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);
     void updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const&);
