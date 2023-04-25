@@ -10,6 +10,7 @@
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/DepthMap.h"
 #include "Rendering/Programs/Normal.h"
+#include "Rendering/Programs/PhongAndShadow.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {
@@ -27,16 +28,16 @@ public:
     Duck& operator=(Duck&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const&) const;
+    void  draw(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
     void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
-    float                         _radius{};
-    Rendering::Programs::Texture  _shader{};
-    Rendering::Programs::DepthMap _depthMap{};
-    Model                         _model;
+    float                               _radius{};
+    Rendering::Programs::PhongAndShadow _shader{};
+    Rendering::Programs::DepthMap       _depthMap{};
+    Model                               _model;
 };
 
 } // namespace Rendering::Shapes

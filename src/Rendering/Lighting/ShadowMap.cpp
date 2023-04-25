@@ -33,14 +33,14 @@ void ShadowMap::defineDepthMap()
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> renderCastersShadowsFn)
+void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn)
 {
     // 1. first render to depth map
     float const near_plane = 1.0f;
     float const far_plane  = 7.5f;
 
     auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-    auto const lightView       = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto const lightView       = glm::lookAt(glm::vec3(0.f, 10.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     lightSpaceMatrix           = lightProjection * lightView;
 
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);

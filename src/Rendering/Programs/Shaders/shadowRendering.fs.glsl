@@ -15,7 +15,6 @@ uniform sampler2D shadowMap;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 
-
 float ShadowCalculation(vec4 fragPosLightSpace)
 {
     // perform perspective divide

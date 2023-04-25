@@ -7,14 +7,14 @@ Duck::Duck()
     : _model("assets/models/Duck/Duck.gltf")
 {}
 
-void Duck::draw(utils::TransformAttributes const& transformAttributes) const
+void Duck::draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
 {
     _shader._program.use();
 
     auto model = glm::translate(glm::mat4{1}, transformAttributes._position);
     model      = glm::scale(model, glm::vec3(0.01f));
 
-    _shader.setMatrices(model);
+    _shader.setMatrices(model, lightSpaceMatrix);
 
     _model.draw();
 

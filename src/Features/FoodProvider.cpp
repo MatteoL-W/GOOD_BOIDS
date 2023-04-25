@@ -37,7 +37,7 @@ void FoodProvider::draw() const
     {
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(utils::TransformAttributes{food});
+                sphereShape.draw(utils::TransformAttributes{food}, glm::mat4{});
             },
             sphereShape
         );

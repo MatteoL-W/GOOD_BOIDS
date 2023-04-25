@@ -26,7 +26,7 @@ public:
     Cone& operator=(Cone&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const& transformAttributes) const;
+    void  draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
     void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };

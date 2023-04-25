@@ -179,6 +179,7 @@ void Model::createEachVbos()
 void Model::draw() const
 {
     glBindVertexArray(_vao);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureId);
 
     auto const& scene = _model.scenes[_model.defaultScene];

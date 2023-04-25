@@ -7,7 +7,7 @@ Cone::Cone(float radius)
     : _radius(radius), _vertices(Rendering::Geometries::cone_vertices(getRadius(), getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
 {}
 
-void Cone::draw(utils::TransformAttributes const& transformAttributes) const
+void Cone::draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
 {
     _shader._program.use();
 

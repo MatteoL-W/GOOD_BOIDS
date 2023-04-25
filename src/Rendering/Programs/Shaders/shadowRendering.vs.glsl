@@ -19,7 +19,7 @@ void main()
 {
     vs_out.FragPos = vec3(model * vec4(aPos, 1.0));
     vs_out.Normal = transpose(inverse(mat3(model))) * aNormal;
-    vs_out.TexCoords = aTexCoords;
+    vs_out.TexCoords = vec2(aTexCoords.x, 1-aTexCoords.y); // Inverse UV to have right texture (still don't know why)
     vs_out.FragPosLightSpace = lightSpaceMatrix * vec4(vs_out.FragPos, 1.0);
     gl_Position = projection * view * vec4(vs_out.FragPos, 1.0);
 }

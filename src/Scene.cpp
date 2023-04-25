@@ -43,7 +43,7 @@ void Scene::initializeBoids(p6::Context& ctx)
 
     auto addSpeciesToGUI = [&]() {
         GUI::showSpeciesGUI("Little boids", firstSpecies, _boidsManager);
-        GUI::showSpeciesGUI("Middle boids", secondSpecies, _boidsManager);
+        //GUI::showSpeciesGUI("Middle boids", secondSpecies, _boidsManager);
     };
 
     auto const load_boids = [&]() {
@@ -68,7 +68,7 @@ void Scene::updateMembers(p6::Context& ctx)
 void Scene::renderDepthMap()
 {
     _directional.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
-        _boidsManager.draw(lightSpaceMatrix);
+        _boidsManager.draw(true, lightSpaceMatrix);
     });
 }
 
@@ -79,7 +79,7 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _foodProvider.draw();
-    _boidsManager.draw();
+    _boidsManager.draw(false, _directional.getLightSpaceMatrix());
     _floor.draw({});
 }
 

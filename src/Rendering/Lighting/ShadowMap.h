@@ -8,7 +8,9 @@ namespace Lighting {
 class ShadowMap {
 public:
     explicit ShadowMap();
-    void renderDepthMap(std::function<void(glm::mat4)> renderCastersShadowsFn);
+    void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn);
+
+    glm::mat4 getLightSpaceMatrix() { return lightSpaceMatrix; };
 
 private:
     void defineDepthMap();
