@@ -26,11 +26,11 @@ struct PhongAndShadow {
         , uViewPos(glGetUniformLocation(_program.id(), "viewPos"))
     {}
 
-    void setMatrices(glm::mat4 lightSpaceMatrix, glm::mat4 modelMatrix) const
+    void setMatrices(glm::mat4 lightSpaceMatrix, glm::mat4 model) const
     {
         // What about uModel ?
         glUniformMatrix4fv(uLightSpaceMatrix, 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
-        glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+        glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(model));
     }
 };
 

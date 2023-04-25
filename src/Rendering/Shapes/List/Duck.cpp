@@ -11,12 +11,29 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes) const
 {
     _shader._program.use();
 
-    auto transformation = glm::translate(glm::mat4{1}, transformAttributes._position);
-    transformation      = glm::scale(transformation, glm::vec3(0.01f));
+    auto model = glm::translate(glm::mat4{1}, transformAttributes._position);
+    model      = glm::scale(model, glm::vec3(0.01f));
 
-    _shader.setMatrices(transformation);
+    _shader.setMatrices(model);
 
     _model.draw();
+
+    glUseProgram(0);
+}
+
+void Duck::drawDepthMap(const utils::TransformAttributes& transformAttributes, glm::mat4 lightSpaceMatrix) const
+{
+    _depthMap._program.use();
+
+    auto model = glm::translate(glm::mat4{1}, transformAttributes._position);
+    model      = glm::scale(model, glm::vec3(0.01f));
+
+    _depthMap.setModel(model);
+    _depthMap.setLightSpace(lightSpaceMatrix);
+
+    _model.draw();
+
+    glUseProgram(0);
 }
 
 } // namespace Rendering::Shapes

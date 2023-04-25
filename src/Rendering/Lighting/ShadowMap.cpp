@@ -1,11 +1,10 @@
+#include "ShadowMap.h"
 #include <p6/p6.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "ShadowMap.h"
 
 namespace Lighting {
 
-ShadowMap::ShadowMap(glm::vec3 direction)
-    : _direction(direction)
+ShadowMap::ShadowMap()
 {
     defineDepthMap();
 };
@@ -37,13 +36,15 @@ void ShadowMap::defineDepthMap()
 void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> renderCastersShadowsFn)
 {
     // 1. first render to depth map
-    float     near_plane = 1.0f, far_plane = 7.5f;
-    glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-    glm::mat4 lightView       = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    lightSpaceMatrix          = lightProjection * lightView;
+    float const near_plane = 1.0f;
+    float const far_plane  = 7.5f;
 
+    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+    auto const lightView       = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    lightSpaceMatrix           = lightProjection * lightView;
+
+    glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, depthMapFBO);
-    glpp::viewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT); // Width/height of shadow map
 
     glClear(GL_DEPTH_BUFFER_BIT);
     renderCastersShadowsFn(lightSpaceMatrix);
@@ -51,4 +52,4 @@ void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> renderCastersShado
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 }
 
-} // namespace Light
+} // namespace Lighting

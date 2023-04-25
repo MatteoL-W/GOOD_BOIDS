@@ -23,10 +23,10 @@ void Manager::update(Features::ObstaclesManager const& obstacles, Features::Food
         boid.update(_boids, obstacles, foodProvider);
 }
 
-void Manager::draw()
+void Manager::draw(glm::mat4 lightSpaceMatrixIfDepthMapDraw)
 {
     for (auto& boid : _boids)
-        boid.draw();
+        boid.draw(lightSpaceMatrixIfDepthMapDraw);
 }
 
 void Manager::updateForcesConfig(unsigned int speciesId, ForcesConfig const& config)

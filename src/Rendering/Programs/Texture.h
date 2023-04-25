@@ -21,16 +21,13 @@ struct Texture {
         , uNormalMatrix(glGetUniformLocation(_program.id(), "uNormalMatrix"))
     {}
 
-    void setMatrices(glm::mat4 transformation) const
+    void setMatrices(glm::mat4 model) const
     {
-        auto modelViewMatrix = Camera::getViewMatrix();
-        modelViewMatrix      = modelViewMatrix * transformation;
-
-        auto projectionMatrix = utils::getProjectionMatrix();
-        auto normalMatrix     = glm::transpose(glm::inverse(modelViewMatrix));
+        auto modelViewMatrix = Camera::getViewMatrix() * model;
+        auto normalMatrix    = glm::transpose(glm::inverse(modelViewMatrix));
 
         glUniformMatrix4fv(uMVMatrix, 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
-        glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * modelViewMatrix));
+        glUniformMatrix4fv(uMVPMatrix, 1, GL_FALSE, glm::value_ptr(utils::getProjectionMatrix() * modelViewMatrix));
         glUniformMatrix4fv(uNormalMatrix, 1, GL_FALSE, glm::value_ptr(normalMatrix));
     }
 };

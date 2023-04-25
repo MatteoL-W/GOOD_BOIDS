@@ -18,10 +18,13 @@ struct DepthMap {
         , uModel(glGetUniformLocation(_program.id(), "uModel"))
     {}
 
-    void setMatrices(glm::mat4 lightSpaceMatrix, glm::mat4 modelMatrix) const
+    void setLightSpace(glm::mat4 lightSpaceMatrix) const
     {
-        // What about uModel ? We gave it a mat4{1}.
         glUniformMatrix4fv(uLightSpaceMatrix, 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
+    }
+
+    void setModel(glm::mat4 modelMatrix) const
+    {
         glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(modelMatrix));
     }
 };

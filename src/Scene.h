@@ -13,6 +13,7 @@ private:
     void initializeBoids(p6::Context&);
     void initializeImGui(p6::Context&, auto addSpeciesFn, auto loadBoidsFn);
 
+    void renderDepthMap();
     void updateMembers(p6::Context&);
     void render(p6::Context&);
 
@@ -21,6 +22,6 @@ private:
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
     Features::ObstaclesManager _obstaclesManager{};
 
-    Lighting::ShadowMap       _directional{glm::vec3{1.f, 1.f, 1.f}};
+    Lighting::ShadowMap       _directional{};
     Rendering::Shapes::Plane _floor{0.1f};
 };

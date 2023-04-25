@@ -28,6 +28,7 @@ public:
 
 public:
     void  draw(utils::TransformAttributes const&) const;
+    void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

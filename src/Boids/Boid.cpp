@@ -14,11 +14,15 @@ void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager con
     _movement.update(boidsIterator, obstacles, foodProvider, getRadius());
 }
 
-void Boid::draw()
+void Boid::draw(glm::mat4 lightSpaceMatrixIfDepthMapDraw)
 {
     std::visit(
         [&](auto const& shape) {
-            shape.draw(_movement.getTransformAttributes());
+            const bool depthMapDraw = lightSpaceMatrixIfDepthMapDraw != glm::mat4{};
+            if (depthMapDraw)
+                shape.drawDepthMap(_movement.getTransformAttributes(), lightSpaceMatrixIfDepthMapDraw);
+            else
+                shape.draw(_movement.getTransformAttributes());
         },
         _shape
     );
