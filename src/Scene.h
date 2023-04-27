@@ -3,6 +3,7 @@
 #include <p6/p6.h>
 #include "Boids/Manager.h"
 #include "Rendering/Lighting/ShadowMap.h"
+#include "Rendering/Programs/Debug.h"
 #include "utils/ProjectionMatrixHandler.h"
 
 class Scene {
@@ -24,4 +25,8 @@ private:
 
     Lighting::ShadowMap       _directional{};
     Rendering::Shapes::Plane _floor{0.1f};
+
+    void                      renderQuad();
+    Rendering::Programs::Debug debugDepthQuad;
+    void                       debug();
 };

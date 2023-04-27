@@ -22,6 +22,7 @@ void Scene::setupWorld(p6::Context& ctx)
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
+        debug();
     };
 }
 
@@ -69,18 +70,19 @@ void Scene::renderDepthMap()
 {
     _directional.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
         _boidsManager.draw(true, lightSpaceMatrix);
+        //_floor.draw({}, lightSpaceMatrix);
     });
 }
 
 void Scene::render(p6::Context& ctx)
 {
-    glClearColor(1.f, 0.f, 0.f, 1.f);
+    glClearColor(0.f, 0.f, 0.f, 1.f);
     glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    _floor.draw({}, _directional.getLightSpaceMatrix());
     _foodProvider.draw();
     _boidsManager.draw(false, _directional.getLightSpaceMatrix());
-    _floor.draw({});
 }
 
 // ToDo: Move this function away
@@ -99,4 +101,47 @@ void Scene::initializeImGui(p6::Context& ctx, auto addSpeciesFn, auto loadBoidsF
         // ImGui::ShowDemoWindow();
         ImGui::End();
     };
+}
+
+unsigned int quadVAO = 0;
+unsigned int quadVBO;
+
+void Scene::renderQuad()
+{
+    if (quadVAO == 0)
+    {
+        float quadVertices[] = {
+            // positions        // texture Coords
+            -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+            1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+            1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+        };
+        // setup plane VAO
+        glGenVertexArrays(1, &quadVAO);
+        glGenBuffers(1, &quadVBO);
+        glBindVertexArray(quadVAO);
+        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    }
+    glBindVertexArray(quadVAO);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindVertexArray(0);
+}
+
+void Scene::debug()
+{
+
+    // Debug
+        glViewport(0, 0, 1920, 1080);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        debugDepthQuad._program.use();
+        debugDepthQuad.setMatrices();
+        glActiveTexture(GL_TEXTURE0);
+        _directional.bind();
+        renderQuad();
 }

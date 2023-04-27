@@ -33,7 +33,7 @@ struct PhongAndShadow {
         glUniformMatrix4fv(uView, 1, GL_FALSE, glm::value_ptr(Camera::getViewMatrix()));
         glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(uLightSpaceMatrix, 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
-        glUniform3fv(uLightPos, 1, glm::value_ptr(glm::vec3(0.f, 10.0f, 0.0f))); // ToDo
+        glUniform3fv(uLightPos, 1, glm::value_ptr(glm::vec3(-2.0f, 4.0f, -1.0f))); // ToDo
         glUniform3fv(uViewPos, 1, glm::value_ptr(Camera::getPosition()));
     }
 };

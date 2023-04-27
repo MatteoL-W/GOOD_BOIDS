@@ -8,6 +8,7 @@
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
+#include "Rendering/Programs/PhongAndShadow.h"
 #include "Rendering/Programs/Texture.h"
 #include "utils/TransformAttributes.h"
 
@@ -26,13 +27,14 @@ public:
     Plane& operator=(Plane&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const& transformAttributes) const;
+    void  draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
+    GLuint                                       textureId{};
     float                                        _radius{};
-    Rendering::Programs::Texture                 _shader{};
+    Rendering::Programs::PhongAndShadow          _shader{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
     RenderEngine::Mesh                           _mesh;
 };
