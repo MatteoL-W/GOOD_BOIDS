@@ -25,18 +25,17 @@ void Scene::initializeBoids(p6::Context& ctx)
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
+    _boidsManager.addSpecies(ctx, firstSpecies);
 
-    auto const load_boids = [&]() {
-        _boidsManager.reset();
-        _boidsManager.addSpecies(ctx, firstSpecies);
-    };
-    load_boids();
+    ctx.imgui = [&]() {
+        // ToDo : Reset settings
+        ImGui::Begin("My super GUI");
 
-    auto addSpeciesToGUI = [&]() {
         GUI::showSpeciesGUI("Little boids", firstSpecies, _boidsManager);
-    };
+        GUI::showFoodGUI(_foodProvider);
 
-    initializeImGui(ctx, addSpeciesToGUI, load_boids);
+        ImGui::End();
+    };
 }
 
 void Scene::updateMembers(p6::Context& ctx)
@@ -69,22 +68,4 @@ void Scene::render(p6::Context& ctx)
     _boidsManager.draw(false, _shadowMap.getLightSpaceMatrix());
 
     _foodProvider.draw();
-}
-
-// ToDo: Move this function away
-void Scene::initializeImGui(p6::Context& ctx, auto addSpeciesFn, auto loadBoidsFn)
-{
-    ctx.imgui = [&]() {
-        ImGui::Begin("My super GUI");
-
-        addSpeciesFn();
-        GUI::showFoodGUI(_foodProvider);
-
-        if (ImGui::Button("Reload boids"))
-            loadBoidsFn();
-
-        // ToDo : Reset settings
-        // ImGui::ShowDemoWindow();
-        ImGui::End();
-    };
 }
