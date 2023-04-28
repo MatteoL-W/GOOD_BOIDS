@@ -11,7 +11,7 @@ public:
     void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn);
 
     glm::mat4 getLightSpaceMatrix() { return lightSpaceMatrix; };
-    void bind() {glBindTexture(GL_TEXTURE_2D, depthMap);};
+    void      bind() { glBindTexture(GL_TEXTURE_2D, depthMap); };
 
 private:
     void defineDepthMap();
@@ -26,4 +26,4 @@ private:
     glm::mat4          lightSpaceMatrix;
 };
 
-}  // namespace Lighting
+} // namespace Lighting

@@ -22,7 +22,7 @@ void Scene::setupWorld(p6::Context& ctx)
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
-        debug();
+        //debug();
     };
 }
 
@@ -35,12 +35,12 @@ void Scene::initializeBoids(p6::Context& ctx)
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
     };
 
-    auto secondSpecies = Boids::Species{
-        Rendering::Shapes::getConeInstance(0.2f),
-        5,
-        {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
-        {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
-    };
+//    auto secondSpecies = Boids::Species{
+//        Rendering::Shapes::getConeInstance(0.2f),
+//        5,
+//        {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
+//        {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
+//    };
 
     auto addSpeciesToGUI = [&]() {
         GUI::showSpeciesGUI("Little boids", firstSpecies, _boidsManager);
@@ -50,7 +50,7 @@ void Scene::initializeBoids(p6::Context& ctx)
     auto const load_boids = [&]() {
         _boidsManager.reset();
         _boidsManager.addSpecies(ctx, firstSpecies);
-        _boidsManager.addSpecies(ctx, secondSpecies);
+//        _boidsManager.addSpecies(ctx, secondSpecies);
     };
     load_boids();
 
@@ -70,7 +70,7 @@ void Scene::renderDepthMap()
 {
     _directional.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
         _boidsManager.draw(true, lightSpaceMatrix);
-        //_floor.draw({}, lightSpaceMatrix);
+        _floor.drawDepthMap({}, lightSpaceMatrix);
     });
 }
 
@@ -80,9 +80,15 @@ void Scene::render(p6::Context& ctx)
     glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glActiveTexture(GL_TEXTURE1);
+    _directional.bind();
     _floor.draw({}, _directional.getLightSpaceMatrix());
-    _foodProvider.draw();
+
+    glActiveTexture(GL_TEXTURE1);
+    _directional.bind();
     _boidsManager.draw(false, _directional.getLightSpaceMatrix());
+
+    _foodProvider.draw();
 }
 
 // ToDo: Move this function away
@@ -103,6 +109,7 @@ void Scene::initializeImGui(p6::Context& ctx, auto addSpeciesFn, auto loadBoidsF
     };
 }
 
+// ToDo : Clean Debug
 unsigned int quadVAO = 0;
 unsigned int quadVBO;
 
@@ -135,13 +142,12 @@ void Scene::renderQuad()
 
 void Scene::debug()
 {
-
     // Debug
-        glViewport(0, 0, 1920, 1080);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        debugDepthQuad._program.use();
-        debugDepthQuad.setMatrices();
-        glActiveTexture(GL_TEXTURE0);
-        _directional.bind();
-        renderQuad();
+    glViewport(0, 0, 1920, 1080);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    debugDepthQuad._program.use();
+    debugDepthQuad.setMatrices();
+    glActiveTexture(GL_TEXTURE0);
+    _directional.bind();
+    renderQuad();
 }

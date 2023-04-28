@@ -22,6 +22,10 @@ void ShadowMap::defineDepthMap()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
     // With the generated depth texture we can attach it as the framebuffer's depth buffer (FBO)
     glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
@@ -35,12 +39,13 @@ void ShadowMap::defineDepthMap()
 
 void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn)
 {
+    glCullFace(GL_FRONT);
     // 1. first render to depth map
-    float const near_plane = 1.0f;
-    float const far_plane  = 7.5f;
+    float const near_plane = 0.1f;
+    float const far_plane  = 75.f;
 
-    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-    auto const lightView       = glm::lookAt(glm::vec3(-2.0f, 4.0f, -1.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane); // ToDo
+    auto const lightView       = glm::lookAt(glm::vec3(.0f, 3.0f, -2.f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     lightSpaceMatrix           = lightProjection * lightView;
 
     glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
@@ -50,6 +55,7 @@ void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCaste
     renderCastersShadowsFn(lightSpaceMatrix);
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glCullFace(GL_BACK);
 }
 
 } // namespace Lighting

@@ -37,7 +37,7 @@ void FreeFly::handleEvents(p6::Context& ctx)
     };
 
     ctx.key_repeated = [&](p6::Key key) {
-        const float step = .01f;
+        const float step = .1f;
 
         switch (key.physical)
         {

@@ -8,6 +8,7 @@
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
+#include "Rendering/Programs/DepthMap.h"
 #include "Rendering/Programs/PhongAndShadow.h"
 #include "Rendering/Programs/Texture.h"
 #include "utils/TransformAttributes.h"
@@ -28,6 +29,7 @@ public:
 
 public:
     void  draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
+    void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
@@ -35,6 +37,7 @@ private:
     GLuint                                       textureId{};
     float                                        _radius{};
     Rendering::Programs::PhongAndShadow          _shader{};
+    Rendering::Programs::DepthMap                _depthMap{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
     RenderEngine::Mesh                           _mesh;
 };
