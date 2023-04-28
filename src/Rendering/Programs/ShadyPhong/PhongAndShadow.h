@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Rendering/Cameras/CameraManager.h"
-#include <glpp-extended/lib/glm/glm/gtc/type_ptr.hpp>
 #include <p6/p6.h>
+#include <glpp-extended/lib/glm/glm/gtc/type_ptr.hpp>
+#include "Rendering/Cameras/CameraManager.h"
 #include "utils/ProjectionMatrixHandler.h"
 
 namespace Rendering::Programs {
@@ -21,14 +21,14 @@ struct PhongAndShadow {
 
     PhongAndShadow()
         : _program{p6::load_shader("../src/Rendering/Programs/ShadyPhong/shadowRendering.vs.glsl", "../src/Rendering/Programs/ShadyPhong/shadowRendering.fs.glsl")}
-        , uDiffuseTexture(glGetUniformLocation(_program.id(), "diffuseTexture"))
-        , uShadowMap(glGetUniformLocation(_program.id(), "shadowMap"))
-        , uProjection(glGetUniformLocation(_program.id(), "projection"))
-        , uView(glGetUniformLocation(_program.id(), "view"))
-        , uModel(glGetUniformLocation(_program.id(), "model"))
-        , uLightSpaceMatrix(glGetUniformLocation(_program.id(), "lightSpaceMatrix"))
-        , uLightPos(glGetUniformLocation(_program.id(), "lightPos"))
-        , uViewPos(glGetUniformLocation(_program.id(), "viewPos"))
+        , uDiffuseTexture(glGetUniformLocation(_program.id(), "uDiffuseTexture"))
+        , uShadowMap(glGetUniformLocation(_program.id(), "uShadowMap"))
+        , uProjection(glGetUniformLocation(_program.id(), "uProjection"))
+        , uView(glGetUniformLocation(_program.id(), "uView"))
+        , uModel(glGetUniformLocation(_program.id(), "uModel"))
+        , uLightSpaceMatrix(glGetUniformLocation(_program.id(), "uLightSpaceMatrix"))
+        , uLightPos(glGetUniformLocation(_program.id(), "uLightPos"))
+        , uViewPos(glGetUniformLocation(_program.id(), "uViewPos"))
     {}
 
     void setMatrices(glm::mat4 model, glm::mat4 lightSpaceMatrix) const
