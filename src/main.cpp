@@ -4,6 +4,7 @@
 #include <tiny_gltf.h>
 #include <cstdlib>
 #include "Scene.h"
+#include "utils/ProjectionMatrixHandler.h"
 
 int main(int argc, char* argv[])
 {
@@ -26,6 +27,12 @@ int main(int argc, char* argv[])
 
     auto scene = Scene{};
     scene.setupWorld(ctx);
+
+    auto& projectionMatrixHandler = utils::getProjectionMatrixHandlerInstance();
+    projectionMatrixHandler.setProjection(ctx.aspect_ratio());
+    ctx.main_canvas_resized = [&]() {
+        projectionMatrixHandler.setProjection(ctx.aspect_ratio());
+    };
 
     ctx.start();
 }

@@ -3,27 +3,32 @@
 #include <p6/p6.h>
 #include "Rendering/Programs/DepthMap.h"
 
-namespace Lighting {
+namespace Rendering::Lighting {
 
 class ShadowMap {
 public:
     explicit ShadowMap();
+    ~ShadowMap();
     void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn);
 
-    glm::mat4 getLightSpaceMatrix() { return lightSpaceMatrix; };
-    void      bind() { glBindTexture(GL_TEXTURE_2D, depthMap); };
+    glm::mat4 getLightSpaceMatrix() { return _lightSpaceMatrix; };
+    GLuint    getDepthMapTextureId() const { return _depthMapTexture; };
+    void      bindTextureOnFirstUnit() const;
 
 private:
-    void defineDepthMap();
+    void generateDepthTexture();
+    void generateLightSpaceMatrix();
+    void attachTextureToFBO() const;
 
 private:
-    Rendering::Programs::DepthMap _shader;
+    const unsigned int _SHADOW_WIDTH  = 2048;
+    const unsigned int _SHADOW_HEIGHT = 2048;
 
-    const unsigned int SHADOW_WIDTH  = 2048;
-    const unsigned int SHADOW_HEIGHT = 2048;
-    unsigned int       depthMapFBO;
-    unsigned int       depthMap;
-    glm::mat4          lightSpaceMatrix;
+    Rendering::Programs::DepthMap _shader{};
+
+    GLuint    _depthMapTexture{};
+    GLuint    _depthMapFBO{};
+    glm::mat4 _lightSpaceMatrix{};
 };
 
-} // namespace Lighting
+} // namespace Rendering::Lighting
