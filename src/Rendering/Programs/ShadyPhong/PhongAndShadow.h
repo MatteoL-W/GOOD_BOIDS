@@ -1,8 +1,8 @@
 #pragma once
 
-#include <p6/p6.h>
-#include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Cameras/CameraManager.h"
+#include <glpp-extended/lib/glm/glm/gtc/type_ptr.hpp>
+#include <p6/p6.h>
 #include "utils/ProjectionMatrixHandler.h"
 
 namespace Rendering::Programs {
@@ -20,7 +20,7 @@ struct PhongAndShadow {
     GLint uViewPos{};
 
     PhongAndShadow()
-        : _program{p6::load_shader("../src/Rendering/Programs/Shaders/shadowRendering.vs.glsl", "../src/Rendering/Programs/Shaders/shadowRendering.fs.glsl")}
+        : _program{p6::load_shader("../src/Rendering/Programs/ShadyPhong/shadowRendering.vs.glsl", "../src/Rendering/Programs/ShadyPhong/shadowRendering.fs.glsl")}
         , uDiffuseTexture(glGetUniformLocation(_program.id(), "diffuseTexture"))
         , uShadowMap(glGetUniformLocation(_program.id(), "shadowMap"))
         , uProjection(glGetUniformLocation(_program.id(), "projection"))

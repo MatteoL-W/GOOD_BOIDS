@@ -28,7 +28,7 @@ void DebugDepthMap::render(p6::Context& ctx, GLuint depthMapTexture)
     glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     _shader._program.use();
-    _shader.setMatrices();
+    _shader.setNearAndFar(.1f, 100.f);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 

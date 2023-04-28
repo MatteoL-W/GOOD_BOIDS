@@ -8,9 +8,9 @@
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
-#include "Rendering/Programs/DepthMap.h"
-#include "Rendering/Programs/Normal.h"
-#include "Rendering/Programs/PhongAndShadow.h"
+#include "Rendering/Programs/DepthMap/DepthMap.h"
+#include "Rendering/Programs/Normal/Normal.h"
+#include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {

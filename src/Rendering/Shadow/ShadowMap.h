@@ -1,7 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "Rendering/Programs/DepthMap.h"
+#include "Rendering/Programs/DepthMap/DepthMap.h"
 
 namespace Rendering::Lighting {
 

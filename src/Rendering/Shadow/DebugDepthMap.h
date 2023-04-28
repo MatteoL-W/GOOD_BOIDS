@@ -1,7 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
-#include "Rendering/Programs/Debug.h"
+#include "Rendering/Programs/DebugDepthMap/Debug.h"
 
 namespace Rendering::Lighting {
 

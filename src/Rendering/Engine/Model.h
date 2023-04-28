@@ -3,7 +3,7 @@
 #include <p6/p6.h>
 #include <tiny_gltf.h>
 #include <string>
-#include "Rendering/Programs/Texture.h"
+#include "Rendering/Programs/Texture/Texture.h"
 
 class Model {
 public:

@@ -9,8 +9,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
-#include "Rendering/Programs/DepthMap.h"
-#include "Rendering/Programs/Normal.h"
+#include "Rendering/Programs/DepthMap/DepthMap.h"
+#include "Rendering/Programs/Normal/Normal.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {
