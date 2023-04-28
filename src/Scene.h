@@ -2,8 +2,8 @@
 
 #include <p6/p6.h>
 #include "Boids/Manager.h"
-#include "Rendering/Lighting/ShadowMap.h"
-#include "Rendering/Lighting/DebugDepthMap.h"
+#include "Rendering/Shadow/ShadowMap.h"
+#include "Rendering/Shadow/DebugDepthMap.h"
 
 class Scene {
 public:

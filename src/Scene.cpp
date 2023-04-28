@@ -13,7 +13,7 @@ void Scene::setupWorld(p6::Context& ctx)
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
-        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
+        //_debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
     };
 }
 
