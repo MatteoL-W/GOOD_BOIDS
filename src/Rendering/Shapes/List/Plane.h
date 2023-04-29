@@ -11,6 +11,7 @@
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 #include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
 #include "Rendering/Programs/Texture/Texture.h"
+#include "utils/RenderType.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {
@@ -28,13 +29,12 @@ public:
     Plane& operator=(Plane&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
-    void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
+    void  draw(utils::RenderType renderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
-    GLuint                                       textureId{};
+    GLuint                                       _textureId{};
     float                                        _radius{};
     Rendering::Programs::PhongAndShadow          _shader{};
     Rendering::Programs::DepthMap                _depthMap{};

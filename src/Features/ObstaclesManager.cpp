@@ -13,7 +13,7 @@ void ObstaclesManager::draw(p6::Context& ctx)
 
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(utils::TransformAttributes{obstacle._position}, glm::mat4{});
+                sphereShape.draw(utils::RenderType::Classic, utils::TransformAttributes{obstacle._position}, glm::mat4{});
             },
             sphereShape
         );

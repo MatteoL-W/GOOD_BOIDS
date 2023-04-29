@@ -7,30 +7,25 @@ Duck::Duck()
     : _model("assets/models/Duck/Duck.gltf")
 {}
 
-void Duck::draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
+
+void Duck::draw(utils::RenderType renderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
 {
-    _shader._program.use();
+    auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
+    modelMatrix      = glm::scale(modelMatrix, glm::vec3(0.01f));
 
-    auto model = glm::translate(glm::mat4{1}, transformAttributes._position);
-    model      = glm::scale(model, glm::vec3(0.01f));
+    switch (renderType)
+    {
+    case utils::RenderType::Classic:
+        _shader._program.use();
+        _shader.setMatrices(modelMatrix, lightSpaceMatrix);
+        break;
 
-    _shader.setMatrices(model, lightSpaceMatrix);
-
-    _model.draw();
-
-    glUseProgram(0);
-}
-
-void Duck::drawDepthMap(const utils::TransformAttributes& transformAttributes, glm::mat4 lightSpaceMatrix) const
-{
-    _depthMap._program.use();
-
-    auto model = glm::translate(glm::mat4{1}, transformAttributes._position);
-    model      = glm::scale(model, glm::vec3(0.01f));
-
-    _depthMap.setModel(model);
-    _depthMap.setLightSpace(lightSpaceMatrix);
-
+    case utils::RenderType::DepthMap:
+        _depthMap._program.use();
+        _depthMap.setMatrices(modelMatrix, lightSpaceMatrix);
+        break;
+    }
+    
     _model.draw();
 
     glUseProgram(0);

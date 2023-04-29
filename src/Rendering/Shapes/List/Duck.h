@@ -9,8 +9,8 @@
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/DepthMap/DepthMap.h"
-#include "Rendering/Programs/Normal/Normal.h"
 #include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
+#include "utils/RenderType.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {
@@ -28,8 +28,7 @@ public:
     Duck& operator=(Duck&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
-    void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
+    void  draw(utils::RenderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

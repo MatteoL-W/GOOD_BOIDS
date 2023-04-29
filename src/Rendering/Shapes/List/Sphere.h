@@ -1,6 +1,6 @@
 #pragma once
 
-//ToDo: Delete
+// ToDo: Delete
 
 #include <p6/p6.h>
 #include <cstddef> // For offsetof()
@@ -12,6 +12,7 @@
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 #include "Rendering/Programs/Normal/Normal.h"
 #include "utils/TransformAttributes.h"
+#include "utils/RenderType.h"
 
 namespace Rendering::Shapes {
 
@@ -28,15 +29,13 @@ public:
     Sphere& operator=(Sphere&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
-    void  drawDepthMap(utils::TransformAttributes const&, glm::mat4 lightSpaceMatrix) const;
+    void  draw(utils::RenderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
     float                                        _radius{};
     Rendering::Programs::Normal                  _shader{};
-    Rendering::Programs::DepthMap                _depthMap{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
     RenderEngine::Mesh                           _mesh;
 };

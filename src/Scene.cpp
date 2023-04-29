@@ -28,7 +28,6 @@ void Scene::initializeBoids(p6::Context& ctx)
     _boidsManager.addSpecies(ctx, firstSpecies);
 
     ctx.imgui = [&]() {
-        // ToDo : Reset settings
         ImGui::Begin("My super GUI");
 
         GUI::showSpeciesGUI("Little boids", firstSpecies, _boidsManager);
@@ -50,8 +49,8 @@ void Scene::updateMembers(p6::Context& ctx)
 void Scene::renderDepthMap()
 {
     _shadowMap.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
-        _boidsManager.draw(true, lightSpaceMatrix);
-        _floor.drawDepthMap({}, lightSpaceMatrix);
+        _boidsManager.draw(utils::RenderType::DepthMap, lightSpaceMatrix);
+        //_floor.drawDepthMap({}, lightSpaceMatrix);
     });
 }
 
@@ -62,10 +61,10 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
-    _floor.draw({}, _shadowMap.getLightSpaceMatrix());
+    _floor.draw(utils::RenderType::Classic, {}, _shadowMap.getLightSpaceMatrix());
 
     _shadowMap.bindTextureOnFirstUnit();
-    _boidsManager.draw(false, _shadowMap.getLightSpaceMatrix());
+    _boidsManager.draw(utils::RenderType::Classic, _shadowMap.getLightSpaceMatrix());
 
     _foodProvider.draw();
 }
