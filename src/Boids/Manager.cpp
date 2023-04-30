@@ -23,10 +23,11 @@ void Manager::update(Features::ObstaclesManager const& obstacles, Features::Food
         boid.update(_boids, obstacles, foodProvider);
 }
 
-void Manager::draw(utils::RenderType renderType, glm::mat4 lightSpaceMatrix)
+// ToDo: Why not const ?
+void Manager::draw(utils::RenderingDatas renderingDatas)
 {
     for (auto& boid : _boids)
-        boid.draw(renderType, lightSpaceMatrix);
+        boid.draw(renderingDatas);
 }
 
 void Manager::updateForcesConfig(unsigned int speciesId, ForcesConfig const& config)
@@ -42,6 +43,5 @@ void Manager::updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const&
         if (boid.getSpeciesId() == speciesId)
             boid.setBehaviorConfig(config);
 }
-
 
 } // namespace Boids

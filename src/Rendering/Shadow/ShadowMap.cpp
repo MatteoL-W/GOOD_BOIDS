@@ -2,7 +2,7 @@
 #include <p6/p6.h>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace Rendering::Lighting {
+namespace Rendering::Shadow {
 
 ShadowMap::ShadowMap()
 {

@@ -8,7 +8,7 @@
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
 #include "Rendering/Shapes/ShapesRegister.h"
-#include "utils/RenderType.h"
+#include "utils/RenderingDatas.h"
 
 namespace Boids {
 
@@ -33,7 +33,7 @@ public:
     void addSpecies(p6::Context&, Species&);
 
     void update(Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(utils::RenderType, glm::mat4 lightSpaceMatrix = {});
+    void draw(utils::RenderingDatas renderingDatas);
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);
     void updateBehaviorConfig(unsigned int speciesId, BehaviorConfig const&);

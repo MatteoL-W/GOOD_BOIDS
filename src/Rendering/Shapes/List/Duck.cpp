@@ -8,21 +8,21 @@ Duck::Duck()
 {}
 
 
-void Duck::draw(utils::RenderType renderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
+void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
     modelMatrix      = glm::scale(modelMatrix, glm::vec3(0.01f));
 
-    switch (renderType)
+    switch (renderingDatas._renderType)
     {
     case utils::RenderType::Classic:
         _shader._program.use();
-        _shader.setMatrices(modelMatrix, lightSpaceMatrix);
+        _shader.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
         break;
 
     case utils::RenderType::DepthMap:
         _depthMap._program.use();
-        _depthMap.setMatrices(modelMatrix, lightSpaceMatrix);
+        _depthMap.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
         break;
     }
     

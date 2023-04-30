@@ -3,7 +3,7 @@
 #include <p6/p6.h>
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 
-namespace Rendering::Lighting {
+namespace Rendering::Shadow {
 
 class ShadowMap {
 public:

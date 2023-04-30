@@ -11,8 +11,8 @@
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 #include "Rendering/Programs/Normal/Normal.h"
+#include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
-#include "utils/RenderType.h"
 
 namespace Rendering::Shapes {
 
@@ -29,7 +29,7 @@ public:
     Sphere& operator=(Sphere&& other) noexcept = default;
 
 public:
-    void  draw(utils::RenderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const;
+    void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

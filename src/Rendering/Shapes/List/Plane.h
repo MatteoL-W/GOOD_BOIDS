@@ -11,7 +11,7 @@
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 #include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
 #include "Rendering/Programs/Texture/Texture.h"
-#include "utils/RenderType.h"
+#include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {

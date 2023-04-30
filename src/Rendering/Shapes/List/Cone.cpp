@@ -8,7 +8,7 @@ Cone::Cone(float radius)
     : _radius(radius), _vertices(Rendering::Geometries::cone_vertices(getRadius(), getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
 {}
 
-void Cone::draw(utils::RenderType renderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
+void Cone::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     auto const  up            = glm::vec3(0.f, 1.f, 0.f);
     auto const  rotationAxis  = glm::cross(up, transformAttributes._velocity);
@@ -17,16 +17,16 @@ void Cone::draw(utils::RenderType renderType, utils::TransformAttributes const& 
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
     modelMatrix      = glm::rotate(modelMatrix, rotationAngle, rotationAxis);
 
-    switch (renderType)
+    switch (renderingDatas._renderType)
     {
     case utils::RenderType::Classic:
         _shader._program.use();
-        _shader.setMatrices(modelMatrix, lightSpaceMatrix);
+        _shader.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
         break;
 
     case utils::RenderType::DepthMap:
         _depthMap._program.use();
-        _depthMap.setMatrices(modelMatrix, lightSpaceMatrix);
+        _depthMap.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
         break;
     }
 

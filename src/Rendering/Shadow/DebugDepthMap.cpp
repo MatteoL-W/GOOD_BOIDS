@@ -1,7 +1,7 @@
 #include "DebugDepthMap.h"
 #include <p6/p6.h>
 
-namespace Rendering::Lighting {
+namespace Rendering::Shadow {
 
 DebugDepthMap::DebugDepthMap()
 {

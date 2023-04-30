@@ -7,11 +7,11 @@ Sphere::Sphere(float radius)
     : _radius(radius), _vertices(Rendering::Geometries::sphere_vertices(getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
 {}
 
-void Sphere::draw(utils::RenderType renderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
+void Sphere::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
 
-    switch (renderType)
+    switch (renderingDatas._renderType)
     {
     case utils::RenderType::Classic:
         _shader._program.use();

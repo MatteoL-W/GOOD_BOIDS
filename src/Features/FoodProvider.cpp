@@ -33,11 +33,12 @@ void FoodProvider::update(p6::Context& ctx)
 void FoodProvider::draw() const
 {
     auto const& sphereShape = Rendering::Shapes::getSphereInstance(_config._radius);
+    auto renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
     for (auto const& food : _foods)
     {
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(utils::RenderType::Classic, utils::TransformAttributes{food}, glm::mat4{});
+                sphereShape.draw(utils::TransformAttributes{food}, renderingDatas);
             },
             sphereShape
         );

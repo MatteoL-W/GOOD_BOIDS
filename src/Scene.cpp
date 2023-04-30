@@ -3,11 +3,13 @@
 #include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
 #include "Rendering/Cameras/CameraManager.h"
+#include "Rendering/Lights/Directional.h"
 #include "Rendering/Shapes/ShapesRegister.h"
 
 void Scene::setupWorld(p6::Context& ctx)
 {
     initializeBoids(ctx);
+    auto directionalLight = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {1.f, 0.f, 0.f}, .1f, .4f, .5f};
 
     ctx.update = [&]() {
         updateMembers(ctx);
@@ -49,8 +51,12 @@ void Scene::updateMembers(p6::Context& ctx)
 void Scene::renderDepthMap()
 {
     _shadowMap.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
-        _boidsManager.draw(utils::RenderType::DepthMap, lightSpaceMatrix);
-        //_floor.drawDepthMap({}, lightSpaceMatrix);
+        _boidsManager.draw(
+            utils::RenderingDatas{
+                ._renderType       = utils::RenderType::DepthMap,
+                ._lightSpaceMatrix = lightSpaceMatrix,
+            }
+        );
     });
 }
 
@@ -64,7 +70,12 @@ void Scene::render(p6::Context& ctx)
     _floor.draw(utils::RenderType::Classic, {}, _shadowMap.getLightSpaceMatrix());
 
     _shadowMap.bindTextureOnFirstUnit();
-    _boidsManager.draw(utils::RenderType::Classic, _shadowMap.getLightSpaceMatrix());
+    _boidsManager.draw(
+        utils::RenderingDatas{
+            utils::RenderType::Classic,
+            _shadowMap.getLightSpaceMatrix(),
+        }
+    );
 
     _foodProvider.draw();
 }

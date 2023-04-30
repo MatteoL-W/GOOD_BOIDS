@@ -6,8 +6,8 @@
 #include "Features/ObstaclesManager.h"
 #include "Movement.h"
 #include "Rendering/Shapes/ShapesRegister.h"
+#include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
-#include "utils/RenderType.h"
 
 namespace Boids {
 
@@ -16,7 +16,7 @@ public:
     explicit Boid(unsigned int _speciesId, ShapesType const&, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
 
     void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&);
-    void draw(utils::RenderType, glm::mat4 lightSpaceMatrix = {});
+    void draw(utils::RenderingDatas&);
 
     void         setForcesConfig(ForcesConfig config) { _movement.setForcesConfig(config); };
     void         setBehaviorConfig(BehaviorConfig config) { _movement.setBehaviorConfig(config); };
