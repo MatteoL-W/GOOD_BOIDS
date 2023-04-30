@@ -16,7 +16,7 @@ struct PhongAndShadow {
     GLint uView{};
     GLint uModel{};
     GLint uLightSpaceMatrix{};
-    GLint uLightPos{};
+    GLint uDirLightPos{}; // In order to draw shadows!
     GLint uViewPos{};
 
     PhongAndShadow()
@@ -27,7 +27,7 @@ struct PhongAndShadow {
         , uView(glGetUniformLocation(_program.id(), "uView"))
         , uModel(glGetUniformLocation(_program.id(), "uModel"))
         , uLightSpaceMatrix(glGetUniformLocation(_program.id(), "uLightSpaceMatrix"))
-        , uLightPos(glGetUniformLocation(_program.id(), "uLightPos"))
+        , uDirLightPos(glGetUniformLocation(_program.id(), "dirLight.position"))
         , uViewPos(glGetUniformLocation(_program.id(), "uViewPos"))
     {}
 
@@ -39,7 +39,23 @@ struct PhongAndShadow {
         glUniformMatrix4fv(uView, 1, GL_FALSE, glm::value_ptr(Camera::getViewMatrix()));
         glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(uLightSpaceMatrix, 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
-        glUniform3fv(uLightPos, 1, glm::value_ptr(glm::vec3(.0f, 3.0f, -2.f))); // ToDo
+
+        // ToDo: Move in classes
+        glUniform3fv(uDirLightPos, 1, glm::value_ptr(glm::vec3(.0f, 3.0f, -2.f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.direction"), 1, glm::value_ptr(glm::vec3(1.f, 0.f, 0.f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.ambient"), 1, glm::value_ptr(glm::vec3(0.1f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.diffuse"), 1, glm::value_ptr(glm::vec3(0.4f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.specular"), 1, glm::value_ptr(glm::vec3(0.5f)));
+
+        glUniform1i(glGetUniformLocation(_program.id(), "pointLightsAmount"), 1);
+        glUniform3fv(glGetUniformLocation(_program.id(), "pointLights[0].position"), 1, glm::value_ptr(glm::vec3(-2.f, .1f, .0f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "pointLights[0].ambient"), 1, glm::value_ptr(glm::vec3(0.1f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "pointLights[0].diffuse"), 1, glm::value_ptr(glm::vec3(0.4f)));
+        glUniform3fv(glGetUniformLocation(_program.id(), "pointLights[0].specular"), 1, glm::value_ptr(glm::vec3(1.f)));
+        glUniform1f(glGetUniformLocation(_program.id(), "pointLights[0].constant"), 1.0f);
+        glUniform1f(glGetUniformLocation(_program.id(), "pointLights[0].linear"), .09f);
+        glUniform1f(glGetUniformLocation(_program.id(), "pointLights[0].quadratic"), .032f);
+
         glUniform3fv(uViewPos, 1, glm::value_ptr(Camera::getPosition()));
     }
 };
