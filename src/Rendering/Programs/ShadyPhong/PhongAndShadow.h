@@ -32,7 +32,7 @@ struct PhongAndShadow {
             renderingDatas._directional->setMatrices(_program);
 
         for (size_t i = 0; i < renderingDatas._points.size(); i++)
-            renderingDatas._points[i].setMatrices(i, _program);
+            renderingDatas._points[i].setMatrices(static_cast<unsigned int>(i), _program);
         _program.set("uPointLightsAmount", static_cast<int>(renderingDatas._points.size()));
 
         _program.set("uViewPow", Camera::getPosition());

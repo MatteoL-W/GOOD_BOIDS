@@ -16,7 +16,7 @@ public:
     explicit ObstaclesManager(std::vector<SphereObstacle> const& obstacles = {})
         : _obstacles(obstacles){};
 
-    void draw(p6::Context&);
+    void draw();
     void addOne(glm::vec3 pos, float radius = 0.1f);
     void addRange(glm::vec3 start, glm::vec3 end, float radius = 0.1f);
 

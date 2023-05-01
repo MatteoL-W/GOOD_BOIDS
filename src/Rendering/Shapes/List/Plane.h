@@ -29,7 +29,7 @@ public:
     Plane& operator=(Plane&& other) noexcept = default;
 
 public:
-    void  draw(utils::TransformAttributes const&, utils::RenderingDatas&) const;
+    void  draw([[maybe_unused]] utils::TransformAttributes const&, utils::RenderingDatas&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 

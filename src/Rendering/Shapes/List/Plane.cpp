@@ -20,7 +20,7 @@ Plane::Plane(float radius)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Plane::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
+void Plane::draw([[maybe_unused]] utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     // ToDo: Use transformAttributes
     switch (renderingDatas._renderType)
