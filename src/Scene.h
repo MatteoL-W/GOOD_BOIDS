@@ -23,6 +23,7 @@ private:
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
     Features::ObstaclesManager _obstaclesManager{};
 
+    utils::RenderingDatas            _renderingDatas{};
     Rendering::Shadow::ShadowMap     _shadowMap{};
     Rendering::Shadow::DebugDepthMap _debugDepthMap{};
 

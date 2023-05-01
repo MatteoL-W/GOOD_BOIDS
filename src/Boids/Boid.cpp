@@ -14,6 +14,7 @@ void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager con
     _movement.update(boidsIterator, obstacles, foodProvider, getRadius());
 }
 
+// ToDo: passer renderingDatas en const&
 void Boid::draw(utils::RenderingDatas& renderingDatas)
 {
     std::visit(

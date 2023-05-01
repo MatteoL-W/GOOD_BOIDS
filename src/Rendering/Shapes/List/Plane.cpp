@@ -20,19 +20,19 @@ Plane::Plane(float radius)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Plane::draw(utils::RenderType renderType, utils::TransformAttributes const& transformAttributes, glm::mat4 lightSpaceMatrix) const
+void Plane::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     // ToDo: Use transformAttributes
-    switch (renderType)
+    switch (renderingDatas._renderType)
     {
     case utils::RenderType::Classic:
         _shader._program.use();
-        _shader.setMatrices(glm::mat4{1}, lightSpaceMatrix);
+        _shader.setMatrices(glm::mat4{1}, renderingDatas);
         break;
 
     case utils::RenderType::DepthMap:
         _depthMap._program.use();
-        _depthMap.setMatrices(glm::mat4{1}, lightSpaceMatrix);
+        _depthMap.setMatrices(glm::mat4{1}, renderingDatas._lightSpaceMatrix);
         break;
     }
 

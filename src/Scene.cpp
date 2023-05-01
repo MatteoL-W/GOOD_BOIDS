@@ -9,7 +9,9 @@
 void Scene::setupWorld(p6::Context& ctx)
 {
     initializeBoids(ctx);
-    auto directionalLight = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {1.f, 0.f, 0.f}, .1f, .4f, .5f};
+
+    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {1.f, 0.f, 0.f}, .1f, .4f, .5f};
+    _renderingDatas._renderType  = utils::RenderType::Classic;
 
     ctx.update = [&]() {
         updateMembers(ctx);
@@ -66,16 +68,14 @@ void Scene::render(p6::Context& ctx)
     glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
+
+    // ToDo: Refactor
     _shadowMap.bindTextureOnFirstUnit();
-    _floor.draw(utils::RenderType::Classic, {}, _shadowMap.getLightSpaceMatrix());
+    _floor.draw({}, _renderingDatas);
 
     _shadowMap.bindTextureOnFirstUnit();
-    _boidsManager.draw(
-        utils::RenderingDatas{
-            utils::RenderType::Classic,
-            _shadowMap.getLightSpaceMatrix(),
-        }
-    );
+    _boidsManager.draw(_renderingDatas);
 
     _foodProvider.draw();
 }

@@ -4,6 +4,7 @@
 #include <glpp-extended/lib/glm/glm/gtc/type_ptr.hpp>
 #include "Rendering/Cameras/CameraManager.h"
 #include "utils/ProjectionMatrixHandler.h"
+#include "utils/RenderingDatas.h"
 
 namespace Rendering::Programs {
 
@@ -31,22 +32,18 @@ struct PhongAndShadow {
         , uViewPos(glGetUniformLocation(_program.id(), "uViewPos"))
     {}
 
-    void setMatrices(glm::mat4 model, glm::mat4 lightSpaceMatrix) const
+    void setMatrices(glm::mat4 model, utils::RenderingDatas& renderingDatas) const
     {
         glUniform1i(uDiffuseTexture, 0);
         glUniform1i(uShadowMap, 1);
         glUniformMatrix4fv(uProjection, 1, GL_FALSE, glm::value_ptr(utils::getProjectionMatrix()));
         glUniformMatrix4fv(uView, 1, GL_FALSE, glm::value_ptr(Camera::getViewMatrix()));
         glUniformMatrix4fv(uModel, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(uLightSpaceMatrix, 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
+        glUniformMatrix4fv(uLightSpaceMatrix, 1, GL_FALSE, glm::value_ptr(renderingDatas._lightSpaceMatrix));
+
+        renderingDatas._directional->setMatrices(_program.id());
 
         // ToDo: Move in classes
-        glUniform3fv(uDirLightPos, 1, glm::value_ptr(glm::vec3(.0f, 3.0f, -2.f)));
-        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.direction"), 1, glm::value_ptr(glm::vec3(1.f, 0.f, 0.f)));
-        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.ambient"), 1, glm::value_ptr(glm::vec3(0.1f)));
-        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.diffuse"), 1, glm::value_ptr(glm::vec3(0.4f)));
-        glUniform3fv(glGetUniformLocation(_program.id(), "dirLight.specular"), 1, glm::value_ptr(glm::vec3(0.5f)));
-
         glUniform1i(glGetUniformLocation(_program.id(), "pointLightsAmount"), 1);
         glUniform3fv(glGetUniformLocation(_program.id(), "pointLights[0].position"), 1, glm::value_ptr(glm::vec3(-2.f, .1f, .0f)));
         glUniform3fv(glGetUniformLocation(_program.id(), "pointLights[0].ambient"), 1, glm::value_ptr(glm::vec3(0.1f)));

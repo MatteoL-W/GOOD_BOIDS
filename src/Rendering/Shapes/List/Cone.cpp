@@ -21,7 +21,7 @@ void Cone::draw(utils::TransformAttributes const& transformAttributes, utils::Re
     {
     case utils::RenderType::Classic:
         _shader._program.use();
-        _shader.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
+        _shader.setMatrices(modelMatrix, renderingDatas);
         break;
 
     case utils::RenderType::DepthMap:
