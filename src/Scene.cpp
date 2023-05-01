@@ -9,12 +9,7 @@
 void Scene::setupWorld(p6::Context& ctx)
 {
     initializeBoids(ctx);
-
-    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {1.f, 0.f, 0.f}, .1f, .4f, .5f};
-    _renderingDatas._points      = {
-        Rendering::Lights::Point{{-2.f, .1f, .0f}, 1.f, .09f, .032f, .1f, .4f, 1.f},
-    };
-    _renderingDatas._renderType = utils::RenderType::Classic;
+    initializeLights();
 
     ctx.update = [&]() {
         updateMembers(ctx);
@@ -44,6 +39,14 @@ void Scene::initializeBoids(p6::Context& ctx)
     };
 }
 
+void Scene::initializeLights()
+{
+    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {0.f, -1.f, 0.f}, .1f, .4f, .5f};
+    _renderingDatas._points      = {
+        Rendering::Lights::Point{{-2.f, .1f, .0f}, 1.f, .09f, .032f, .1f, .4f, 1.f},
+    };
+}
+
 void Scene::updateMembers(p6::Context& ctx)
 {
     auto cameraManager = Camera::getCameraInstance();
@@ -55,6 +58,9 @@ void Scene::updateMembers(p6::Context& ctx)
 
 void Scene::renderDepthMap()
 {
+    if (!_renderingDatas._directional.has_value())
+        return;
+
     _shadowMap.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
         _boidsManager.draw(
             utils::RenderingDatas{
@@ -62,7 +68,7 @@ void Scene::renderDepthMap()
                 ._lightSpaceMatrix = lightSpaceMatrix,
             }
         );
-    });
+    }, _renderingDatas._directional.value());
 }
 
 void Scene::render(p6::Context& ctx)

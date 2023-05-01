@@ -45,10 +45,10 @@ void ShadowMap::attachTextureToFBO() const
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn)
+void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Rendering::Lights::Directional& directional)
 {
     glCullFace(GL_FRONT);
-    generateLightSpaceMatrix();
+    generateLightSpaceMatrix(directional);
     glViewport(0, 0, _SHADOW_WIDTH, _SHADOW_HEIGHT);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _depthMapFBO);
 
@@ -59,10 +59,10 @@ void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCaste
     glCullFace(GL_BACK);
 }
 
-void ShadowMap::generateLightSpaceMatrix()
+void ShadowMap::generateLightSpaceMatrix(Rendering::Lights::Directional& directional)
 {
-    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 15.f); // ToDo: Light Positions
-    auto const lightView       = glm::lookAt(glm::vec3(.0f, 3.0f, -2.f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 15.f);
+    auto const lightView       = glm::lookAt(directional.getPosition(), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     _lightSpaceMatrix          = lightProjection * lightView;
 }
 

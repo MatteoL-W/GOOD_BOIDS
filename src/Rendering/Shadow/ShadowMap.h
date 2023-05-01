@@ -1,6 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
+#include "Rendering/Lights/Directional.h"
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 
 namespace Rendering::Shadow {
@@ -9,7 +10,7 @@ class ShadowMap {
 public:
     explicit ShadowMap();
     ~ShadowMap();
-    void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn);
+    void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Rendering::Lights::Directional&);
 
     glm::mat4 getLightSpaceMatrix() { return _lightSpaceMatrix; };
     GLuint    getDepthMapTextureId() const { return _depthMapTexture; };
@@ -17,8 +18,8 @@ public:
 
 private:
     void generateDepthTexture();
-    void generateLightSpaceMatrix();
     void attachTextureToFBO() const;
+    void generateLightSpaceMatrix(Rendering::Lights::Directional&);
 
 private:
     const unsigned int _SHADOW_WIDTH  = 2048;
@@ -31,4 +32,4 @@ private:
     glm::mat4 _lightSpaceMatrix{};
 };
 
-} // namespace Rendering::Lighting
+} // namespace Rendering::Shadow

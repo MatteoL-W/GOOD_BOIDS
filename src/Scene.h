@@ -12,6 +12,7 @@ public:
 
 private:
     void initializeBoids(p6::Context&);
+    void initializeLights();
 
     void updateMembers(p6::Context&);
     void renderDepthMap();
@@ -23,7 +24,7 @@ private:
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
     Features::ObstaclesManager _obstaclesManager{};
 
-    utils::RenderingDatas            _renderingDatas{};
+    utils::RenderingDatas            _renderingDatas{._renderType = utils::RenderType::Classic};
     Rendering::Shadow::ShadowMap     _shadowMap{};
     Rendering::Shadow::DebugDepthMap _debugDepthMap{};
 
