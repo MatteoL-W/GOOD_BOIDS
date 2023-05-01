@@ -72,4 +72,4 @@ ShadowMap::~ShadowMap()
     glDeleteFramebuffers(1, &_depthMapFBO);
 }
 
-} // namespace Rendering::Lighting
+} // namespace Rendering::Shadow

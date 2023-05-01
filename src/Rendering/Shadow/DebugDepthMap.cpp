@@ -37,4 +37,4 @@ void DebugDepthMap::render(p6::Context& ctx, GLuint depthMapTexture)
     glBindVertexArray(0);
 }
 
-} // namespace Rendering::Lighting
+} // namespace Rendering::Shadow

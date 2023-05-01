@@ -16,4 +16,4 @@ private:
     GLuint                     _quadVBO{};
 };
 
-} // namespace Rendering::Lighting
+} // namespace Rendering::Shadow
