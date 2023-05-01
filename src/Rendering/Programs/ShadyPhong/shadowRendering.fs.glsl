@@ -36,7 +36,7 @@ uniform vec3 uViewPos;
 #define MAX_POINT_LIGHTS 10
 uniform DirLight dirLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
-uniform int pointLightsAmount;
+uniform int uPointLightsAmount;
 
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -48,7 +48,7 @@ void main()
     vec3 viewDir = normalize(uViewPos - fs_in.FragPos);
     
     vec3 result = CalcDirLightAndShadows(dirLight, norm, viewDir);
-    for(int i = 0; i < pointLightsAmount; i++)
+    for(int i = 0; i < uPointLightsAmount; i++)
         result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
 
     FragColor = vec4(result, 1.0);

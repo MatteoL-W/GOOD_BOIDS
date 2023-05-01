@@ -8,7 +8,7 @@ namespace Rendering::Lights {
 class Point {
 public:
     Point(glm::vec3 position, float constant, float linear, float quadratic, float ambient, float diffuse, float specular);
-    void setMatrices(unsigned int index, GLuint programId);
+    void setMatrices(unsigned int index, p6::Shader const&) const;
 
 private:
     glm::vec3 _position{};

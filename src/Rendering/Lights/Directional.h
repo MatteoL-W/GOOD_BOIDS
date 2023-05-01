@@ -10,7 +10,7 @@ public:
     Directional(glm::vec3 position, glm::vec3 direction, float ambient, float diffuse, float specular);
 
     glm::vec3 getPosition() const { return _position; };
-    void setMatrices(GLuint programId);
+    void setMatrices(p6::Shader const&) const;
 
 private:
     GLuint _programId{};

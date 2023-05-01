@@ -6,15 +6,13 @@ Directional::Directional(glm::vec3 position, glm::vec3 direction, float ambient,
     : _position(position), _direction(direction), _ambient(ambient), _diffuse(diffuse), _specular(specular)
 {}
 
-void Directional::setMatrices(GLuint programId)
+void Directional::setMatrices(p6::Shader const& program) const
 {
-    _programId = programId;
-
-    glUniform3fv(glGetUniformLocation(_programId, "dirLight.position"), 1, glm::value_ptr(_position));
-    glUniform3fv(glGetUniformLocation(_programId, "dirLight.direction"), 1, glm::value_ptr(_direction));
-    glUniform3fv(glGetUniformLocation(_programId, "dirLight.ambient"), 1, glm::value_ptr(glm::vec3(_ambient)));
-    glUniform3fv(glGetUniformLocation(_programId, "dirLight.diffuse"), 1, glm::value_ptr(glm::vec3(_diffuse)));
-    glUniform3fv(glGetUniformLocation(_programId, "dirLight.specular"), 1, glm::value_ptr(glm::vec3(_specular)));
+    program.set("dirLight.position", _position);
+    program.set("dirLight.direction", _direction);
+    program.set("dirLight.ambient", glm::vec3(_ambient));
+    program.set("dirLight.diffuse", glm::vec3(_diffuse));
+    program.set("dirLight.specular", glm::vec3(_specular));
 }
 
 } // namespace Rendering::Lights
