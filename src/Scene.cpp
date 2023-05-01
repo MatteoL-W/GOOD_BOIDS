@@ -52,6 +52,8 @@ void Scene::updateMembers(p6::Context& ctx)
     auto cameraManager = Camera::getCameraInstance();
     cameraManager.handleEvents(ctx);
 
+    _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
+
     _foodProvider.update(ctx);
     _boidsManager.update(_obstaclesManager, _foodProvider);
 }
@@ -61,14 +63,17 @@ void Scene::renderDepthMap()
     if (!_renderingDatas._directional.has_value())
         return;
 
-    _shadowMap.renderDepthMap([&](glm::mat4 lightSpaceMatrix) {
-        _boidsManager.draw(
-            utils::RenderingDatas{
-                ._renderType       = utils::RenderType::DepthMap,
-                ._lightSpaceMatrix = lightSpaceMatrix,
-            }
-        );
-    }, _renderingDatas._directional.value());
+    _shadowMap.renderDepthMap(
+        [&](glm::mat4 lightSpaceMatrix) {
+            _boidsManager.draw(
+                utils::RenderingDatas{
+                    ._renderType       = utils::RenderType::DepthMap,
+                    ._lightSpaceMatrix = lightSpaceMatrix,
+                }
+            );
+        },
+        _renderingDatas._directional.value()
+    );
 }
 
 void Scene::render(p6::Context& ctx)
@@ -77,14 +82,8 @@ void Scene::render(p6::Context& ctx)
     glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
-
-    // ToDo: Refactor
     _shadowMap.bindTextureOnFirstUnit();
     _floor.draw({}, _renderingDatas);
-
-    _shadowMap.bindTextureOnFirstUnit();
     _boidsManager.draw(_renderingDatas);
-
     _foodProvider.draw();
 }
