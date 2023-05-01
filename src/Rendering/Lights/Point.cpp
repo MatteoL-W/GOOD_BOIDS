@@ -8,8 +8,10 @@ Point::Point(glm::vec3 position, float constant, float linear, float quadratic, 
 
 void Point::setMatrices(unsigned int index, p6::Shader const& program) const
 {
-    auto prefix = std::string("pointLights[" + std::to_string(index) + "].");
-    auto addPrefix = [prefix](const char* property) { return prefix + property; };
+    auto prefix    = std::string("pointLights[" + std::to_string(index) + "].");
+    auto addPrefix = [prefix](const char* property) {
+        return prefix + property;
+    };
 
     program.set(addPrefix("position"), _position);
     program.set(addPrefix("constant"), _constant);

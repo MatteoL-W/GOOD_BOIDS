@@ -10,11 +10,9 @@ public:
     Directional(glm::vec3 position, glm::vec3 direction, float ambient, float diffuse, float specular);
 
     glm::vec3 getPosition() const { return _position; };
-    void setMatrices(p6::Shader const&) const;
+    void      setMatrices(p6::Shader const&) const;
 
 private:
-    GLuint _programId{};
-
     glm::vec3 _position{}; // The position is needed for the shadow
     glm::vec3 _direction{};
 

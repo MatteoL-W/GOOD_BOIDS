@@ -1,8 +1,8 @@
 #pragma once
 
+#include <p6/p6.h>
 #include <iterator>
 #include <list>
-#include <p6/p6.h>
 
 namespace Features {
 using Clock = std::chrono::high_resolution_clock;

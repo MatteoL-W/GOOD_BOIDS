@@ -16,7 +16,7 @@ struct RenderingDatas {
     RenderType _renderType{};
 
     // Needed for shadows
-    glm::mat4  _lightSpaceMatrix{};
+    glm::mat4 _lightSpaceMatrix{};
 
     // Lights
     std::optional<Rendering::Lights::Directional> _directional{};

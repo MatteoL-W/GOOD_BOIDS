@@ -8,7 +8,8 @@ ProjectionMatrixHandler& getProjectionMatrixHandlerInstance()
     return handler;
 }
 
-glm::mat4 const getProjectionMatrix() {
+glm::mat4 const getProjectionMatrix()
+{
     const auto handler = getProjectionMatrixHandlerInstance();
     return handler.getProjection();
 }

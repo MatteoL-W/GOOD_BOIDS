@@ -7,7 +7,6 @@ Duck::Duck()
     : _model("assets/models/Duck/Duck.gltf")
 {}
 
-
 void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
@@ -25,7 +24,7 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::Re
         _depthMap.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
         break;
     }
-    
+
     _model.draw();
 
     glUseProgram(0);

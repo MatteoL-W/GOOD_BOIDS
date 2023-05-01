@@ -46,10 +46,10 @@ void main()
 {
     vec3 norm = normalize(fs_in.Normal);
     vec3 viewDir = normalize(uViewPos - fs_in.FragPos);
-    
+
     vec3 result = CalcDirLightAndShadows(dirLight, norm, viewDir);
-    for(int i = 0; i < uPointLightsAmount; i++)
-        result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
+    for (int i = 0; i < uPointLightsAmount; i++)
+    result += CalcPointLight(pointLights[i], norm, fs_in.FragPos, viewDir);
 
     FragColor = vec4(result, 1.0);
 }
@@ -125,7 +125,7 @@ float CalcShadow(vec4 fragPosLightSpace) {
     shadow /= 9.0;
 
     // Set shadow to 0.0 if outside the far plane region
-    if(projCoords.z > 1.0) shadow = 0.0;
+    if (projCoords.z > 1.0) shadow = 0.0;
 
     return shadow;
 }

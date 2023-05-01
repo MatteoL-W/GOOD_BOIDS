@@ -1,8 +1,8 @@
 #include "geometriesVertices.hpp"
 #include <cmath>
-#include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
+#include <vector>
 
 namespace Rendering::Geometries {
 

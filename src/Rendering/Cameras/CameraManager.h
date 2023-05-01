@@ -22,7 +22,7 @@ private:
 };
 
 CameraManager const& getCameraInstance();
-glm::mat4 getViewMatrix();
-glm::vec3 getPosition();
+glm::mat4            getViewMatrix();
+glm::vec3            getPosition();
 
 } // namespace Camera

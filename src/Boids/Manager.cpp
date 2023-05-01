@@ -23,7 +23,6 @@ void Manager::update(Features::ObstaclesManager const& obstacles, Features::Food
         boid.update(_boids, obstacles, foodProvider);
 }
 
-// ToDo: Why not const ?
 void Manager::draw(utils::RenderingDatas renderingDatas)
 {
     for (auto& boid : _boids)
