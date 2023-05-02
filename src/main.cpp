@@ -1,4 +1,5 @@
 #include <p6/p6.h>
+#include "Rendering/Shapes/List/Plane.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <tiny_gltf.h>
@@ -23,7 +24,7 @@ int main(int argc, char* argv[])
 
     auto ctx = p6::Context{{.title = "GOOD_BOIDS"}};
     ctx.maximize_window();
-    ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
+    //ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -31,6 +32,7 @@ int main(int argc, char* argv[])
 
     auto firstSpecies = Boids::Species{
         Rendering::Shapes::getDuckInstance(),
+        //Rendering::Shapes::getSphereInstance(0.3f),
         10,
         {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
         {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
@@ -47,7 +49,7 @@ int main(int argc, char* argv[])
     auto const load_boids   = [&]() {
         boidsManager.reset();
         boidsManager.addSpecies(ctx, firstSpecies);
-        boidsManager.addSpecies(ctx, secondSpecies);
+        //boidsManager.addSpecies(ctx, secondSpecies);
     };
     load_boids();
 
@@ -55,14 +57,21 @@ int main(int argc, char* argv[])
 
     auto obstaclesManager = Features::ObstaclesManager{};
     // obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    // obstaclesManager.addRange({-2.f, 0.f, 0.f}, {2.f, 2.f, 0.f}, 0.1f);
-    // obstaclesManager.add3DMapDelimiters();
+    obstaclesManager.addRange({-2.f, 0.f, 0.f}, {2.f, 2.f, 0.f}, 0.1f);
+    //obstaclesManager.add3DMapDelimiters();
 
     auto cameraManager = Camera::getCameraInstance();
 
     // ToDo: Dirty: don't call walls here
     auto floor = Rendering::Shapes::Plane{0.1f};
+    //auto floor = Rendering::Shapes::getPlaneInstance(0.1f);
 
+    auto wall = Rendering::Shapes::Plane{0.1f, {{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{-10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
+    auto wall2 = Rendering::Shapes::Plane{0.1f, {{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{-10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{-10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{-10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{-10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
+    auto wall3 = Rendering::Shapes::Plane{0.1f, {{{-10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{-10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
+    auto wall4 = Rendering::Shapes::Plane{0.1f, {{{10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
+    
+    
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
@@ -85,8 +94,8 @@ int main(int argc, char* argv[])
 
         cameraManager.handleEvents(ctx);
 
-        foodProvider.update(ctx);
-        foodProvider.draw(ctx);
+        //foodProvider.update(ctx);
+        //foodProvider.draw(ctx);
 
         boidsManager.update(obstaclesManager, foodProvider);
         boidsManager.draw(ctx);
@@ -94,6 +103,11 @@ int main(int argc, char* argv[])
         // ToDo: Dirty: don't call walls here
         floor.draw(ctx, {});
         // obstaclesManager.draw(ctx);
+
+        wall.draw(ctx, {});
+        wall2.draw(ctx, {});
+        wall3.draw(ctx, {});
+        wall4.draw(ctx, {});
     };
 
     ctx.start();

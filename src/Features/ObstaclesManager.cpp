@@ -11,6 +11,7 @@ void ObstaclesManager::draw(p6::Context& ctx)
         if (!obstacle._visible)
             return;
 
+        std::cout << "visible" << std::endl;
         std::visit(
             [&](auto const& sphereShape) {
                 sphereShape.draw(ctx, utils::TransformAttributes{obstacle._position});

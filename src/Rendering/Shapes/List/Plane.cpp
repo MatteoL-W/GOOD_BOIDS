@@ -1,4 +1,6 @@
 #include "Plane.h"
+
+#include <utility>
 #include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Engine/Mesh.h"
 
@@ -7,6 +9,10 @@ namespace Rendering::Shapes {
 // ToDo: Clean constructor and use radius
 Plane::Plane(float radius)
     : _radius(radius), _vertices(std::vector<Rendering::Geometries::Vertex3D>{{{-10.0f, 0.0f, -10.0f}, {0.0f, 10.0f, 0.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, -10.0f}, {0.0f, 10.0f, 0.0f}, {10.0f, 0.0f}}, {{10.0f, 0.0f, 10.0f}, {0.0f, 10.0f, 0.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, -10.0f}, {0.0f, 10.0f, 0.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, 10.0f}, {0.0f, 10.0f, 0.0f}, {10.0f, 10.0f}}, {{-10.0f, 0.0f, 10.0f}, {0.0f, 10.0f, 0.0f}, {0.0f, 10.0f}}}), _mesh(RenderEngine::Mesh{_vertices})
+{}
+
+Plane::Plane(float radius, std::vector<Rendering::Geometries::Vertex3D> vertices)
+    :_radius(radius), _vertices(std::move(vertices)), _mesh(RenderEngine::Mesh{_vertices})
 {}
 
 void Plane::draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const

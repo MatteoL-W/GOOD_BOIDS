@@ -16,6 +16,7 @@ namespace Rendering::Shapes {
 class Plane {
 public:
     explicit Plane(float radius);
+    explicit Plane(float radius, std::vector<Rendering::Geometries::Vertex3D> vertices);
 
     // We delete the copy constructors because the class has resources that cannot be copied
     Plane(const Plane& other)            = delete;

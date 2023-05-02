@@ -12,7 +12,9 @@ void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::Obs
 {
     // Add forces to acceleration
     addFoodAttraction(foodProvider);
+    //std::cout << "avant" << std::endl;
     addObstaclesAvoidance(obstacles, boidRadius);
+    //std::cout << "apres" << std::endl;
     addClassicBoidsForces(boids, boidRadius);
 
     addToVelocity(getAcceleration());
