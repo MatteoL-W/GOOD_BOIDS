@@ -4,7 +4,9 @@
 namespace Rendering::Shapes {
 
 Duck::Duck()
-    : _model("assets/models/Duck/Duck.gltf")
+    : _HQModel("assets/models/Duck/Duck.gltf")
+    , _MQModel("assets/models/Duck/DuckMQ.gltf")
+    , _LQModel("assets/models/Duck/DuckLQ.gltf")
 {}
 
 void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
@@ -25,7 +27,15 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::Re
         break;
     }
 
-    _model.draw();
+    float const distance = glm::distance(Camera::getPosition(), transformAttributes._position);
+    if (distance < 3) {
+        _LQModel.draw();
+    } else if (distance < 7) {
+        _MQModel.draw();
+    } else {
+        _HQModel.draw();
+    }
+
 
     glUseProgram(0);
 }

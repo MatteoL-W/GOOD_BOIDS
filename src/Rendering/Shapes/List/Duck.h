@@ -36,7 +36,10 @@ private:
     float                               _radius{};
     Rendering::Programs::PhongAndShadow _shader{};
     Rendering::Programs::DepthMap       _depthMap{};
-    Model                               _model;
+
+    Model                               _HQModel;
+    Model                               _MQModel;
+    Model                               _LQModel;
 };
 
 } // namespace Rendering::Shapes
