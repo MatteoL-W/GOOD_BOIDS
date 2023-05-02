@@ -4,9 +4,12 @@
 namespace Rendering::Shapes {
 
 Duck::Duck()
-    : _HQModel("assets/models/Duck/Duck.gltf")
-    , _MQModel("assets/models/Duck/DuckMQ.gltf")
-    , _LQModel("assets/models/Duck/DuckLQ.gltf")
+    : _LODHandler(
+        {Model{"assets/models/Duck/Duck.gltf"},
+         Model{"assets/models/Duck/DuckMQ.gltf"},
+         Model{"assets/models/Duck/DuckLQ.gltf"}},
+        10.f
+    )
 {}
 
 void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
@@ -27,15 +30,9 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::Re
         break;
     }
 
-    float const distance = glm::distance(Camera::getPosition(), transformAttributes._position);
-    if (distance < 3) {
-        _LQModel.draw();
-    } else if (distance < 7) {
-        _MQModel.draw();
-    } else {
-        _HQModel.draw();
-    }
-
+    _LODHandler.drawCorrespondingModel(
+        glm::distance(Camera::getPosition(), transformAttributes._position)
+    );
 
     glUseProgram(0);
 }
