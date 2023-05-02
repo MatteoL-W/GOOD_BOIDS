@@ -10,7 +10,7 @@ public:
         : _distance(distance), _angleX(angleX), _angleY(angleY) {}
 
     // ToDo: Incorrect
-    glm::vec3 getPosition() const { return glm::vec3{-5.f, 0.f, 0.f}; };
+    glm::vec3 getPosition() const;
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
 
