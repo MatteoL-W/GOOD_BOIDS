@@ -4,12 +4,8 @@
 #include <doctest/doctest.h>
 #include <tiny_gltf.h>
 #include <cstdlib>
-#include "Boids/Manager.h"
-#include "Features/FoodProvider.h"
-#include "Features/ObstaclesManager.h"
-#include "GUI/GUI.hpp"
-#include "Rendering/Cameras/CameraManager.h"
-#include "Rendering/Shapes/ShapesRegister.h"
+#include "Scene.h"
+#include "utils/ProjectionMatrixHandler.h"
 
 int main(int argc, char* argv[])
 {
@@ -30,84 +26,13 @@ int main(int argc, char* argv[])
     glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    auto firstSpecies = Boids::Species{
-        Rendering::Shapes::getDuckInstance(),
-        //Rendering::Shapes::getSphereInstance(0.3f),
-        10,
-        {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
-        {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
-    };
+    auto scene = Scene{};
+    scene.setupWorld(ctx);
 
-    auto secondSpecies = Boids::Species{
-        Rendering::Shapes::getConeInstance(0.2f),
-        5,
-        {._minSpeed = .015f, ._maxSpeed = 0.020f, ._foodAttractionRadius = 0.8f},
-        {._separationRadius = 0.35f, ._separationFactor = 0.01f, ._alignmentRadius = .5f, ._alignmentFactor = .5f, ._cohesionRadius = .5f, ._cohesionFactor = .5f},
-    };
-
-    auto       boidsManager = Boids::Manager{};
-    auto const load_boids   = [&]() {
-        boidsManager.reset();
-        boidsManager.addSpecies(ctx, firstSpecies);
-        //boidsManager.addSpecies(ctx, secondSpecies);
-    };
-    load_boids();
-
-    auto foodProvider = Features::FoodProvider{Features::FoodConfig{}, true};
-
-    auto obstaclesManager = Features::ObstaclesManager{};
-    // obstaclesManager.add2DMapDelimiters(ctx.aspect_ratio(), 1);
-    obstaclesManager.addRange({-2.f, 0.f, 0.f}, {2.f, 2.f, 0.f}, 0.1f);
-    //obstaclesManager.add3DMapDelimiters();
-
-    auto cameraManager = Camera::getCameraInstance();
-
-    // ToDo: Dirty: don't call walls here
-    auto floor = Rendering::Shapes::Plane{0.1f};
-    //auto floor = Rendering::Shapes::getPlaneInstance(0.1f);
-
-    auto wall = Rendering::Shapes::Plane{0.1f, {{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{-10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
-    auto wall2 = Rendering::Shapes::Plane{0.1f, {{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{-10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{-10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{-10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{-10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
-    auto wall3 = Rendering::Shapes::Plane{0.1f, {{{-10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{-10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{-10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
-    auto wall4 = Rendering::Shapes::Plane{0.1f, {{{10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}},{{10.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 0.0f}}, {{10.0f, 10.0f, -10.0f}, {0.0f, 0.0f, 10.0f}, {10.0f, 10.0f}}, {{10.0f, 10.0f, 10.0f}, {0.0f, 0.0f, 10.0f}, {0.0f, 10.0f}}}};
-    
-    
-    ctx.imgui = [&]() {
-        ImGui::Begin("My super GUI");
-
-        GUI::showSpeciesGUI("Little boids", firstSpecies, boidsManager);
-        GUI::showSpeciesGUI("Middle boids", secondSpecies, boidsManager);
-
-        GUI::showFoodGUI(foodProvider);
-
-        if (ImGui::Button("Reload flock"))
-            load_boids();
-
-        // ToDo : Reset settings
-        // ImGui::ShowDemoWindow();
-        ImGui::End();
-    };
-
-    ctx.update = [&]() {
-        ctx.background(p6::NamedColor::Gray);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        cameraManager.handleEvents(ctx);
-
-        //foodProvider.update(ctx);
-        //foodProvider.draw(ctx);
-
-        boidsManager.update(obstaclesManager, foodProvider);
-        boidsManager.draw(ctx);
-
-        // ToDo: Dirty: don't call walls here
-        floor.draw(ctx, {});
-        // obstaclesManager.draw(ctx);
-
-        wall.draw(ctx, {});
-        wall2.draw(ctx, {});
-        wall3.draw(ctx, {});
-        wall4.draw(ctx, {});
+    auto& projectionMatrixHandler = utils::getProjectionMatrixHandlerInstance();
+    projectionMatrixHandler.setProjection(ctx.aspect_ratio());
+    ctx.main_canvas_resized = [&]() {
+        projectionMatrixHandler.setProjection(ctx.aspect_ratio());
     };
 
     ctx.start();

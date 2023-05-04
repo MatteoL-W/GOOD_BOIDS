@@ -8,7 +8,11 @@
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
-#include "Rendering/Programs/Texture.h"
+#include "Rendering/Programs/DepthMap/DepthMap.h"
+#include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
+#include "Rendering/Programs/Texture/Texture.h"
+#include "glm/ext/vector_float3.hpp"
+#include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {
@@ -17,6 +21,7 @@ class Plane {
 public:
     explicit Plane(float radius);
     explicit Plane(float radius, std::vector<Rendering::Geometries::Vertex3D> vertices);
+    explicit Plane(float radius, glm::vec3 position, float height);
 
     // We delete the copy constructors because the class has resources that cannot be copied
     Plane(const Plane& other)            = delete;
@@ -27,13 +32,15 @@ public:
     Plane& operator=(Plane&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const;
+    void  draw([[maybe_unused]] utils::TransformAttributes const&, utils::RenderingDatas&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
+    GLuint                                       _textureId{};
     float                                        _radius{};
-    Rendering::Programs::Texture                 _shader{};
+    Rendering::Programs::PhongAndShadow          _shader{};
+    Rendering::Programs::DepthMap                _depthMap{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
     RenderEngine::Mesh                           _mesh;
 };

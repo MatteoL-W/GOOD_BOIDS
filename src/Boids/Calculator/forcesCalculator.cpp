@@ -5,7 +5,6 @@ namespace Boids::Calculator {
 glm::vec3 computeObstaclesAvoidance(Movement const& boid, Features::ObstaclesManager const& obstacles, float boidRadius)
 {
     auto force = glm::vec3{};
-    std::cout << "ici" << std::endl;
 
     for (auto const& obstacle : obstacles.getObstacles())
     {

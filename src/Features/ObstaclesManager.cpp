@@ -3,8 +3,9 @@
 
 namespace Features {
 
-void ObstaclesManager::draw(p6::Context& ctx)
+void ObstaclesManager::draw()
 {
+    auto renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
     for (auto const& obstacle : _obstacles)
     {
         auto const& sphereShape = Rendering::Shapes::getSphereInstance(obstacle._radius);
@@ -14,7 +15,7 @@ void ObstaclesManager::draw(p6::Context& ctx)
         std::cout << "visible" << std::endl;
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(ctx, utils::TransformAttributes{obstacle._position});
+                sphereShape.draw(utils::TransformAttributes{obstacle._position}, renderingDatas);
             },
             sphereShape
         );

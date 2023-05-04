@@ -12,6 +12,7 @@ class CameraManager {
 public:
     explicit CameraManager(CameraType&);
 
+    glm::vec3 getPosition() const;
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
     void      changeCamera(CameraType& newCamera);
@@ -21,6 +22,7 @@ private:
 };
 
 CameraManager const& getCameraInstance();
-glm::mat4 getViewMatrix();
+glm::mat4            getViewMatrix();
+glm::vec3            getPosition();
 
 } // namespace Camera

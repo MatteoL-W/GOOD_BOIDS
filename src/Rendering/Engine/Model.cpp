@@ -101,12 +101,11 @@ std::optional<const tinygltf::Texture*> Model::getTexture(tinygltf::Model& model
 
 void Model::createAndBindTexture(const tinygltf::Texture& texture)
 {
-    GLuint textureId{};
-    glGenTextures(1, &textureId);
+    glGenTextures(1, &_textureId);
 
     auto& image = _model.images[texture.source];
 
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindTexture(GL_TEXTURE_2D, _textureId);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -180,11 +179,14 @@ void Model::createEachVbos()
 void Model::draw() const
 {
     glBindVertexArray(_vao);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureId);
 
     auto const& scene = _model.scenes[_model.defaultScene];
     for (int const node : scene.nodes)
         drawNode(_model.nodes[node]);
 
+    glBindTexture(GL_TEXTURE_2D, 0);
     glBindVertexArray(0);
 }
 

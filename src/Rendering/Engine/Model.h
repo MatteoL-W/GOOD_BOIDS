@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Rendering/Programs/Texture.h"
 #include <p6/p6.h>
-#include <string>
 #include <tiny_gltf.h>
+#include <string>
+#include "Rendering/Programs/Texture/Texture.h"
 
 class Model {
 public:
@@ -29,6 +29,7 @@ private:
 private:
     tinygltf::Model    _model{};
     tinygltf::TinyGLTF _loader{};
+    GLuint             _textureId{};
 
     GLuint                _vao{};
     std::map<int, GLuint> _vbos;

@@ -1,4 +1,6 @@
 #include "ShapesRegister.h"
+
+#include <utility>
 #include "Rendering/Shapes/ShapesRegister.h"
 
 namespace Rendering::Shapes {
@@ -21,10 +23,10 @@ ShapesType const& getDuckInstance()
     return cone;
 }
 
-// ShapesType const& getPlaneInstance(float radius)
-// {
-//     static ShapesType const plane = Plane{radius};
-//     return plane;
-// }
+ShapesType const& getPlaneInstance(float radius, std::vector<Rendering::Geometries::Vertex3D> vertices)
+{
+    static ShapesType const plane = Plane{radius, std::move(vertices)};
+    return plane;
+}
 
 } // namespace Rendering::Shapes

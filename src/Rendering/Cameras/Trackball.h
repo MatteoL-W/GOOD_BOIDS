@@ -9,6 +9,8 @@ public:
     Trackball(float distance = -5, float angleX = 0, float angleY = 0)
         : _distance(distance), _angleX(angleX), _angleY(angleY) {}
 
+    // ToDo: Incorrect
+    glm::vec3 getPosition() const { return glm::vec3{-5.f, 0.f, 0.f}; };
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
 

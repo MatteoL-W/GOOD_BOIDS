@@ -30,14 +30,19 @@ void FoodProvider::update(p6::Context& ctx)
     }
 }
 
-void FoodProvider::draw(p6::Context& ctx) const
+void FoodProvider::draw() const
 {
-    auto const& sphereShape = Rendering::Shapes::getSphereInstance(_config._radius);
+    auto const& sphereShape    = Rendering::Shapes::getSphereInstance(_config._radius);
+    auto        renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
+
+    if (_foods.empty())
+        return;
+
     for (auto const& food : _foods)
     {
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(ctx, utils::TransformAttributes{food});
+                sphereShape.draw(utils::TransformAttributes{food}, renderingDatas);
             },
             sphereShape
         );
@@ -47,7 +52,10 @@ void FoodProvider::draw(p6::Context& ctx) const
 void FoodProvider::addFoodRandomly(p6::Context& ctx)
 {
     for (int i = 0; i < _config._drops; i++)
-        _foods.emplace_back(p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()), p6::random::number(-1, 1), p6::random::number(-1, 1));
+        _foods.emplace_back(
+            p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()),
+            p6::random::number(-1, 1), p6::random::number(-1, 1)
+        );
 }
 
 } // namespace Features

@@ -11,6 +11,7 @@ class FreeFly {
 public:
     FreeFly(glm::vec3 position = {}, float horizontalRotation = 0.f, float verticalRotation = 0.f);
 
+    glm::vec3 getPosition() const { return _position; };
     glm::mat4 getViewMatrix() const { return glm::lookAt(_position, _position + _front, _up); };
     void      handleEvents(p6::Context& ctx);
 

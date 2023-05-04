@@ -1,5 +1,7 @@
 #pragma once
 
+// ToDo: Delete
+
 #include <p6/p6.h>
 #include <cstddef> // For offsetof()
 #include <glm/ext/matrix_clip_space.hpp>
@@ -7,7 +9,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
-#include "Rendering/Programs/Normal.h"
+#include "Rendering/Programs/DepthMap/DepthMap.h"
+#include "Rendering/Programs/Normal/Normal.h"
+#include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
 
 namespace Rendering::Shapes {
@@ -25,7 +29,7 @@ public:
     Sphere& operator=(Sphere&& other) noexcept = default;
 
 public:
-    void  draw(p6::Context& ctx, utils::TransformAttributes const& transformAttributes) const;
+    void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
