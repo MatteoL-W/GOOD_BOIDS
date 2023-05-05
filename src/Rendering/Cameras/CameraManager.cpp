@@ -47,7 +47,7 @@ void CameraManager::changeCamera(CameraType& newCamera)
 
 CameraManager const& getCameraInstance()
 {
-    static Camera::CameraType  defaultCamera = Camera::Trackball{};
+    static Camera::CameraType  defaultCamera = Camera::ThirdPerson{};
     static CameraManager const cameraManager = CameraManager{defaultCamera};
     return cameraManager;
 }

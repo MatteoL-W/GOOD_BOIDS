@@ -2,11 +2,12 @@
 
 #include <variant>
 #include "FreeFly.h"
+#include "ThirdPerson.h"
 #include "Trackball.h"
 
 namespace Camera {
 
-using CameraType = std::variant<FreeFly, Trackball>;
+using CameraType = std::variant<FreeFly, Trackball, ThirdPerson>;
 
 class CameraManager {
 public:
