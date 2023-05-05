@@ -11,7 +11,7 @@ public:
     LODHandler(std::vector<Model> models, float usedRange)
         : _models(std::move(models)), _usedRange(usedRange){};
 
-    void drawCorrespondingModel(float distance) const;
+    void drawCorrespondingModel(glm::vec3 position) const;
 
 private:
     std::vector<Model> _models;

@@ -2,8 +2,9 @@
 
 namespace utils {
 
-void LODHandler::drawCorrespondingModel(float distance) const
+void LODHandler::drawCorrespondingModel(glm::vec3 position) const
 {
+    float distance = glm::distance(position, Camera::getPosition());
     if (_models.empty())
         return;
 
