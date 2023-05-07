@@ -2,21 +2,21 @@
 
 namespace utils {
 
-void LODHandler::drawCorrespondingModel(glm::vec3 position) const
+const Model& LODHandler::getCorrespondingModel(float distance) const
 {
-    float distance = glm::distance(position, Camera::getPosition());
     if (_models.empty())
-        return;
+        exit(1);
 
     for (size_t i = 0; i < _models.size() - 1; i++)
         if (distance < (_usedRange / _models.size()) * (i+1))
-        {
-            _models[i].draw();
-            return;
-        }
+            return _models[i];
 
-    // Draw the last model if we're out of range
-    _models[_models.size()-1].draw();
+    return _models[_models.size()-1];
+}
+
+void LODHandler::drawCorrespondingModel(float distance) const
+{
+    getCorrespondingModel(distance).draw();
 }
 
 } // namespace utils
