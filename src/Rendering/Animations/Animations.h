@@ -5,12 +5,6 @@
 
 namespace Rendering::Animations {
 
-static std::string GetFilePathExtension(const std::string &FileName) {
-    if (FileName.find_last_of(".") != std::string::npos)
-        return FileName.substr(FileName.find_last_of(".") + 1);
-    return "";
-}
-
 static std::string Indent(const int indent) {
     std::string s;
     for (int i = 0; i < indent; i++) {
@@ -19,8 +13,6 @@ static std::string Indent(const int indent) {
 
     return s;
 }
-
-
 
 static void ProcessAnimation(const tinygltf::Animation &animation, const tinygltf::Model &model)
 {
@@ -31,7 +23,6 @@ static void ProcessAnimation(const tinygltf::Animation &animation, const tinyglt
   } else if (animaton_channel.target_path.compare("weights") == 0) {
   }
 #endif
-
 
     for (size_t j = 0; j < animation.samplers.size(); j++) {
         std::cout << "== samplers[" << j << "] ===============" << std::endl;
@@ -60,8 +51,7 @@ static void ProcessAnimation(const tinygltf::Animation &animation, const tinyglt
                 }
             }
         }
-
-
+        
         //const tinygltf::Accessor &accessor = model.accessors[sampler.output];
         //std::cout << Indent(2) << "output        : " << sampler.output
         //          << std::endl;

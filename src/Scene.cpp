@@ -4,7 +4,6 @@
 #include "GUI/GUI.hpp"
 #include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Lights/Directional.h"
-#include "Rendering/Shapes/List/Plane.h"
 #include "Rendering/Shapes/ShapesRegister.h"
 #include "utils/TransformAttributes.h"
 
@@ -17,7 +16,7 @@ void Scene::setupWorld(p6::Context& ctx)
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
-        //        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
+        //_debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
     };
 }
 
@@ -60,6 +59,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
 
     _renderingDatas._points[0].setPosition(Spectator::getSpectatorPosition());
+    _animatedCube.update();
 }
 
 void Scene::renderDepthMap()
@@ -95,4 +95,6 @@ void Scene::render(p6::Context& ctx)
 
     _skyBox.draw();
     _cubeMap.draw();
+
+    _animatedCube.draw({}, _renderingDatas);
 }

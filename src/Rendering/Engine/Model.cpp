@@ -12,7 +12,6 @@ Model::Model(std::string const& path, bool const isBinaryGltf)
 {
     loadModel(path, isBinaryGltf);
     bindModel();
-    Rendering::Animations::DumpAnim(_model);
 }
 
 void Model::loadModel(std::string const& path, bool const isBinaryGltf)
@@ -208,5 +207,118 @@ void Model::drawMesh(tinygltf::Mesh const& mesh) const
         auto const indexAccessor = _model.accessors[primitive.indices];
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbos.at(indexAccessor.bufferView));
         glDrawElements(primitive.mode, static_cast<GLsizei>(indexAccessor.count), indexAccessor.componentType, bufferOffset<char>(indexAccessor.byteOffset));
+    }
+}
+
+void Model::loadAnimation()
+{
+    for (size_t i = 0; i < _model.animations.size(); i++) {
+        const tinygltf::Animation &animation = _model.animations[i];
+        // name: animation.name
+
+        // foreach animation channels
+        for (size_t j = 0; i < animation.channels.size(); i++) {
+            // samplerId : animation.channels[j].sampler
+            // target.id : animation.channels[j].target_node
+            // target.path : animation.channels[j].target_path (rotation for example)
+        }
+
+        // number of samplers : animation.samplers.size()
+
+        // we process the animation
+        processAnimation(animation);
+    }
+}
+
+void Model::processAnimation(const tinygltf::Animation& animation)
+{
+#if 0
+  if (animaton_channel.target_path.compare("translation") == 0) {
+  } else if (animaton_channel.target_path.compare("rotation") == 0) {
+  } else if (animaton_channel.target_path.compare("scale") == 0) {
+  } else if (animaton_channel.target_path.compare("weights") == 0) {
+  }
+#endif
+    // for each samplers
+    for (const auto & sampler : animation.samplers) {
+        // interpolation : sampler.interpolation (LINEAR for example)
+        // input : sampler.input (0 for example)
+        // output : sampler.output (1 for example)
+
+        const tinygltf::Accessor &accessor = _model.accessors[sampler.input];
+
+        for (size_t i = 0; i < accessor.minValues.size(); i++) {
+            // input min[i] : accessor.minValues[i]
+        }
+        for (size_t i = 0; i < accessor.maxValues.size(); i++) {
+            // input max[i] : accessor.maxValues[i]
+        }
+
+        // input count : accessor.count
+
+        // foreach accessor
+        for (size_t i = 0; i < accessor.count; i++) {
+            if (accessor.type == TINYGLTF_TYPE_SCALAR) {
+                float v = 0.f;
+                if (tinygltf::util::DecodeScalarAnimationValue(i, accessor, _model, &v)) {
+                    // input value[i] : v
+                }
+            }
+        }
+    }
+}
+
+std::optional<tinygltf::Animation> Model::getAnimationForNode(int nodeId) const {
+    for (const auto& anim : _model.animations) {
+        for (const auto& channel : anim.channels) {
+            if (channel.target_node == nodeId) {
+                return anim;
+            }
+        }
+    }
+    return std::nullopt;
+}
+
+void Model::animateNodes()
+{
+    for (size_t i = 0; i < _model.nodes.size(); i++) {
+        // What if multiple animations for node ?
+        auto animation = getAnimationForNode(i);
+        if (!animation.has_value())
+            exit(1);
+
+        // foreach animation channels
+        for (size_t j = 0; i < animation->channels.size(); i++) {
+            // samplerId : animation.channels[j].sampler
+            // target.id : animation.channels[j].target_node
+            // target.path : animation.channels[j].target_path (rotation for example)
+        }
+
+        for (const auto & sampler : animation->samplers) {
+            // interpolation : sampler.interpolation (LINEAR for example)
+            // input : sampler.input (0 for example)
+            // output : sampler.output (1 for example)
+
+            const tinygltf::Accessor &accessor = _model.accessors[sampler.input];
+
+            for (size_t i = 0; i < accessor.minValues.size(); i++) {
+                // input min[i] : accessor.minValues[i]
+            }
+            for (size_t i = 0; i < accessor.maxValues.size(); i++) {
+                // input max[i] : accessor.maxValues[i]
+            }
+
+            // input count : accessor.count
+
+            // foreach accessor
+            for (size_t i = 0; i < accessor.count; i++) {
+                if (accessor.type == TINYGLTF_TYPE_SCALAR) {
+                    float v = 0.f;
+                    if (tinygltf::util::DecodeScalarAnimationValue(i, accessor, _model, &v)) {
+                        // input value[i] : v
+                    }
+                }
+            }
+        }
     }
 }

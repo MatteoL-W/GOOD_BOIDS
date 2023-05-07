@@ -8,6 +8,7 @@
 class Model {
 public:
     explicit Model(std::string const& path, bool isBinaryGltf = false);
+    void animateNodes();
     void draw() const;
 
 private:
@@ -16,6 +17,10 @@ private:
     void bindModelNodes(tinygltf::Node&);
     void bindMesh(tinygltf::Mesh&);
     void bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive);
+
+    void                               loadAnimation();
+    void                               processAnimation(const tinygltf::Animation& animation);
+    std::optional<tinygltf::Animation> getAnimationForNode(int nodeId) const;
 
     static std::optional<const tinygltf::Texture*> getTexture(tinygltf::Model& model);
 
