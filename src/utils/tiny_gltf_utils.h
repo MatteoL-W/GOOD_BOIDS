@@ -37,4 +37,6 @@ bool DecodeScaleAnimationValue(const size_t i, const tinygltf::Accessor& accesso
 
 bool DecodeRotationAnimationValue(const size_t i, const tinygltf::Accessor& accessor, const tinygltf::Model& model, float* xyzw);
 
+
+
 } // namespace tinygltf::util

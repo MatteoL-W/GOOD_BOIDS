@@ -59,7 +59,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
 
     _renderingDatas._points[0].setPosition(Spectator::getSpectatorPosition());
-    _animatedCube.update();
+    _animatedCube.update(ctx.time());
 }
 
 void Scene::renderDepthMap()

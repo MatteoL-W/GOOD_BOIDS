@@ -30,7 +30,7 @@ public:
     AnimatedCube& operator=(AnimatedCube&& other) noexcept = default;
 
 public:
-    void  update();
+    void  update(float currentTime);
     void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };

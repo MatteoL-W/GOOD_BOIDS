@@ -8,8 +8,9 @@
 class Model {
 public:
     explicit Model(std::string const& path, bool isBinaryGltf = false);
-    void animateNodes();
+    void animateNodes(float currentTime);
     void draw() const;
+    tinygltf::Model const& getModel() const { return _model; };
 
 private:
     void loadModel(std::string const& path, bool isBinaryGltf);
