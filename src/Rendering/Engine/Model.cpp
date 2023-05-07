@@ -1,5 +1,6 @@
 #include "Model.h"
 #include <stdexcept>
+#include "Rendering/Animations/Animations.h"
 
 template<typename T>
 inline constexpr T* bufferOffset(std::size_t offset)
@@ -11,6 +12,7 @@ Model::Model(std::string const& path, bool const isBinaryGltf)
 {
     loadModel(path, isBinaryGltf);
     bindModel();
+    Rendering::Animations::DumpAnim(_model);
 }
 
 void Model::loadModel(std::string const& path, bool const isBinaryGltf)
