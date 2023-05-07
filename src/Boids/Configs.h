@@ -15,6 +15,8 @@ struct ForcesConfig {
     float _alignmentFactor  = .4f;
     float _cohesionRadius   = .2f;
     float _cohesionFactor   = .4f;
+
+    float _turnFactor = .4f;
 };
 
 } // namespace Boids

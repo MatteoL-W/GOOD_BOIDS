@@ -39,21 +39,6 @@ Plane::Plane(float radius, std::vector<Rendering::Geometries::Vertex3D> vertices
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Plane::Plane(float radius, glm::vec3 position, float height)
-    : _radius(radius), _vertices(Geometries::plane_vertices(radius, position, height)), _mesh(RenderEngine::Mesh{_vertices})
-{
-    glGenTextures(1, &_textureId);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
-
-    const auto texture = p6::load_image_buffer("assets/textures/EarthMap.jpg");
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width(), texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.data());
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-}
-
 void Plane::draw([[maybe_unused]] utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     // ToDo: Use transformAttributes

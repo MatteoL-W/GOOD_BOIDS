@@ -10,10 +10,10 @@ Boid::Boid(unsigned int speciesId, ShapesType const& shape, utils::TransformAttr
     : _speciesId(speciesId), _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
 {}
 
-void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider)
+void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, Rendering::Shapes::Cube const& walls)
 {
     auto const boidsIterator = Iterator::ForEachBoidMovement<Boid>{boids};
-    _movement.update(boidsIterator, obstacles, foodProvider, getRadius());
+    _movement.update(boidsIterator, obstacles, foodProvider, getRadius(), walls);
 }
 
 void Boid::draw(utils::RenderingDatas& renderingDatas)

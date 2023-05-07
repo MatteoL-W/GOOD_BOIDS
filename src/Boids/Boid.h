@@ -15,7 +15,7 @@ class Boid {
 public:
     explicit Boid(unsigned int _speciesId, ShapesType const&, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
 
-    void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&);
+    void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&, Rendering::Shapes::Cube const&);
     void draw(utils::RenderingDatas&);
 
     void         setForcesConfig(ForcesConfig config) { _movement.setForcesConfig(config); };

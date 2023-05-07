@@ -60,7 +60,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
 
     _foodProvider.update(ctx);
-    _boidsManager.update(_obstaclesManager, _foodProvider);
+    _boidsManager.update(_obstaclesManager, _foodProvider, _walls);
 }
 
 void Scene::renderDepthMap()
@@ -93,4 +93,5 @@ void Scene::render(p6::Context& ctx)
     _foodProvider.draw();
 
     _walls.draw({}, _renderingDatas);
+    
 }

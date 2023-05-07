@@ -8,16 +8,15 @@ Movement::Movement(unsigned int speciesId, utils::TransformAttributes const& tra
     : _speciesId(speciesId), _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
-void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float boidRadius)
+void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float boidRadius, Rendering::Shapes::Cube const& walls)
 {
     // Add forces to acceleration
     addFoodAttraction(foodProvider);
-    //std::cout << "avant" << std::endl;
     addObstaclesAvoidance(obstacles, boidRadius);
-    //std::cout << "apres" << std::endl;
     addClassicBoidsForces(boids, boidRadius);
 
     addToVelocity(getAcceleration());
+    stayInside(walls);
     utils::vec::constrain(_transformAttributes._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
 
     addToPosition(getVelocity());
@@ -77,6 +76,28 @@ std::vector<Movement> Movement::getNearbyBoids(Iterator::IForEachBoidMovement co
 std::vector<Movement> Movement::getNearbyAndSameBoids(Iterator::IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const
 {
     return getNearbyBoidsFromBoid(getSpeciesId(), *this, boids, boidRadius, proximityRadius);
+}
+
+void Movement::stayInside(Rendering::Shapes::Cube const& walls) 
+{
+    if (_transformAttributes._position.x <= - (walls.getRadius()/100)){
+        addToVelocity(glm::vec3(_forcesConfig._turnFactor, 0.f, 0.f));
+    }
+    if (_transformAttributes._position.x >= (walls.getRadius()/100)){
+        addToVelocity(glm::vec3(- _forcesConfig._turnFactor, 0.f, 0.f));
+    }
+    if (_transformAttributes._position.y <= - (walls.getRadius()/100)){
+        addToVelocity(glm::vec3(0.f, _forcesConfig._turnFactor, 0.f));
+    }
+    if (_transformAttributes._position.y >= (walls.getRadius()/100)){
+        addToVelocity(glm::vec3(0.f, - _forcesConfig._turnFactor, 0.f));
+    }
+    if (_transformAttributes._position.z <= - (walls.getRadius()/100)){
+        addToVelocity(glm::vec3(0.f, 0.f, _forcesConfig._turnFactor));
+    }
+    if (_transformAttributes._position.z >= (walls.getRadius()/100)){
+        addToVelocity(glm::vec3(0.f, 0.f, - _forcesConfig._turnFactor));
+    }
 }
 
 } // namespace Boids

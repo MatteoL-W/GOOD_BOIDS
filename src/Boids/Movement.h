@@ -5,6 +5,7 @@
 #include "Boids/Iterator/IForEachBoidMovement.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
+#include "Rendering/Shapes/List/Cube.h"
 #include "utils/TransformAttributes.h"
 
 namespace Boids {
@@ -13,7 +14,7 @@ class Movement {
 public:
     Movement() = default;
     explicit Movement(unsigned int _speciesId, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
-    void update(Iterator::IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float boidRadius);
+    void update(Iterator::IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float boidRadius, Rendering::Shapes::Cube const&);
 
     [[nodiscard]] unsigned int               getSpeciesId() const { return _speciesId; };
     [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
@@ -28,6 +29,8 @@ public:
     void addToPosition(glm::vec3 position) { _transformAttributes._position += position; };
     void addToVelocity(glm::vec3 velocity) { _transformAttributes._velocity += velocity; };
     void addToAcceleration(glm::vec3 velocity) { _transformAttributes._velocity += velocity; };
+
+    void stayInside(Rendering::Shapes::Cube const&);
 
 private:
     void addFoodAttraction(Features::FoodProvider&);

@@ -17,10 +17,10 @@ void Manager::addSpecies(p6::Context& ctx, Species& species)
         );
 }
 
-void Manager::update(Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider)
+void Manager::update(Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, Rendering::Shapes::Cube const& walls)
 {
     for (auto& boid : _boids)
-        boid.update(_boids, obstacles, foodProvider);
+        boid.update(_boids, obstacles, foodProvider, walls);
 }
 
 void Manager::draw(utils::RenderingDatas renderingDatas)

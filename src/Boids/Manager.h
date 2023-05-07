@@ -32,7 +32,7 @@ public:
     Manager() = default;
     void addSpecies(p6::Context&, Species&);
 
-    void update(Features::ObstaclesManager const&, Features::FoodProvider&);
+    void update(Features::ObstaclesManager const&, Features::FoodProvider&, Rendering::Shapes::Cube const&);
     void draw(utils::RenderingDatas renderingDatas);
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);
