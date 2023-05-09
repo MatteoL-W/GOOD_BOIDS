@@ -8,8 +8,10 @@
 class Model {
 public:
     explicit Model(std::string const& path, bool isBinaryGltf = false);
-    void animateNodes(float currentTime);
+
+    void playAllAnimations(float currentTime);
     void draw() const;
+
     tinygltf::Model const& getModel() const { return _model; };
 
 private:
@@ -19,9 +21,8 @@ private:
     void bindMesh(tinygltf::Mesh&);
     void bindAllPrimitiveAttributes(const tinygltf::Primitive& primitive);
 
-    void                               loadAnimation();
-    void                               processAnimation(const tinygltf::Animation& animation);
-    std::optional<tinygltf::Animation> getAnimationForNode(int nodeId) const;
+    float computeInterpolationFactor(float currentTime, const tinygltf::AnimationSampler& sampler, const float* inputData, int keyframeIndex) const;
+    void  updateNodeTransform(const tinygltf::AnimationChannel& channel, tinygltf::Node& node, const float* outputData, int keyframeIndex, float factor) const;
 
     static std::optional<const tinygltf::Texture*> getTexture(tinygltf::Model& model);
 
