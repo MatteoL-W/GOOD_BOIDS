@@ -17,7 +17,7 @@ void Scene::setupWorld(p6::Context& ctx)
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
-//        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
+        //        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
     };
 }
 
@@ -85,7 +85,8 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
-    _cubeMap.draw(_renderingDatas);
+    _floor.draw({._position = glm::vec3{0.f, -_sceneRadius + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _foodProvider.draw();
+    _cubeMap.draw();
 }

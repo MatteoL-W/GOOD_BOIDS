@@ -8,22 +8,12 @@ Cube::Cube(float radius)
     : _radius(radius), _model{"assets/models/Cube/Cube.gltf"}
 {}
 
-void Cube::draw(utils::RenderingDatas& renderingDatas) const
+void Cube::draw() const
 {
     auto modelMatrix = glm::scale(glm::mat4{1}, glm::vec3(_radius));
 
-    switch (renderingDatas._renderType)
-    {
-    case utils::RenderType::Classic:
-        _shader._program.use();
-        _shader.setMatrices(modelMatrix, renderingDatas);
-        break;
-
-    case utils::RenderType::DepthMap:
-        _depthMap._program.use();
-        _depthMap.setMatrices(modelMatrix, renderingDatas._lightSpaceMatrix);
-        break;
-    }
+    _shader._program.use();
+    _shader.setMatrices(modelMatrix);
 
     _model.draw();
 }

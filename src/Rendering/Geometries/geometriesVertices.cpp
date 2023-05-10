@@ -121,25 +121,9 @@ std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float r
     return vertices;
 }
 
- std::vector<Rendering::Geometries::Vertex3D> plane_vertices(float radius, glm::vec3 position, float height)
- {
-     std::vector<Rendering::Geometries::Vertex3D> vertices;
-
-     glm::vec3 normal = {0.0f, 1.0f, 0.0f};
-
-     glm::vec3 bottomLeft  = {position.x - radius, position.y, position.z};
-     glm::vec3 bottomRight = {position.x + radius, position.y, position.z};
-     glm::vec3 topRight    = {position.x + radius, position.y, position.z + height};
-     glm::vec3 topLeft     = {position.x - radius, position.y, position.z + height};
-
-     vertices.push_back({bottomLeft, normal, {0.0f, 0.0f}});
-     vertices.push_back({bottomRight, normal, {radius, 0.0f}});
-     vertices.push_back({topRight, normal, {radius, radius}});
-     vertices.push_back({bottomLeft, normal, {0.0f, 0.0f}});
-     vertices.push_back({topRight, normal, {radius, radius}});
-     vertices.push_back({topLeft, normal, {0.0f, radius}});
-
-     return vertices;
- }
+std::vector<Rendering::Geometries::Vertex3D> plane_vertices()
+{
+    return std::vector<Rendering::Geometries::Vertex3D>{{{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {1.f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 1.f}}};
+}
 
 } // namespace Rendering::Geometries

@@ -8,8 +8,7 @@
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
-#include "Rendering/Programs/DepthMap/DepthMap.h"
-#include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
+#include "Rendering/Programs/Transparent/Transparent.h"
 #include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
 
@@ -28,15 +27,14 @@ public:
     Cube& operator=(Cube&& other) noexcept = default;
 
 public:
-    void  draw(utils::RenderingDatas&) const;
+    void  draw() const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
 private:
-    float                                        _radius{};
-    Rendering::Programs::PhongAndShadow          _shader{};
-    Rendering::Programs::DepthMap                _depthMap{};
-    Model                                        _model;
+    float                            _radius{};
+    Rendering::Programs::Transparent _shader{};
+    Model                            _model;
 };
 
 } // namespace Rendering::Shapes
