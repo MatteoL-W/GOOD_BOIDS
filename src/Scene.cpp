@@ -88,5 +88,7 @@ void Scene::render(p6::Context& ctx)
     _floor.draw({._position = glm::vec3{0.f, -_sceneRadius + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _foodProvider.draw();
+    _skyBox.draw();
+
     _cubeMap.draw();
 }

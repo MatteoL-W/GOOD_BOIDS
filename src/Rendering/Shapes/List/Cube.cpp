@@ -10,7 +10,7 @@ Cube::Cube(float radius)
 
 void Cube::draw() const
 {
-    auto modelMatrix = glm::scale(glm::mat4{1}, glm::vec3(_radius));
+    auto modelMatrix = glm::scale(glm::mat4{1.f}, glm::vec3(_radius));
 
     _shader._program.use();
     _shader.setMatrices(modelMatrix);

@@ -2,6 +2,7 @@
 
 #include <p6/p6.h>
 #include "Boids/Manager.h"
+#include "Rendering/Engine/SkyBox.h"
 #include "Rendering/Shadow/DebugDepthMap.h"
 #include "Rendering/Shadow/ShadowMap.h"
 #include "Rendering/Shapes/List/Cube.h"
@@ -21,7 +22,7 @@ private:
     void render(p6::Context&);
 
 private:
-    float _sceneRadius = 5.f;
+    float          _sceneRadius = 5.f;
     Boids::Manager _boidsManager{};
 
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
@@ -31,6 +32,7 @@ private:
     Rendering::Shadow::ShadowMap     _shadowMap{};
     Rendering::Shadow::DebugDepthMap _debugDepthMap{};
 
-    Rendering::Shapes::Cube _cubeMap{_sceneRadius};
-    Rendering::Shapes::Plane _floor{_sceneRadius};
+    Rendering::Engine::SkyBox _skyBox{};
+    Rendering::Shapes::Cube   _cubeMap{_sceneRadius};
+    Rendering::Shapes::Plane  _floor{_sceneRadius};
 };

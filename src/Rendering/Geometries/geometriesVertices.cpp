@@ -126,4 +126,52 @@ std::vector<Rendering::Geometries::Vertex3D> plane_vertices()
     return std::vector<Rendering::Geometries::Vertex3D>{{{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {1.f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 1.f}}};
 }
 
+// Function to create and return the skybox vertices
+std::array<float, 108> skyboxVertices()
+{
+    static constexpr float radius = 10.f;
+    return {
+        -radius, radius, -radius,
+        -radius, -radius, -radius,
+        radius, -radius, -radius,
+        radius, -radius, -radius,
+        radius, radius, -radius,
+        -radius, radius, -radius,
+
+        -radius, -radius, radius,
+        -radius, -radius, -radius,
+        -radius, radius, -radius,
+        -radius, radius, -radius,
+        -radius, radius, radius,
+        -radius, -radius, radius,
+
+        radius, -radius, -radius,
+        radius, -radius, radius,
+        radius, radius, radius,
+        radius, radius, radius,
+        radius, radius, -radius,
+        radius, -radius, -radius,
+
+        -radius, -radius, radius,
+        -radius, radius, radius,
+        radius, radius, radius,
+        radius, radius, radius,
+        radius, -radius, radius,
+        -radius, -radius, radius,
+
+        -radius, radius, -radius,
+        radius, radius, -radius,
+        radius, radius, radius,
+        radius, radius, radius,
+        -radius, radius, radius,
+        -radius, radius, -radius,
+
+        -radius, -radius, -radius,
+        -radius, -radius, radius,
+        radius, -radius, -radius,
+        radius, -radius, -radius,
+        -radius, -radius, radius,
+        radius, -radius, radius};
+}
+
 } // namespace Rendering::Geometries
