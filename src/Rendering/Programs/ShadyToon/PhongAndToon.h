@@ -14,8 +14,8 @@ struct PhongAndShadow {
     PhongAndShadow()
         : _program{
             p6::load_shader(
-                "../src/Rendering/Programs/ShadyPhong/ShadyPhong.vs.glsl",
-                "../src/Rendering/Programs/ShadyPhong/ShadyPhong.fs.glsl"
+                "../src/Rendering/Programs/ShadyToon/ShadyToon.vs.glsl",
+                "../src/Rendering/Programs/ShadyToon/ShadyToon.fs.glsl"
             )}
     {}
 
