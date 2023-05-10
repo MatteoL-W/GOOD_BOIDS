@@ -18,11 +18,11 @@ struct Species {
         : _id(_speciesCounter++), _shape(shape), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
     {}
 
-    unsigned int      _id;
+    unsigned int           _id;
     BoidsShapesType const& _shape;
-    int               _quantity;
-    BehaviorConfig    _behaviorConfig;
-    ForcesConfig      _forcesConfig;
+    int                    _quantity;
+    BehaviorConfig         _behaviorConfig;
+    ForcesConfig           _forcesConfig;
 
     inline static unsigned int _speciesCounter = 0;
 };

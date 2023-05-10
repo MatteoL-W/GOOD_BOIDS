@@ -19,7 +19,7 @@ struct SkyBox {
 
     [[maybe_unused]] void setMatrices() const
     {
-        auto view = glm::mat4{glm::mat3{Camera::getViewMatrix()}};
+        auto view      = glm::mat4{glm::mat3{Camera::getViewMatrix()}};
         auto MVPMatrix = utils::getProjectionMatrix() * view;
 
         _program.set("uMVPMatrix", MVPMatrix);

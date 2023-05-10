@@ -2,9 +2,7 @@
 
 #include "Rendering/Shapes/List/Cone.h"
 #include "Rendering/Shapes/List/Duck.h"
-#include "Rendering/Shapes/List/Plane.h"
 #include "Rendering/Shapes/List/Sphere.h"
-#include "Rendering/Shapes/List/Cube.h"
 
 using BoidsShapesType = std::variant<Rendering::Shapes::Sphere, Rendering::Shapes::Cone, Rendering::Shapes::Duck>;
 

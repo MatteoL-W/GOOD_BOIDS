@@ -1,8 +1,5 @@
 #include "ShapesRegister.h"
 
-#include <utility>
-#include "Rendering/Shapes/ShapesRegister.h"
-
 namespace Rendering::Shapes {
 
 BoidsShapesType const& getSphereInstance(float radius)
