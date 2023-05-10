@@ -78,26 +78,18 @@ std::vector<Movement> Movement::getNearbyAndSameBoids(Iterator::IForEachBoidMove
     return getNearbyBoidsFromBoid(getSpeciesId(), *this, boids, boidRadius, proximityRadius);
 }
 
-void Movement::stayInside(Rendering::Shapes::Cube const& walls) 
+void Movement::stayInside(Rendering::Shapes::Cube const& walls)
 {
-    if (_transformAttributes._position.x <= - (walls.getRadius()/100)){
-        addToVelocity(glm::vec3(_forcesConfig._turnFactor, 0.f, 0.f));
-    }
-    if (_transformAttributes._position.x >= (walls.getRadius()/100)){
-        addToVelocity(glm::vec3(- _forcesConfig._turnFactor, 0.f, 0.f));
-    }
-    if (_transformAttributes._position.y <= - (walls.getRadius()/100)){
-        addToVelocity(glm::vec3(0.f, _forcesConfig._turnFactor, 0.f));
-    }
-    if (_transformAttributes._position.y >= (walls.getRadius()/100)){
-        addToVelocity(glm::vec3(0.f, - _forcesConfig._turnFactor, 0.f));
-    }
-    if (_transformAttributes._position.z <= - (walls.getRadius()/100)){
-        addToVelocity(glm::vec3(0.f, 0.f, _forcesConfig._turnFactor));
-    }
-    if (_transformAttributes._position.z >= (walls.getRadius()/100)){
-        addToVelocity(glm::vec3(0.f, 0.f, - _forcesConfig._turnFactor));
-    }
+    auto applyWallSteering = [&](float positionOnAxe, glm::vec3 turnFactor) {
+        if (positionOnAxe <= -walls.getRadius())
+            addToVelocity(turnFactor);
+        else if (positionOnAxe >= walls.getRadius())
+            addToVelocity(-turnFactor);
+    };
+
+    applyWallSteering(_transformAttributes._position.x, glm::vec3(_forcesConfig._turnFactor, 0.f, 0.f));
+    applyWallSteering(_transformAttributes._position.y, glm::vec3(0.f, _forcesConfig._turnFactor, 0.f));
+    applyWallSteering(_transformAttributes._position.z, glm::vec3(0.f, 0.f, _forcesConfig._turnFactor));
 }
 
 } // namespace Boids
