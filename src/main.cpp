@@ -22,6 +22,8 @@ int main(int argc, char* argv[])
     ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glEnable(GL_CULL_FACE);
     glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -35,4 +37,5 @@ int main(int argc, char* argv[])
     };
 
     ctx.start();
+    glpp::shut_down();
 }

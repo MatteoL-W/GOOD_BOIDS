@@ -4,14 +4,14 @@
 
 namespace Boids {
 
-Boid::Boid(unsigned int speciesId, ShapesType const& shape, utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+Boid::Boid(unsigned int speciesId, BoidsShapesType const& shape, utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
     : _speciesId(speciesId), _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
 {}
 
-void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider)
+void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float sceneRadius)
 {
     auto const boidsIterator = Iterator::ForEachBoidMovement<Boid>{boids};
-    _movement.update(boidsIterator, obstacles, foodProvider, getRadius());
+    _movement.update(boidsIterator, obstacles, foodProvider, sceneRadius, getRadius());
 }
 
 void Boid::draw(utils::RenderingDatas& renderingDatas)

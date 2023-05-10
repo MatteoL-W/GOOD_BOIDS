@@ -5,6 +5,7 @@
 #include "Boids/Iterator/IForEachBoidMovement.h"
 #include "Features/FoodProvider.h"
 #include "Features/ObstaclesManager.h"
+#include "Rendering/Shapes/List/Cube.h"
 #include "utils/TransformAttributes.h"
 
 namespace Boids {
@@ -13,7 +14,8 @@ class Movement {
 public:
     Movement() = default;
     explicit Movement(unsigned int _speciesId, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
-    void update(Iterator::IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float boidRadius);
+    // ToDo : Strong type ?
+    void update(Iterator::IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float sceneRadius, float boidRadius);
 
     [[nodiscard]] unsigned int               getSpeciesId() const { return _speciesId; };
     [[nodiscard]] utils::TransformAttributes getTransformAttributes() const { return _transformAttributes; };
@@ -33,6 +35,7 @@ private:
     void addFoodAttraction(Features::FoodProvider&);
     void addObstaclesAvoidance(Features::ObstaclesManager const&, float boidRadius);
     void addClassicBoidsForces(Iterator::IForEachBoidMovement const&, float boidRadius);
+    void addWallSteering(float sceneRadius);
 
     /// Return a vector containing all the boids nearby that share the same species
     [[nodiscard]] std::vector<Movement> getNearbyAndSameBoids(Iterator::IForEachBoidMovement const& boids, float boidRadius, float proximityRadius) const;

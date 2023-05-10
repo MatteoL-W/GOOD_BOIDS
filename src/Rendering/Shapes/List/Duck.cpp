@@ -14,6 +14,7 @@ Duck::Duck()
 
 void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
+    glCullFace(GL_FRONT);
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
     modelMatrix      = glm::scale(modelMatrix, glm::vec3(0.01f));
 
@@ -35,6 +36,7 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::Re
     );
 
     glUseProgram(0);
+    glCullFace(GL_BACK);
 }
 
 } // namespace Rendering::Shapes

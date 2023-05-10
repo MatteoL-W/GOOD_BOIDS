@@ -11,6 +11,7 @@
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 #include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
 #include "Rendering/Programs/Texture/Texture.h"
+#include "glm/ext/vector_float3.hpp"
 #include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
 
@@ -39,7 +40,7 @@ private:
     Rendering::Programs::PhongAndShadow          _shader{};
     Rendering::Programs::DepthMap                _depthMap{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
-    RenderEngine::Mesh                           _mesh;
+    Rendering::Engine::Mesh                      _mesh;
 };
 
 } // namespace Rendering::Shapes

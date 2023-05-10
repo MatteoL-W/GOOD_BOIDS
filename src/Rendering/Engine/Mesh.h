@@ -3,7 +3,7 @@
 #include <p6/p6.h>
 #include "Rendering/Geometries/Vertex3D.hpp"
 
-namespace RenderEngine {
+namespace Rendering::Engine {
 
 class Mesh {
 public:
@@ -28,4 +28,4 @@ private:
     GLuint _vao = 0;
 };
 
-} // namespace RenderEngine
+} // namespace Rendering::Engine

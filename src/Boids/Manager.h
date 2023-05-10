@@ -14,15 +14,15 @@ namespace Boids {
 
 struct Species {
     // We specify the constructor in order to increment speciesCounter.
-    Species(ShapesType const& shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
+    Species(BoidsShapesType const& shape, int quantity, BehaviorConfig behaviorConfig, ForcesConfig forcesConfig)
         : _id(_speciesCounter++), _shape(shape), _quantity(quantity), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
     {}
 
-    unsigned int      _id;
-    ShapesType const& _shape;
-    int               _quantity;
-    BehaviorConfig    _behaviorConfig;
-    ForcesConfig      _forcesConfig;
+    unsigned int           _id;
+    BoidsShapesType const& _shape;
+    int                    _quantity;
+    BehaviorConfig         _behaviorConfig;
+    ForcesConfig           _forcesConfig;
 
     inline static unsigned int _speciesCounter = 0;
 };
@@ -32,7 +32,7 @@ public:
     Manager() = default;
     void addSpecies(p6::Context&, Species&);
 
-    void update(Features::ObstaclesManager const&, Features::FoodProvider&);
+    void update(Features::ObstaclesManager const&, Features::FoodProvider&, float sceneRadius);
     void draw(utils::RenderingDatas renderingDatas);
 
     void updateForcesConfig(unsigned int speciesId, ForcesConfig const&);

@@ -2,21 +2,21 @@
 
 namespace Rendering::Shapes {
 
-ShapesType const& getSphereInstance(float radius)
+BoidsShapesType const& getSphereInstance(float radius)
 {
-    static ShapesType const sphere = Sphere{radius};
+    static BoidsShapesType const sphere = Sphere{radius};
     return sphere;
 }
 
-ShapesType const& getConeInstance(float radius)
+BoidsShapesType const& getConeInstance(float radius)
 {
-    static ShapesType const cone = Cone{radius};
+    static BoidsShapesType const cone = Cone{radius};
     return cone;
 }
 
-ShapesType const& getDuckInstance()
+BoidsShapesType const& getDuckInstance()
 {
-    static ShapesType const cone = Duck{};
+    static BoidsShapesType const cone = Duck{};
     return cone;
 }
 

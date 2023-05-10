@@ -4,7 +4,9 @@
 #include "GUI/GUI.hpp"
 #include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Lights/Directional.h"
+#include "Rendering/Shapes/List/Plane.h"
 #include "Rendering/Shapes/ShapesRegister.h"
+#include "utils/TransformAttributes.h"
 
 void Scene::setupWorld(p6::Context& ctx)
 {
@@ -15,7 +17,7 @@ void Scene::setupWorld(p6::Context& ctx)
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
-        //_debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
+        //        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
     };
 }
 
@@ -55,7 +57,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
 
     _foodProvider.update(ctx);
-    _boidsManager.update(_obstaclesManager, _foodProvider);
+    _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
 }
 
 void Scene::renderDepthMap()
@@ -83,7 +85,10 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
-    _floor.draw({}, _renderingDatas);
+    _floor.draw({._position = glm::vec3{0.f, -_sceneRadius + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _foodProvider.draw();
+    _skyBox.draw();
+
+    _cubeMap.draw();
 }

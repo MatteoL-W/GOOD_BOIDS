@@ -1,13 +1,13 @@
 #include "Plane.h"
-#include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Engine/Mesh.h"
+#include "Rendering/Geometries/geometriesVertices.hpp"
 
 namespace Rendering::Shapes {
 
-// ToDo: Clean constructor and use radius
 Plane::Plane(float radius)
-    : _radius(radius), _vertices(std::vector<Rendering::Geometries::Vertex3D>{{{-10.0f, 0.0f, -10.0f}, {0.0f, 10.0f, 0.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, -10.0f}, {0.0f, 10.0f, 0.0f}, {10.0f, 0.0f}}, {{10.0f, 0.0f, 10.0f}, {0.0f, 10.0f, 0.0f}, {10.0f, 10.0f}}, {{-10.0f, 0.0f, -10.0f}, {0.0f, 10.0f, 0.0f}, {0.0f, 0.0f}}, {{10.0f, 0.0f, 10.0f}, {0.0f, 10.0f, 0.0f}, {10.0f, 10.0f}}, {{-10.0f, 0.0f, 10.0f}, {0.0f, 10.0f, 0.0f}, {0.0f, 10.0f}}}), _mesh(RenderEngine::Mesh{_vertices})
+    : _radius(radius), _vertices(Rendering::Geometries::plane_vertices()), _mesh(Rendering::Engine::Mesh{_vertices})
 {
+    // ToDo: Texture class
     glGenTextures(1, &_textureId);
     glBindTexture(GL_TEXTURE_2D, _textureId);
 
@@ -20,19 +20,21 @@ Plane::Plane(float radius)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Plane::draw([[maybe_unused]] utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
+void Plane::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
-    // ToDo: Use transformAttributes
+    auto modelViewMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
+    modelViewMatrix      = glm::scale(modelViewMatrix, glm::vec3{_radius});
+
     switch (renderingDatas._renderType)
     {
     case utils::RenderType::Classic:
         _shader._program.use();
-        _shader.setMatrices(glm::mat4{1}, renderingDatas);
+        _shader.setMatrices(modelViewMatrix, renderingDatas);
         break;
 
     case utils::RenderType::DepthMap:
         _depthMap._program.use();
-        _depthMap.setMatrices(glm::mat4{1}, renderingDatas._lightSpaceMatrix);
+        _depthMap.setMatrices(modelViewMatrix, renderingDatas._lightSpaceMatrix);
         break;
     }
 

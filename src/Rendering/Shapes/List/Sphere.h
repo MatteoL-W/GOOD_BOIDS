@@ -37,7 +37,7 @@ private:
     float                                        _radius{};
     Rendering::Programs::Normal                  _shader{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
-    RenderEngine::Mesh                           _mesh;
+    Rendering::Engine::Mesh                      _mesh;
 };
 
 } // namespace Rendering::Shapes

@@ -8,12 +8,13 @@ Movement::Movement(unsigned int speciesId, utils::TransformAttributes const& tra
     : _speciesId(speciesId), _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 
-void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float boidRadius)
+void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float sceneRadius, float boidRadius)
 {
     // Add forces to acceleration
     addFoodAttraction(foodProvider);
     addObstaclesAvoidance(obstacles, boidRadius);
     addClassicBoidsForces(boids, boidRadius);
+    addWallSteering(sceneRadius);
 
     addToVelocity(getAcceleration());
     utils::vec::constrain(_transformAttributes._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);
@@ -41,6 +42,20 @@ void Movement::addClassicBoidsForces(Iterator::IForEachBoidMovement const& boids
     addToAcceleration(separation);
     addToAcceleration(alignment);
     addToAcceleration(cohesion);
+}
+
+void Movement::addWallSteering(float sceneRadius)
+{
+    auto applyWallSteering = [&](float positionOnAxe, glm::vec3 turnFactor) {
+        if (positionOnAxe <= -sceneRadius)
+            addToAcceleration(turnFactor);
+        else if (positionOnAxe >= sceneRadius)
+            addToAcceleration(-turnFactor);
+    };
+
+    applyWallSteering(_transformAttributes._position.x, glm::vec3(_forcesConfig._turnFactor, 0.f, 0.f));
+    applyWallSteering(_transformAttributes._position.y, glm::vec3(0.f, _forcesConfig._turnFactor, 0.f));
+    applyWallSteering(_transformAttributes._position.z, glm::vec3(0.f, 0.f, _forcesConfig._turnFactor));
 }
 
 static std::vector<Movement> getNearbyBoidsFromBoid(
