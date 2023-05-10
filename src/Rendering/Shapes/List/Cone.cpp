@@ -5,7 +5,7 @@
 namespace Rendering::Shapes {
 
 Cone::Cone(float radius)
-    : _radius(radius), _vertices(Rendering::Geometries::cone_vertices(getRadius(), getRadius(), 32, 16)), _mesh(RenderEngine::Mesh{_vertices})
+    : _radius(radius), _vertices(Rendering::Geometries::cone_vertices(getRadius(), getRadius(), 32, 16)), _mesh(Rendering::Engine::Mesh{_vertices})
 {}
 
 void Cone::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const

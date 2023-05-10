@@ -40,7 +40,7 @@ private:
     Rendering::Programs::PhongAndShadow          _shader{};
     Rendering::Programs::DepthMap                _depthMap{};
     std::vector<Rendering::Geometries::Vertex3D> _vertices{};
-    RenderEngine::Mesh                           _mesh;
+    Rendering::Engine::Mesh                      _mesh;
 };
 
 } // namespace Rendering::Shapes

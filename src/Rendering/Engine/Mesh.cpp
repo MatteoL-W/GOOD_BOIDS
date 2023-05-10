@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <utility>
 
-namespace RenderEngine {
+namespace Rendering::Engine {
 
 Mesh::Mesh(std::vector<Rendering::Geometries::Vertex3D> const& vertices)
 {
@@ -70,4 +70,4 @@ void Mesh::draw(GLsizei verticesSize) const
     glBindVertexArray(0);
 }
 
-} // namespace RenderEngine
+} // namespace Rendering::Engine
