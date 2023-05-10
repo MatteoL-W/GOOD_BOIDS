@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 #include <vector>
-#include "glm/fwd.hpp"
 
 namespace Rendering::Geometries {
 

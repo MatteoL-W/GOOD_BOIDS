@@ -7,7 +7,6 @@
 #include "Rendering/Shadow/ShadowMap.h"
 #include "Rendering/Shapes/List/Cube.h"
 #include "Rendering/Shapes/List/Plane.h"
-#include "Rendering/Shapes/ShapesRegister.h"
 #include "utils/RenderingDatas.h"
 
 class Scene {

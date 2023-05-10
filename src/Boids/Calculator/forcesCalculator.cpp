@@ -11,6 +11,7 @@ glm::vec3 computeObstaclesAvoidance(Movement const& boid, Features::ObstaclesMan
         auto toObstacle      = obstacle._position - boid.getPosition();
         auto distance        = glm::length(toObstacle);
         auto avoidanceRadius = boidRadius + obstacle._radius * 2;
+
         if (distance > avoidanceRadius)
             continue;
 
