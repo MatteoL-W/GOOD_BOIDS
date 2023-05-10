@@ -6,7 +6,6 @@
 #include "Rendering/Lights/Directional.h"
 #include "Rendering/Shapes/List/Plane.h"
 #include "Rendering/Shapes/ShapesRegister.h"
-#include "glm/fwd.hpp"
 #include "utils/TransformAttributes.h"
 
 void Scene::setupWorld(p6::Context& ctx)
@@ -14,7 +13,7 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeBoids(ctx);
     initializeLights();
 
-    _walls.setRadius(1000.0f);
+    _walls.setRadius(10.0f);
 
     ctx.update = [&]() {
         updateMembers(ctx);
@@ -88,10 +87,7 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
-    _floor.draw({}, _renderingDatas);
+    _walls.draw({}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _foodProvider.draw();
-
-    _walls.draw({}, _renderingDatas);
-    
 }

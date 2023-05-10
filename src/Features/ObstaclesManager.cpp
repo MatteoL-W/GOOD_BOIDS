@@ -12,7 +12,6 @@ void ObstaclesManager::draw()
         if (!obstacle._visible)
             return;
 
-        std::cout << "visible" << std::endl;
         std::visit(
             [&](auto const& sphereShape) {
                 sphereShape.draw(utils::TransformAttributes{obstacle._position}, renderingDatas);

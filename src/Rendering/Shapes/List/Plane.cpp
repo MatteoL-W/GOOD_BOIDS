@@ -1,7 +1,6 @@
 #include "Plane.h"
 
 #include <utility>
-#include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Engine/Mesh.h"
 
 #include "Rendering/Geometries/geometriesVertices.hpp"

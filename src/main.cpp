@@ -1,5 +1,4 @@
 #include <p6/p6.h>
-#include "Rendering/Shapes/List/Plane.h"
 #define DOCTEST_CONFIG_IMPLEMENT
 #include <doctest/doctest.h>
 #include <tiny_gltf.h>
@@ -20,7 +19,7 @@ int main(int argc, char* argv[])
 
     auto ctx = p6::Context{{.title = "GOOD_BOIDS"}};
     ctx.maximize_window();
-    //ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
+    ctx.framerate_capped_at(60); // Avoid different results on 240Hz/60Hz
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);

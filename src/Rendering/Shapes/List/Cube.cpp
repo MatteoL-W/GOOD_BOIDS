@@ -10,9 +10,7 @@ Cube::Cube()
 
 void Cube::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
-    auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3(0.01f));
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3(_radius));
+    auto modelMatrix = glm::scale(glm::mat4{1}, glm::vec3(_radius));
 
     switch (renderingDatas._renderType)
     {
@@ -28,8 +26,6 @@ void Cube::draw(utils::TransformAttributes const& transformAttributes, utils::Re
     }
 
     _model.draw();
-
-    glUseProgram(0);
 }
 
 } // namespace Rendering::Shapes

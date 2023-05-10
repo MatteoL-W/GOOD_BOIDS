@@ -8,26 +8,16 @@ glm::vec3 computeObstaclesAvoidance(Movement const& boid, Features::ObstaclesMan
 
     for (auto const& obstacle : obstacles.getObstacles())
     {
-        std::cout << "la" << std::endl;
-        //std::cout << obstacle._position.x << ", " << obstacle._radius << std::endl;
         auto toObstacle      = obstacle._position - boid.getPosition();
         auto distance        = glm::length(toObstacle);
         auto avoidanceRadius = boidRadius + obstacle._radius * 2;
-        std::cout << distance << std::endl;
-        std::cout << boidRadius << std::endl;
-        std::cout << avoidanceRadius << std::endl;
-        std::cout << obstacle._radius << std::endl;
         if (distance > avoidanceRadius)
-        {
-            std::cout << "continue" << std::endl;
             continue;
-        }
 
         if (distance < obstacle._radius)
         {
             /// The boid is inside the obstacle, push it away drastically
             force -= glm::normalize(toObstacle);
-            std::cout << "continue2" << std::endl;
             continue;
         }
 
