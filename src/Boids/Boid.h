@@ -13,7 +13,7 @@ namespace Boids {
 
 class Boid {
 public:
-    explicit Boid(unsigned int _speciesId, ShapesType const&, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit Boid(unsigned int _speciesId, BoidsShapesType const&, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
 
     void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&, Rendering::Shapes::Cube const&);
     void draw(utils::RenderingDatas&);
@@ -28,7 +28,7 @@ private:
 
 private:
     unsigned int      _speciesId{};
-    ShapesType const& _shape;
+    BoidsShapesType const& _shape;
     Movement          _movement{};
 };
 
