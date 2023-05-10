@@ -4,11 +4,11 @@
 
 namespace Rendering::Shapes {
 
-Cube::Cube()
-    : _model("assets/models/Cube/Cube.gltf")
+Cube::Cube(float radius)
+    : _radius(radius), _model{"assets/models/Cube/Cube.gltf"}
 {}
 
-void Cube::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
+void Cube::draw(utils::RenderingDatas& renderingDatas) const
 {
     auto modelMatrix = glm::scale(glm::mat4{1}, glm::vec3(_radius));
 

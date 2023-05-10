@@ -13,13 +13,11 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeBoids(ctx);
     initializeLights();
 
-    _walls.setRadius(10.0f);
-
     ctx.update = [&]() {
         updateMembers(ctx);
         renderDepthMap();
         render(ctx);
-        //_debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
+//        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
     };
 }
 
@@ -59,7 +57,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
 
     _foodProvider.update(ctx);
-    _boidsManager.update(_obstaclesManager, _foodProvider, _walls);
+    _boidsManager.update(_obstaclesManager, _foodProvider, _cubeMap);
 }
 
 void Scene::renderDepthMap()
@@ -87,7 +85,7 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
-    _walls.draw({}, _renderingDatas);
+    _cubeMap.draw(_renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _foodProvider.draw();
 }

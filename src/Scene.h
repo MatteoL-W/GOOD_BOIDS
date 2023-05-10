@@ -31,5 +31,5 @@ private:
     Rendering::Shadow::DebugDepthMap _debugDepthMap{};
 
     // ToDo: Won't be here later
-    Rendering::Shapes::Cube _walls;
+    Rendering::Shapes::Cube _cubeMap{3.f};
 };

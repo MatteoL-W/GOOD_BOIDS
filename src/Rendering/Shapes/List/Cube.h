@@ -17,7 +17,7 @@ namespace Rendering::Shapes {
 
 class Cube {
 public:
-    explicit Cube();
+    explicit Cube(float radius);
 
     // We delete the copy constructors because the class has resources that cannot be copied
     Cube(const Cube& other)            = delete;
@@ -28,7 +28,7 @@ public:
     Cube& operator=(Cube&& other) noexcept = default;
 
 public:
-    void  draw([[maybe_unused]] utils::TransformAttributes const&, utils::RenderingDatas&) const;
+    void  draw(utils::RenderingDatas&) const;
     void  setRadius(float radius) { _radius = radius; };
     float getRadius() const { return _radius; };
 
