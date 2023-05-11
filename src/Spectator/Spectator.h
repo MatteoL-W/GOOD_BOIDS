@@ -4,9 +4,7 @@
 
 class Spectator {
 public:
-    void handleEvents(p6::Context&, glm::vec3 const& front, glm::vec3 const& left);
-    void draw();
-
+    void      handleEvents(p6::Context&, glm::vec3 const& front, glm::vec3 const& left);
     glm::vec3 getPosition() const { return _position; };
 
 private:
@@ -17,10 +15,8 @@ private:
 
 private:
     glm::vec3 _position{};
-//    Rendering::Shapes::Duck _model;
-
     static float constexpr _step = 0.1f;
-
 };
 
-Spectator const& getSpectatorInstance();
+Spectator& getSpectatorInstance();
+glm::vec3  getSpectatorPosition();
