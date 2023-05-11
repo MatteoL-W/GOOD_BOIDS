@@ -4,7 +4,6 @@ namespace Camera {
 
 ThirdPerson::ThirdPerson()
 {
-    _spectator = getSpectatorInstance();
     computeDirectionVectors();
 }
 
@@ -27,7 +26,7 @@ void ThirdPerson::handleEvents(p6::Context& ctx)
         rotateUp(move.delta.y * 100);
     };
 
-    _spectator.handleEvents(ctx, _front, _left);
+    getSpectatorInstance().handleEvents(ctx, _front, _left);
 }
 
 void ThirdPerson::computeDirectionVectors()

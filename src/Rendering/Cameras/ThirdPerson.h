@@ -10,7 +10,7 @@ class ThirdPerson {
 public:
     explicit ThirdPerson();
 
-    glm::vec3 getPosition() const { return _spectator.getPosition(); };
+    glm::vec3 getPosition() const { return getSpectatorPosition(); };
     glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _front, _up); };
     void      handleEvents(p6::Context& ctx);
 
@@ -21,14 +21,12 @@ private:
     void computeDirectionVectors();
 
 private:
-    Spectator _spectator{};
-
     glm::vec3 _front{};
     glm::vec3 _left{};
     glm::vec3 _up{};
 
-    float     _horizontalRotation{p6::PI};
-    float     _verticalRotation{};
+    float _horizontalRotation{p6::PI};
+    float _verticalRotation{};
 };
 
 } // namespace Camera

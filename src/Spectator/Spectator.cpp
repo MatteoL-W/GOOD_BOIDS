@@ -32,8 +32,12 @@ void Spectator::handleEvents(p6::Context& ctx, glm::vec3 const& front, glm::vec3
 //    _model.draw({._position = _position}, renderingData);
 //}
 
-Spectator const& getSpectatorInstance()
+Spectator& getSpectatorInstance()
 {
-    static Spectator const spectator = Spectator{};
+    static Spectator spectator = Spectator{};
     return spectator;
+}
+
+glm::vec3 getSpectatorPosition() {
+    return getSpectatorInstance().getPosition();
 }
