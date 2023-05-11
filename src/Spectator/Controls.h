@@ -16,7 +16,7 @@ private:
     void moveBackward(glm::vec3 const& front, float distance = _step) { _position -= distance * front; };
 
 private:
-    static float constexpr _step = 0.1f;
+    static float constexpr _step = 0.05f;
     glm::vec3 _position{};
 };
 

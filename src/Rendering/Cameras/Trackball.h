@@ -2,6 +2,8 @@
 
 #include "p6/p6.h"
 
+// ToDo : Remove ?
+
 namespace Camera {
 
 class Trackball {
@@ -11,6 +13,7 @@ public:
 
     // ToDo: Incorrect
     glm::vec3 getPosition() const;
+    glm::vec3 getFront() const { return glm::vec3{0.f, 0.f, 0.f}; };
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
 

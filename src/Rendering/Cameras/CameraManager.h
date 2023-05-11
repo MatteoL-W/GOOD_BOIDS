@@ -2,19 +2,19 @@
 
 #include <variant>
 #include "FirstPerson.h"
-#include "FreeFly.h"
 #include "ThirdPerson.h"
 #include "Trackball.h"
 
 namespace Camera {
 
-using CameraType = std::variant<FreeFly, Trackball, ThirdPerson, FirstPerson>;
+using CameraType = std::variant<Trackball, ThirdPerson, FirstPerson>;
 
 class CameraManager {
 public:
     explicit CameraManager(CameraType&);
 
     glm::vec3  getPosition() const;
+    glm::vec3  getFront() const;
     glm::mat4  getViewMatrix() const;
     CameraType getAbstractCamera() const { return _camera; };
     void       handleEvents(p6::Context& ctx);
@@ -25,8 +25,10 @@ private:
 };
 
 CameraManager const& getCameraInstance();
-bool                 isFirstPerson();
-glm::mat4            getViewMatrix();
-glm::vec3            getPosition();
+
+bool      isFirstPerson();
+glm::mat4 getViewMatrix();
+glm::vec3 getPosition();
+glm::vec3 getFront();
 
 } // namespace Camera

@@ -11,6 +11,7 @@ public:
     explicit FirstPerson();
 
     glm::vec3 getPosition() const { return Spectator::getSpectatorPosition(); };
+    glm::vec3 getFront() const { return _front; };
     glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _front, _up); };
     void      handleEvents(p6::Context& ctx);
 
