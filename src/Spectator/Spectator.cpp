@@ -9,12 +9,13 @@ Spectator::Spectator()
 
 void Spectator::draw() const
 {
-    auto renderingData = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
+    auto transformAttributes = utils::TransformAttributes{._position = getSpectatorPosition(), ._velocity = Camera::getFront()};
+    auto renderingData       = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
 
     std::visit(
         [&](auto const& shape) {
             if (!Camera::isFirstPerson())
-                shape.draw({._position = getSpectatorPosition()}, renderingData);
+                shape.draw(transformAttributes, renderingData);
         },
         _shape
     );
