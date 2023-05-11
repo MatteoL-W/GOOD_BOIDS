@@ -1,9 +1,9 @@
 #pragma once
 
 #include <variant>
+#include "FirstPerson.h"
 #include "FreeFly.h"
 #include "ThirdPerson.h"
-#include "FirstPerson.h"
 #include "Trackball.h"
 
 namespace Camera {
@@ -14,16 +14,18 @@ class CameraManager {
 public:
     explicit CameraManager(CameraType&);
 
-    glm::vec3 getPosition() const;
-    glm::mat4 getViewMatrix() const;
-    void      handleEvents(p6::Context& ctx);
-    void      changeCamera(CameraType& newCamera);
+    glm::vec3  getPosition() const;
+    glm::mat4  getViewMatrix() const;
+    CameraType getAbstractCamera() const { return _camera; };
+    void       handleEvents(p6::Context& ctx);
+    void       changeCamera(CameraType& newCamera);
 
 private:
     CameraType& _camera;
 };
 
 CameraManager const& getCameraInstance();
+bool                 isFirstPerson();
 glm::mat4            getViewMatrix();
 glm::vec3            getPosition();
 

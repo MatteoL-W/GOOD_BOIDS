@@ -26,7 +26,8 @@ void FirstPerson::handleEvents(p6::Context& ctx)
         rotateUp(move.delta.y * 100);
     };
 
-    Spectator::getSpectatorInstance().handleEvents(ctx, _front, _left);
+    // ToDo: Is it necessary here ?
+    Spectator::getControlsInstance().handleEvents(ctx, _front, _left);
 }
 
 void FirstPerson::computeDirectionVectors()

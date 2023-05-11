@@ -28,7 +28,7 @@ void Controls::handleEvents(p6::Context& ctx, glm::vec3 const& front, glm::vec3 
     };
 }
 
-Controls& getSpectatorInstance()
+Controls& getControlsInstance()
 {
     static Controls spectator = Controls{};
     return spectator;
@@ -36,7 +36,7 @@ Controls& getSpectatorInstance()
 
 glm::vec3 getSpectatorPosition()
 {
-    return getSpectatorInstance().getPosition();
+    return getControlsInstance().getPosition();
 }
 
 } // namespace Spectator

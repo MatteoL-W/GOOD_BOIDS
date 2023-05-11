@@ -8,15 +8,15 @@ BoidsShapesType const& getSphereInstance(float radius)
     return sphere;
 }
 
-BoidsShapesType const& getConeInstance(float radius)
-{
-    static BoidsShapesType const cone = Cone{radius};
-    return cone;
-}
-
 BoidsShapesType const& getDuckInstance()
 {
     static BoidsShapesType const cone = Duck{};
+    return cone;
+}
+
+SpectatorShapesType const& getDuckInstance2()
+{
+    static SpectatorShapesType const cone = Duck{};
     return cone;
 }
 
