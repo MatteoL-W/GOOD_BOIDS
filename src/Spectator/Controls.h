@@ -6,8 +6,8 @@ namespace Spectator {
 
 class Controls {
 public:
-    void      handleEvents(p6::Context&, glm::vec3 const& front, glm::vec3 const& left);
-    glm::vec3 getPosition() const { return _position; };
+    void             handleEvents(p6::Context&, glm::vec3 const& front, glm::vec3 const& left);
+    glm::vec3 const& getPosition() const { return _position; };
 
 private:
     void moveLeft(glm::vec3 const& left, float distance = _step) { _position += distance * left; };
@@ -20,7 +20,7 @@ private:
     glm::vec3 _position{};
 };
 
-Controls& getControlsInstance();
-glm::vec3 getSpectatorPosition();
+Controls&        getControlsInstance();
+glm::vec3 const& getSpectatorPosition();
 
 } // namespace Spectator
