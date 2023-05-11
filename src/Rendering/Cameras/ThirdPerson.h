@@ -22,7 +22,7 @@ private:
     void computeDirectionVectors();
 
 private:
-    static float constexpr _distanceToXPos = 5.f;
+    static float constexpr _distanceToXPos = 3.f;
 
     glm::vec3 _front{};
     glm::vec3 _left{};
