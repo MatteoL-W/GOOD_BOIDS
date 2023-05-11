@@ -34,7 +34,7 @@ Controls& getControlsInstance()
     return spectator;
 }
 
-glm::vec3 getSpectatorPosition()
+glm::vec3 const& getSpectatorPosition()
 {
     return getControlsInstance().getPosition();
 }

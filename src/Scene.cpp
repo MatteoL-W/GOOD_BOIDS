@@ -43,9 +43,9 @@ void Scene::initializeBoids(p6::Context& ctx)
 
 void Scene::initializeLights()
 {
-    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {0.f, -1.f, 0.f}, .1f, .4f, .5f};
+    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {0.f, -1.f, 0.f}, .1f, .2f, .3f};
     _renderingDatas._points      = {
-        Rendering::Lights::Point{{-2.f, .1f, .0f}, 1.f, .09f, .032f, .1f, .4f, 1.f},
+        Rendering::Lights::Point{Spectator::getSpectatorPosition(), 1.f, .09f, .032f, .05f, .4f, 1.f},
     };
 }
 
@@ -58,6 +58,9 @@ void Scene::updateMembers(p6::Context& ctx)
 
     _foodProvider.update(ctx);
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
+
+    glm::vec3 const& position = Spectator::getSpectatorPosition();
+    _renderingDatas._points[0] = Rendering::Lights::Point{position, 1.f, .09f, .032f, .05f, .4f, 1.f};
 }
 
 void Scene::renderDepthMap()
