@@ -1,6 +1,8 @@
-#include "Spectator.h"
+#include "Controls.h"
 
-void Spectator::handleEvents(p6::Context& ctx, glm::vec3 const& front, glm::vec3 const& left)
+namespace Spectator {
+
+void Controls::handleEvents(p6::Context& ctx, glm::vec3 const& front, glm::vec3 const& left)
 {
     ctx.key_repeated = [&](p6::Key key) {
         switch (key.physical)
@@ -26,18 +28,15 @@ void Spectator::handleEvents(p6::Context& ctx, glm::vec3 const& front, glm::vec3
     };
 }
 
-//void Spectator::draw()
-//{
-//    auto renderingData = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
-//    _model.draw({._position = _position}, renderingData);
-//}
-
-Spectator& getSpectatorInstance()
+Controls& getSpectatorInstance()
 {
-    static Spectator spectator = Spectator{};
+    static Controls spectator = Controls{};
     return spectator;
 }
 
-glm::vec3 getSpectatorPosition() {
+glm::vec3 getSpectatorPosition()
+{
     return getSpectatorInstance().getPosition();
 }
+
+} // namespace Spectator
