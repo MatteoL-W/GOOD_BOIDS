@@ -6,9 +6,9 @@
 
 namespace Camera {
 
-class ThirdPerson {
+class FirstPerson {
 public:
-    explicit ThirdPerson();
+    explicit FirstPerson();
 
     glm::vec3 getPosition() const { return Spectator::getSpectatorPosition(); };
     glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _front, _up); };

@@ -2,7 +2,9 @@
 
 #include <p6/p6.h>
 
-class Spectator {
+namespace Spectator {
+
+class Controls {
 public:
     void      handleEvents(p6::Context&, glm::vec3 const& front, glm::vec3 const& left);
     glm::vec3 getPosition() const { return _position; };
@@ -14,9 +16,11 @@ private:
     void moveBackward(glm::vec3 const& front, float distance = _step) { _position -= distance * front; };
 
 private:
-    glm::vec3 _position{};
     static float constexpr _step = 0.1f;
+    glm::vec3 _position{};
 };
 
-Spectator& getSpectatorInstance();
-glm::vec3  getSpectatorPosition();
+Controls& getSpectatorInstance();
+glm::vec3 getSpectatorPosition();
+
+} // namespace Spectator

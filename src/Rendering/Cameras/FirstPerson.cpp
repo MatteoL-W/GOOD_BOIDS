@@ -1,25 +1,25 @@
-#include "ThirdPerson.h"
+#include "FirstPerson.h"
 
 namespace Camera {
 
-ThirdPerson::ThirdPerson()
+FirstPerson::FirstPerson()
 {
     computeDirectionVectors();
 }
 
-void ThirdPerson::rotateLeft(float degrees)
+void FirstPerson::rotateLeft(float degrees)
 {
     _horizontalRotation -= degrees * p6::PI / 180;
     computeDirectionVectors();
 }
 
-void ThirdPerson::rotateUp(float degrees)
+void FirstPerson::rotateUp(float degrees)
 {
     _verticalRotation += degrees * p6::PI / 180;
     computeDirectionVectors();
 }
 
-void ThirdPerson::handleEvents(p6::Context& ctx)
+void FirstPerson::handleEvents(p6::Context& ctx)
 {
     ctx.mouse_moved = [&](p6::MouseMove move) {
         rotateLeft(move.delta.x * 100);
@@ -29,7 +29,7 @@ void ThirdPerson::handleEvents(p6::Context& ctx)
     Spectator::getSpectatorInstance().handleEvents(ctx, _front, _left);
 }
 
-void ThirdPerson::computeDirectionVectors()
+void FirstPerson::computeDirectionVectors()
 {
     _front = glm::vec3{cos(_verticalRotation) * sin(_horizontalRotation), sin(_verticalRotation), cos(_verticalRotation) * cos(_horizontalRotation)};
     _left  = glm::vec3{sin(_horizontalRotation + p6::PI / 2), 0, cos(_horizontalRotation + p6::PI / 2)};
