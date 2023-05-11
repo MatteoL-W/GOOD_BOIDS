@@ -20,7 +20,7 @@ private:
     glm::vec3 _position{};
 };
 
-Controls& getSpectatorInstance();
+Controls& getControlsInstance();
 glm::vec3 getSpectatorPosition();
 
 } // namespace Spectator

@@ -85,10 +85,12 @@ void Scene::render(p6::Context& ctx)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
+
     _floor.draw({._position = glm::vec3{0.f, -_sceneRadius + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
+    _spectator.draw();
     _foodProvider.draw();
-    _skyBox.draw();
 
+    _skyBox.draw();
     _cubeMap.draw();
 }

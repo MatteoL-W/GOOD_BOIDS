@@ -52,6 +52,12 @@ CameraManager const& getCameraInstance()
     return cameraManager;
 }
 
+bool isFirstPerson()
+{
+    auto camera = getCameraInstance();
+    return std::holds_alternative<FirstPerson>(camera.getAbstractCamera());
+}
+
 glm::mat4 getViewMatrix()
 {
     auto camera = getCameraInstance();
