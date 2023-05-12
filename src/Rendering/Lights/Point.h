@@ -9,6 +9,7 @@ class Point {
 public:
     Point(glm::vec3 position, float constant, float linear, float quadratic, float ambient, float diffuse, float specular);
     void setMatrices(unsigned int index, p6::Shader const&) const;
+    void setPosition(glm::vec3 position) { _position = position; };
 
 private:
     glm::vec3 _position{};

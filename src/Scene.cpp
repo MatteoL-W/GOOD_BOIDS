@@ -59,8 +59,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _foodProvider.update(ctx);
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
 
-    glm::vec3 const& position = Spectator::getSpectatorPosition();
-    _renderingDatas._points[0] = Rendering::Lights::Point{position, 1.f, .09f, .032f, .05f, .4f, 1.f};
+    _renderingDatas._points[0].setPosition(Spectator::getSpectatorPosition());
 }
 
 void Scene::renderDepthMap()
