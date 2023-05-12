@@ -4,36 +4,23 @@ namespace Spectator {
 
 void Controls::handleEvents(p6::Context& ctx, Marker& marker)
 {
-    ctx.key_repeated = [&](p6::Key key) {
-        switch (key.physical)
-        {
-        case GLFW_KEY_SPACE:
-            moveUpward();
-            break;
+    if (ctx.key_is_pressed(GLFW_KEY_SPACE))
+        moveUpward();
 
-        case GLFW_KEY_TAB:
-            moveDownward();
-            break;
+    if (ctx.key_is_pressed(GLFW_KEY_TAB))
+        moveDownward();
 
-        case GLFW_KEY_W:
-            moveForward(marker._front);
-            break;
+    if (ctx.key_is_pressed(GLFW_KEY_W))
+        moveForward(marker._front);
 
-        case GLFW_KEY_S:
-            moveBackward(marker._front);
-            break;
+    if (ctx.key_is_pressed(GLFW_KEY_S))
+        moveBackward(marker._front);
 
-        case GLFW_KEY_A:
-            moveLeft(marker._left);
-            break;
+    if (ctx.key_is_pressed(GLFW_KEY_A))
+        moveLeft(marker._left);
 
-        case GLFW_KEY_D:
-            moveRight(marker._left);
-            break;
-        default:
-            break;
-        }
-    };
+    if (ctx.key_is_pressed(GLFW_KEY_D))
+        moveRight(marker._left);
 }
 
 Controls& getControlsInstance()
