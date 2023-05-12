@@ -36,7 +36,9 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::Re
         break;
     }
 
-    _LODHandler.drawCorrespondingModel(transformAttributes._position);
+    _LODHandler.drawCorrespondingModel(
+        glm::distance(Camera::getPosition(), transformAttributes._position)
+    );
 
     glUseProgram(0);
     glCullFace(GL_BACK);

@@ -208,3 +208,89 @@ void Model::drawMesh(tinygltf::Mesh const& mesh) const
         glDrawElements(primitive.mode, static_cast<GLsizei>(indexAccessor.count), indexAccessor.componentType, bufferOffset<char>(indexAccessor.byteOffset));
     }
 }
+
+void Model::playAllAnimations(float currentTime)
+{
+    for (tinygltf::Animation const& animation : _model.animations)
+        for (tinygltf::AnimationChannel const& channel : animation.channels)
+        {
+            auto&       node    = _model.nodes[channel.target_node];
+            auto const& sampler = animation.samplers[channel.sampler];
+
+            auto const& inputAccessor  = _model.accessors[sampler.input];
+            auto const& outputAccessor = _model.accessors[sampler.output];
+
+            auto const& inputBufferView  = _model.bufferViews[inputAccessor.bufferView];
+            auto const& outputBufferView = _model.bufferViews[outputAccessor.bufferView];
+
+            auto const& inputBuffer  = _model.buffers[inputBufferView.buffer];
+            auto const& outputBuffer = _model.buffers[outputBufferView.buffer];
+
+            // Calculate the input and output data pointers
+            auto const* inputData  = reinterpret_cast<const float*>(&inputBuffer.data[inputBufferView.byteOffset + inputAccessor.byteOffset]);
+            auto const* outputData = reinterpret_cast<const float*>(&outputBuffer.data[outputBufferView.byteOffset + outputAccessor.byteOffset]);
+
+            // Find the appropriate keyframe index for the current time
+            size_t keyframeIndex = 0;
+            while (keyframeIndex < inputAccessor.count - 1 && currentTime > inputData[keyframeIndex + 1])
+                keyframeIndex++;
+
+            float factor = computeInterpolationFactor(currentTime, sampler, inputData, keyframeIndex);
+            updateNodeTransform(channel, node, outputData, keyframeIndex, factor);
+        }
+}
+
+float Model::computeInterpolationFactor(float currentTime, const tinygltf::AnimationSampler& sampler, const float* inputData, int keyframeIndex) const
+{
+    float factor = 0.f;
+    if (sampler.interpolation == "LINEAR")
+    {
+        float const deltaTime = inputData[keyframeIndex + 1] - inputData[keyframeIndex];
+        if (deltaTime > 0.0f)
+            factor = (currentTime - inputData[keyframeIndex]) / deltaTime;
+    }
+    return factor;
+}
+
+void Model::updateNodeTransform(const tinygltf::AnimationChannel& channel, tinygltf::Node& node, const float* outputData, int keyframeIndex, float factor) const
+{
+    if (channel.target_path == "translation")
+    {
+        float const* startValue = outputData + keyframeIndex * 3;
+        float const* endValue   = outputData + (keyframeIndex + 1) * 3;
+        node.translation.resize(3);
+        for (int i = 0; i < 3; ++i)
+            node.translation[i] = static_cast<double>(startValue[i] + factor * (endValue[i] - startValue[i]));
+    }
+
+    else if (channel.target_path == "rotation")
+    {
+        const float* startValue = outputData + keyframeIndex * 4;
+        const float* endValue   = outputData + (keyframeIndex + 1) * 4;
+        glm::quat    startQuaternion(startValue[0], startValue[1], startValue[2], startValue[3]);
+        glm::quat    endQuaternion(endValue[0], endValue[1], endValue[2], endValue[3]);
+        glm::quat    resultQuaternion = glm::slerp(startQuaternion, endQuaternion, factor);
+        glm::normalize(resultQuaternion);
+        node.rotation.resize(4);
+        node.rotation[0] = resultQuaternion[0];
+        node.rotation[1] = resultQuaternion[1];
+        node.rotation[2] = resultQuaternion[2];
+        node.rotation[3] = resultQuaternion[3];
+    }
+
+    else if (channel.target_path == "scale")
+    {
+        const float* startValue = outputData + keyframeIndex * 3;
+        const float* endValue   = outputData + (keyframeIndex + 1) * 3;
+
+        node.scale.resize(3);
+        for (int i = 0; i < 3; ++i)
+        {
+            node.scale[i] = static_cast<double>(startValue[i] + factor * (endValue[i] - startValue[i]));
+        }
+
+    }
+
+    else
+        std::cerr << "Unsupported animation target path: " << channel.target_path << std::endl;
+}

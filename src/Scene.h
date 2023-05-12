@@ -5,6 +5,7 @@
 #include "Rendering/Engine/SkyBox.h"
 #include "Rendering/Shadow/DebugDepthMap.h"
 #include "Rendering/Shadow/ShadowMap.h"
+#include "Rendering/Shapes/List/AnimatedCube.h"
 #include "Rendering/Shapes/List/Cube.h"
 #include "Rendering/Shapes/List/Plane.h"
 #include "Spectator/Spectator.h"
@@ -34,6 +35,8 @@ private:
     utils::RenderingDatas            _renderingDatas{._renderType = utils::RenderType::Classic};
     Rendering::Shadow::ShadowMap     _shadowMap{};
     Rendering::Shadow::DebugDepthMap _debugDepthMap{};
+
+    Rendering::Shapes::AnimatedCube _animatedCube{};
 
     Rendering::Engine::SkyBox _skyBox{};
     Rendering::Shapes::Cube   _cubeMap{_sceneRadius};
