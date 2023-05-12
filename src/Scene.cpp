@@ -45,9 +45,9 @@ void Scene::initializeBoids(p6::Context& ctx)
 
 void Scene::initializeLights()
 {
-    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 3.0f, -2.f}, {0.f, -1.f, 0.f}, .1f, .2f, .3f};
+    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, .01f, .2f, .3f};
     _renderingDatas._points      = {
-        Rendering::Lights::Point{Spectator::getSpectatorPosition(), 1.f, .09f, .032f, .05f, .4f, 1.f},
+        Rendering::Lights::Point{Spectator::getSpectatorPosition(), 1.f, .09f, .032f, .01f, .3f, .4f},
     };
 }
 
