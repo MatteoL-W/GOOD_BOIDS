@@ -15,7 +15,7 @@ void Spectator::draw(utils::RenderingDatas& renderingDatas) const
 
     std::visit(
         [&](auto const& shape) {
-            if (!Camera::isFirstPerson() && renderingDatas._renderType == utils::RenderType::Classic)
+            if (!Camera::isFirstPerson() || renderingDatas._renderType == utils::RenderType::DepthMap)
                 shape.draw(transformAttributes, renderingDatas);
         },
         _shape
