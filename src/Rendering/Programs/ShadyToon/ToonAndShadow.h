@@ -8,10 +8,10 @@
 
 namespace Rendering::Programs {
 
-struct PhongAndShadow {
+struct ToonAndShadow {
     p6::Shader _program;
 
-    PhongAndShadow()
+    ToonAndShadow()
         : _program{
             p6::load_shader(
                 "../src/Rendering/Programs/ShadyToon/ShadyToon.vs.glsl",
