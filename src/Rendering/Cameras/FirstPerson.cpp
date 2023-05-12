@@ -26,7 +26,7 @@ void FirstPerson::handleEvents(p6::Context& ctx)
         rotateUp(move.delta.y * 100);
     };
 
-    Spectator::getControlsInstance().handleEvents(ctx, _marker._up, _marker._front, _marker._left);
+    Spectator::getControlsInstance().handleEvents(ctx, _marker);
 }
 
 void FirstPerson::computeDirectionVectors()

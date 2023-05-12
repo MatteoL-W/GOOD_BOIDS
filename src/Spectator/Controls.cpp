@@ -2,33 +2,33 @@
 
 namespace Spectator {
 
-void Controls::handleEvents(p6::Context& ctx, glm::vec3 const& up, glm::vec3 const& front, glm::vec3 const& left)
+void Controls::handleEvents(p6::Context& ctx, Marker& marker)
 {
     ctx.key_repeated = [&](p6::Key key) {
         switch (key.physical)
         {
         case GLFW_KEY_SPACE:
-            moveUpward(up);
+            moveUpward();
             break;
 
         case GLFW_KEY_TAB:
-            moveDownward(up);
+            moveDownward();
             break;
 
         case GLFW_KEY_W:
-            moveForward(front);
+            moveForward(marker._front);
             break;
 
         case GLFW_KEY_S:
-            moveBackward(front);
+            moveBackward(marker._front);
             break;
 
         case GLFW_KEY_A:
-            moveLeft(left);
+            moveLeft(marker._left);
             break;
 
         case GLFW_KEY_D:
-            moveRight(left);
+            moveRight(marker._left);
             break;
         default:
             break;

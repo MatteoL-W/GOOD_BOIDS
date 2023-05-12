@@ -12,12 +12,12 @@ struct Marker {
 
 class Controls {
 public:
-    void             handleEvents(p6::Context& ctx, glm::vec3 const& up, glm::vec3 const& front, glm::vec3 const& left);
+    void             handleEvents(p6::Context& ctx, Marker&);
     glm::vec3 const& getPosition() const { return _position; };
 
 private:
-    void moveUpward(glm::vec3 const& up, float distance = _step) { _position += distance * up; };
-    void moveDownward(glm::vec3 const& up, float distance = _step) { _position += distance * -up; };
+    void moveUpward(float distance = _step) { _position += distance * glm::vec3{0.f, 1.f, 0.f}; };
+    void moveDownward(float distance = _step) { _position += distance * glm::vec3{0.f, -1.f, 0.f}; };
     void moveLeft(glm::vec3 const& left, float distance = _step) { _position += distance * left; };
     void moveRight(glm::vec3 const& left, float distance = _step) { _position -= distance * left; };
     void moveForward(glm::vec3 const& front, float distance = _step) { _position += distance * front; };
