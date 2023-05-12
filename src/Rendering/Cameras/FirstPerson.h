@@ -11,8 +11,8 @@ public:
     explicit FirstPerson();
 
     glm::vec3 getPosition() const { return Spectator::getSpectatorPosition(); };
-    glm::vec3 getFront() const { return _front; };
-    glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _front, _up); };
+    glm::vec3 getFront() const { return _marker._front; };
+    glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _marker._front, _marker._up); };
     void      handleEvents(p6::Context& ctx);
 
     void rotateLeft(float degrees);
@@ -22,9 +22,7 @@ private:
     void computeDirectionVectors();
 
 private:
-    glm::vec3 _front{};
-    glm::vec3 _left{};
-    glm::vec3 _up{};
+    Spectator::Marker _marker{};
 
     float _horizontalRotation{p6::PI};
     float _verticalRotation{};
