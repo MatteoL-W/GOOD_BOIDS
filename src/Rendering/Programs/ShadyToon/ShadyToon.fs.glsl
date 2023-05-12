@@ -38,7 +38,7 @@ uniform DirLight dirLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int uPointLightsAmount;
 
-vec3 CalcShadyToon(vec3 lightPos, vec3 lightDiff, vec3 normal);
+vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 normal);
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir);
 float CalcShadow(vec4 fragPosLightSpace);
@@ -49,66 +49,55 @@ void main()
     vec3 viewDir = normalize(uViewPos - fs_in.FragPos);
 
     vec3 result = CalcDirLightAndShadows(dirLight, norm, viewDir);
-    for (int i = 0; i < uPointLightsAmount; i++)
-    result += CalcPointLight(pointLights[i], norm, viewDir);
+    for (int i = 0; i < uPointLightsAmount; i++) {
+        result += CalcPointLight(pointLights[i], norm, viewDir);
+    }
 
     FragColor = vec4(result, 1.0);
 }
 
-vec3 CalcShadyToon(vec3 lightPos, vec3 lightDiff, vec3 normal) {
-    // Calculate light direction
+vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 normal) {
     vec3 lightDir = normalize(lightPos - fs_in.FragPos);
-
-    // Calculate intensity
     float intensity = max(dot(normal, lightDir), 0.0);
 
     // Define the number of toon shading levels
-    const int numLevels = 4;
+    const int numLevels = 3;
 
-    // Calculate toon level
     int toonLevel = int(intensity * float(numLevels));
-
-    // Calculate level step size
     float levelStep = 1.0 / float(numLevels);
-
-    // Calculate threshold for each level
     float threshold = float(toonLevel) * levelStep;
-
-    // Quantize intensity to the corresponding level
     float quantizedIntensity = threshold * float(numLevels);
 
-    // Calculate shaded color
     vec3 shadedColor = quantizedIntensity * lightDiff;
+    shadedColor += lightAmbient;
 
     return shadedColor;
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
-    // Calculate shaded color using toon shading
-    vec3 shadedColor = CalcShadyToon(light.position, light.diffuse, normal);
+    vec3 color = texture(uDiffuseTexture, fs_in.TexCoords).rgb;
+    vec3 shadedColor = CalcShadyToon(light.position, light.ambient, light.diffuse, normal);
+    shadedColor += light.ambient;
 
-    // Calculate light direction
     vec3 lightDir = normalize(light.position - fs_in.FragPos);
-
-    // Calculate intensity
     float intensity = max(dot(normal, lightDir), 0.0);
 
-    // Apply the intensity to the shaded color
-    vec3 result = intensity * shadedColor;
+    float distance = length(light.position - fs_in.FragPos);
+    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
+
+    vec3 result = color * intensity * attenuation * shadedColor;
 
     return result;
 }
 
-
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir) {
-//    vec3 color = texture(uDiffuseTexture, fs_in.TexCoords).rgb;
-//    mat3 blinnPhong = CalcShadyToon(light.position, light.ambient, light.diffuse, light.specular, normal, viewDir);
-//
-//    // Calculate shadow
-//    float shadow = CalcShadow(fs_in.FragPosLightSpace);
-//    vec3 lighting = (blinnPhong[0] + (1.0 - shadow) * (blinnPhong[1] + blinnPhong[2])) * color;
+    vec3 shadedColor = CalcShadyToon(light.position, light.ambient, light.diffuse, normal);
+    shadedColor += light.ambient;
 
-    return vec3(0.);
+    float shadow = CalcShadow(fs_in.FragPosLightSpace);
+
+    vec3 lighting = (shadedColor + (1.0 - shadow) * shadedColor) * texture(uDiffuseTexture, fs_in.TexCoords).rgb;
+    return lighting;
 }
 
 float CalcShadow(vec4 fragPosLightSpace) {
