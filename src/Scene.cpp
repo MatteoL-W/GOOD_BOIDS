@@ -13,6 +13,9 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeBoids(ctx);
     initializeLights();
 
+    auto cameraManager = Camera::getCameraInstance();
+    cameraManager.handleEvents(ctx);
+
     ctx.update = [&]() {
         updateMembers(ctx);
         renderDepthMap();
@@ -51,9 +54,6 @@ void Scene::initializeLights()
 
 void Scene::updateMembers(p6::Context& ctx)
 {
-    auto cameraManager = Camera::getCameraInstance();
-    cameraManager.handleEvents(ctx);
-
     _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
 
     _foodProvider.update(ctx);

@@ -22,8 +22,12 @@ void FirstPerson::rotateUp(float degrees)
 void FirstPerson::handleEvents(p6::Context& ctx)
 {
     ctx.mouse_moved = [&](p6::MouseMove move) {
-        rotateLeft(move.delta.x * 100);
-        rotateUp(move.delta.y * 100);
+        auto* window = ctx.underlying_glfw_window();
+        if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+        {
+            rotateLeft(move.delta.x * 100);
+            rotateUp(move.delta.y * 100);
+        }
     };
 
     Spectator::getControlsInstance().handleEvents(ctx, _marker);

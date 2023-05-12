@@ -22,8 +22,12 @@ void ThirdPerson::rotateUp(float degrees)
 void ThirdPerson::handleEvents(p6::Context& ctx)
 {
     ctx.mouse_moved = [&](p6::MouseMove move) {
-        rotateLeft(move.delta.x * 100);
-        rotateUp(move.delta.y * 100);
+        auto* window = ctx.underlying_glfw_window();
+        if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+        {
+            rotateLeft(move.delta.x * 100);
+            rotateUp(move.delta.y * 100);
+        }
     };
 
     Spectator::getControlsInstance().handleEvents(ctx, _marker);
@@ -33,7 +37,7 @@ void ThirdPerson::computeDirectionVectors()
 {
     _marker._front = glm::vec3{cos(_verticalRotation) * sin(_horizontalRotation), sin(_verticalRotation), cos(_verticalRotation) * cos(_horizontalRotation)};
     _marker._left  = glm::vec3{sin(_horizontalRotation + p6::PI / 2), 0, cos(_horizontalRotation + p6::PI / 2)};
-    _marker. _up    = glm::cross(_marker._front, _marker._left);
+    _marker._up    = glm::cross(_marker._front, _marker._left);
 }
 
 } // namespace Camera

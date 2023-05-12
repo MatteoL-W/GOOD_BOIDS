@@ -27,8 +27,17 @@ int main(int argc, char* argv[])
     glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    auto window = ctx.underlying_glfw_window();
+    auto *window = ctx.underlying_glfw_window();
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    ctx.key_pressed = [&](p6::Key const& key) {
+        if (key.physical == GLFW_KEY_ESCAPE) {
+            if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            else
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+    };
 
     auto scene = Scene{};
     scene.setupWorld(ctx);

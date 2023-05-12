@@ -8,7 +8,7 @@ glm::vec3 Trackball::getPosition() const
 {
     // Convert angles to radians
     float const theta = glm::radians(_angleX);
-    float const phi = glm::radians(_angleY);
+    float const phi   = glm::radians(_angleY);
 
     // Calculate camera position in spherical coordinates
     float const x = _distance * glm::sin(phi) * glm::cos(theta);
@@ -36,9 +36,14 @@ void Trackball::handleEvents(p6::Context& ctx)
     ctx.mouse_scrolled = [&](p6::MouseScroll scroll) {
         moveFront(scroll.dy);
     };
+
     ctx.mouse_dragged = [&](p6::MouseDrag drag) {
-        rotateUp(drag.delta.y * 100);
-        rotateLeft(drag.delta.x * 100);
+        auto* window = ctx.underlying_glfw_window();
+        if (glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
+        {
+            rotateUp(drag.delta.y * 100);
+            rotateLeft(drag.delta.x * 100);
+        }
     };
 
     Spectator::getControlsInstance().handleEvents(ctx, _marker);
