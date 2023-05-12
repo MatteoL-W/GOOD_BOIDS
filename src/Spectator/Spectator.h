@@ -8,11 +8,10 @@ namespace Spectator {
 class Spectator {
 public:
     Spectator();
-    void draw() const;
+    void draw(utils::RenderingDatas& renderingDatas) const;
 
 private:
-    Controls _controls;
-
+    Controls                   _controls;
     SpectatorShapesType const& _shape{Rendering::Shapes::getDuckInstance2()};
 };
 

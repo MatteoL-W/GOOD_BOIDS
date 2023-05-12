@@ -69,12 +69,12 @@ void Scene::renderDepthMap()
 
     _shadowMap.renderDepthMap(
         [&](glm::mat4 lightSpaceMatrix) {
-            _boidsManager.draw(
-                utils::RenderingDatas{
-                    ._renderType       = utils::RenderType::DepthMap,
-                    ._lightSpaceMatrix = lightSpaceMatrix,
-                }
-            );
+            auto renderingDatas = utils::RenderingDatas{
+                ._renderType       = utils::RenderType::DepthMap,
+                ._lightSpaceMatrix = lightSpaceMatrix,
+            };
+            _boidsManager.draw(renderingDatas);
+            _spectator.draw(renderingDatas);
         },
         _renderingDatas._directional.value()
     );
@@ -90,7 +90,7 @@ void Scene::render(p6::Context& ctx)
 
     _floor.draw({._position = glm::vec3{0.f, -_sceneRadius + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
-    _spectator.draw();
+    _spectator.draw(_renderingDatas);
     _foodProvider.draw();
 
     _skyBox.draw();
