@@ -1,4 +1,5 @@
 #include "Trackball.h"
+#include "Spectator/Controls.h"
 #include "glpp-extended/lib/glm/glm/gtc/type_ptr.hpp"
 
 namespace Camera {
@@ -6,16 +7,16 @@ namespace Camera {
 glm::vec3 Trackball::getPosition() const
 {
     // Convert angles to radians
-    float theta = glm::radians(_angleX);
-    float phi = glm::radians(_angleY);
+    float const theta = glm::radians(_angleX);
+    float const phi = glm::radians(_angleY);
 
     // Calculate camera position in spherical coordinates
-    float x = _distance * glm::sin(phi) * glm::cos(theta);
-    float y = _distance * glm::sin(phi) * glm::sin(theta);
-    float z = _distance * glm::cos(phi);
+    float const x = _distance * glm::sin(phi) * glm::cos(theta);
+    float const y = _distance * glm::sin(phi) * glm::sin(theta);
+    float const z = _distance * glm::cos(phi);
 
     // Return camera position as a vector
-    return glm::vec3(x, y, z);
+    return {x, y, z};
 }
 
 glm::mat4 Trackball::getViewMatrix() const
@@ -39,6 +40,8 @@ void Trackball::handleEvents(p6::Context& ctx)
         rotateUp(drag.delta.y * 100);
         rotateLeft(drag.delta.x * 100);
     };
+
+    Spectator::getControlsInstance().handleEvents(ctx, _up, _front, _left);
 }
 
 } // namespace Camera

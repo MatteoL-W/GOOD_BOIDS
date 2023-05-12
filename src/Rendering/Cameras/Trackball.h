@@ -25,6 +25,11 @@ private:
     float _distance;
     float _angleX;
     float _angleY;
+
+    // To Handle Events
+    glm::vec3 _front{1.f, 0.f, 0.f};
+    glm::vec3 _left{0.f, 0.f, -1.f};
+    glm::vec3 _up{0.f, 1.f, 0.f};
 };
 
 } // namespace Camera
