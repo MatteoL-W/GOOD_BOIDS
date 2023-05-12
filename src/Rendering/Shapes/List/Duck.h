@@ -36,7 +36,7 @@ public:
 
 private:
     float                               _radius{};
-    Rendering::Programs::PhongAndShadow _shader{};
+    Rendering::Programs::ToonAndShadow  _shader{};
     Rendering::Programs::DepthMap       _depthMap{};
 
     utils::LODHandler _LODHandler;
