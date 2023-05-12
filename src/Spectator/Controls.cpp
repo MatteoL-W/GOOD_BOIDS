@@ -2,11 +2,19 @@
 
 namespace Spectator {
 
-void Controls::handleEvents(p6::Context& ctx, glm::vec3 const& front, glm::vec3 const& left)
+void Controls::handleEvents(p6::Context& ctx, glm::vec3 const& up, glm::vec3 const& front, glm::vec3 const& left)
 {
     ctx.key_repeated = [&](p6::Key key) {
         switch (key.physical)
         {
+        case GLFW_KEY_SPACE:
+            moveUpward(up);
+            break;
+
+        case GLFW_KEY_TAB:
+            moveDownward(up);
+            break;
+
         case GLFW_KEY_W:
             moveForward(front);
             break;

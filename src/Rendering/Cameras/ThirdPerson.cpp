@@ -26,7 +26,7 @@ void ThirdPerson::handleEvents(p6::Context& ctx)
         rotateUp(move.delta.y * 100);
     };
 
-    Spectator::getControlsInstance().handleEvents(ctx, _front, _left);
+    Spectator::getControlsInstance().handleEvents(ctx, _up, _front, _left);
 }
 
 void ThirdPerson::computeDirectionVectors()
