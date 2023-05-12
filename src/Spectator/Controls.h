@@ -4,6 +4,12 @@
 
 namespace Spectator {
 
+struct Marker {
+    glm::vec3 _front{};
+    glm::vec3 _left{};
+    glm::vec3 _up{};
+};
+
 class Controls {
 public:
     void             handleEvents(p6::Context& ctx, glm::vec3 const& up, glm::vec3 const& front, glm::vec3 const& left);

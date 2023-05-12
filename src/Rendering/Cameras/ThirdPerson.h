@@ -10,9 +10,9 @@ class ThirdPerson {
 public:
     explicit ThirdPerson();
 
-    glm::vec3 getPosition() const { return Spectator::getSpectatorPosition() - _distanceToXPos * glm::normalize(_front) + _up; };
-    glm::vec3 getFront() const { return _front; };
-    glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _front, _up); };
+    glm::vec3 getPosition() const { return Spectator::getSpectatorPosition() - _distanceToXPos * glm::normalize(_marker._front) + _marker._up; };
+    glm::vec3 getFront() const { return _marker._front; };
+    glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _marker._front, _marker._up); };
     void      handleEvents(p6::Context& ctx);
 
     void rotateLeft(float degrees);
@@ -24,9 +24,7 @@ private:
 private:
     static float constexpr _distanceToXPos = 3.f;
 
-    glm::vec3 _front{};
-    glm::vec3 _left{};
-    glm::vec3 _up{};
+    Spectator::Marker _marker{};
 
     float _horizontalRotation{p6::PI};
     float _verticalRotation{};

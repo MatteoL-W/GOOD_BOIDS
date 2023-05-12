@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Spectator/Controls.h"
 #include "p6/p6.h"
 
 // ToDo : Remove ?
@@ -8,12 +9,11 @@ namespace Camera {
 
 class Trackball {
 public:
-    Trackball(float distance = -5, float angleX = 0, float angleY = 0)
+    explicit Trackball(float distance = -5, float angleX = 0, float angleY = 0)
         : _distance(distance), _angleX(angleX), _angleY(angleY) {}
 
-    // ToDo: Incorrect
     glm::vec3 getPosition() const;
-    glm::vec3 getFront() const { return glm::vec3{0.f, 0.f, 0.f}; };
+    glm::vec3 getFront() const { return glm::vec3{1.f, 0.f, 0.f}; };
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
 
@@ -27,9 +27,11 @@ private:
     float _angleY;
 
     // To Handle Events
-    glm::vec3 _front{1.f, 0.f, 0.f};
-    glm::vec3 _left{0.f, 0.f, -1.f};
-    glm::vec3 _up{0.f, 1.f, 0.f};
+    Spectator::Marker _marker{
+        ._front{1.f, 0.f, 0.f},
+        ._left{0.f, 0.f, -1.f},
+        ._up{0.f, 1.f, 0.f}
+    };
 };
 
 } // namespace Camera
