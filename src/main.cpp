@@ -27,6 +27,9 @@ int main(int argc, char* argv[])
     glDepthFunc(GL_LESS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    auto window = ctx.underlying_glfw_window();
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
     auto scene = Scene{};
     scene.setupWorld(ctx);
 
