@@ -15,29 +15,19 @@ public:
     void setupWorld(p6::Context&);
 
 private:
-    void initializeBoids(p6::Context&);
+    void initializeBoids(SceneRadius&);
     void initializeLights();
-    void initializeImGui(p6::Context& ctx);
+    void initializeImGui(std::function<void()>& imguiFn);
 
     void updateMembers(p6::Context&);
     void renderDepthMap();
-    void render(p6::Context&);
+    void render(glm::ivec2 canvasDimensions);
 
 private:
-    float _sceneRadius = 5.f;
+    SceneRadius _sceneRadius{};
 
-    Boids::Species firstSpecies{
-        ._shape          = Rendering::Shapes::getDuckInstance(),
-        ._quantity       = 1,
-        ._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
-        ._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
-    };
-    Boids::Species secondSpecies{
-        ._shape          = Rendering::Shapes::getDuckInstance(),
-        ._quantity       = 1,
-        ._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 0.6f},
-        ._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
-    };
+    Boids::Species _firstSpecies{Rendering::Shapes::getDuckInstance()};
+    Boids::Species _secondSpecies{Rendering::Shapes::getDuckInstance()};
     Boids::Manager _boidsManager{};
 
     Spectator::Spectator  _spectator{};
@@ -51,6 +41,6 @@ private:
     Rendering::Shadow::DebugDepthMap _debugDepthMap{};
 
     Rendering::Engine::SkyBox _skyBox{};
-    Rendering::Shapes::Cube   _cubeMap{_sceneRadius};
-    Rendering::Shapes::Plane  _floor{_sceneRadius};
+    Rendering::Shapes::Cube   _cubeMap{_sceneRadius.value};
+    Rendering::Shapes::Plane  _floor{_sceneRadius.value};
 };

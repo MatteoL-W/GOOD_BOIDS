@@ -8,24 +8,31 @@
 
 void Scene::setupWorld(p6::Context& ctx)
 {
-    initializeBoids(ctx);
+    initializeBoids(_sceneRadius);
     initializeLights();
-    initializeImGui(ctx);
+    initializeImGui(ctx.imgui);
 
     _cameraManager.handleEvents(ctx);
 
     ctx.update = [&]() {
         updateMembers(ctx);
         renderDepthMap();
-        render(ctx);
-        //        _debugDepthMap.render(ctx, _shadowMap.getDepthMapTextureId());
+        render({ctx.main_canvas_width(), ctx.main_canvas_height()});
     };
 }
 
-void Scene::initializeBoids(p6::Context& ctx)
+void Scene::initializeBoids(SceneRadius& sceneRadius)
 {
-    _boidsManager.addSpecies(ctx, firstSpecies);
-    _boidsManager.addSpecies(ctx, secondSpecies);
+    _firstSpecies._quantity = 1;
+    _firstSpecies._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 0.6f};
+    _firstSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
+
+    _secondSpecies._quantity = 1;
+    _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f};
+    _secondSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
+
+    _boidsManager.addSpecies(sceneRadius, _firstSpecies);
+    _boidsManager.addSpecies(sceneRadius, _secondSpecies);
 }
 
 void Scene::initializeLights()
@@ -36,9 +43,9 @@ void Scene::initializeLights()
     };
 }
 
-void Scene::initializeImGui(p6::Context& ctx)
+void Scene::initializeImGui(std::function<void()>& imguiFn)
 {
-    ctx.imgui = [&]() {
+    imguiFn = [&]() {
         ImGui::Begin("My super GUI");
 
         GUI::showFoodGUI(_foodProvider);
@@ -46,8 +53,8 @@ void Scene::initializeImGui(p6::Context& ctx)
 
         if (ImGui::BeginTabBar("Species"))
         {
-            GUI::showSpeciesGUI("Little boids", firstSpecies);
-            GUI::showSpeciesGUI("Med boids", secondSpecies);
+            GUI::showSpeciesGUI("Little boids", _firstSpecies);
+            GUI::showSpeciesGUI("Med boids", _secondSpecies);
             ImGui::EndTabBar();
         }
 
@@ -85,15 +92,15 @@ void Scene::renderDepthMap()
     );
 }
 
-void Scene::render(p6::Context& ctx)
+void Scene::render(glm::ivec2 canvasDimensions)
 {
     glClearColor(0.f, 0.f, 0.f, 1.f);
-    glViewport(0, 0, ctx.main_canvas_width(), ctx.main_canvas_height());
+    glViewport(0, 0, canvasDimensions.x, canvasDimensions.y);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _shadowMap.bindTextureOnFirstUnit();
 
-    _floor.draw({._position = glm::vec3{0.f, -_sceneRadius + .1f, 0.f}}, _renderingDatas);
+    _floor.draw({._position = glm::vec3{0.f, -_sceneRadius.value + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _spectator.draw(_renderingDatas);
     _foodProvider.draw();

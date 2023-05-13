@@ -8,6 +8,7 @@
 #include "Rendering/Shapes/ShapesRegister.h"
 #include "Species.h"
 #include "utils/RenderingDatas.h"
+#include "utils/StrongType.h"
 #include "utils/TransformAttributes.h"
 
 namespace Boids {
@@ -16,7 +17,7 @@ class Boid {
 public:
     explicit Boid(Species&, utils::TransformAttributes const&);
 
-    void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&, float sceneRadius);
+    void update(std::vector<Boid> const&, Features::ObstaclesManager const&, Features::FoodProvider&, SceneRadius& sceneRadius);
     void draw(utils::RenderingDatas&);
 
     void         setForcesConfig(ForcesConfig config) { _movement.setForcesConfig(config); };
@@ -28,8 +29,8 @@ private:
     [[nodiscard]] float getRadius() const;
 
 private:
-    Species&               _species;
-    Movement               _movement;
+    Species& _species;
+    Movement _movement;
 };
 
 } // namespace Boids
