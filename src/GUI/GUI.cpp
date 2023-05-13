@@ -3,13 +3,13 @@
 
 namespace GUI {
 
-void showSpeciesGUI(std::string speciesName, Boids::Species& species, Boids::Manager& boids)
+void showSpeciesGUI(std::string speciesName, Boids::Species& species)
 {
     if (ImGui::CollapsingHeader(speciesName.c_str()))
     {
         GUI::showParametersGUI(species);
-        GUI::showForcesGUI(boids, species._id, species._forcesConfig);
-        GUI::showBehaviorGUI(boids, species._id, species._behaviorConfig);
+        GUI::showForcesGUI(species._forcesConfig);
+        GUI::showBehaviorGUI(species._behaviorConfig);
     }
 }
 
@@ -19,23 +19,22 @@ void showParametersGUI(Boids::Species& species)
         ImGui::DragInt("Number of Boids", &species._quantity, 1.f, 0, 500);
 }
 
-void showForcesGUI(Boids::Manager& boids, unsigned int speciesId, Boids::ForcesConfig& forcesConfig)
+void showForcesGUI(Boids::ForcesConfig& forcesConfig)
 {
     if (ImGui::CollapsingHeader("Boids forces"))
     {
-        if (ImGui::DragFloat("Separation Radius", &forcesConfig._separationRadius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Separation Factor", &forcesConfig._separationFactor, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Alignment Radius", &forcesConfig._alignmentRadius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Alignment Factor", &forcesConfig._alignmentFactor, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesionRadius, 0.01f, 0, 1.f)
-            || ImGui::DragFloat("Cohesion Factor", &forcesConfig._cohesionFactor, 0.01f, 0, 1.f))
+        if (ImGui::DragFloat("Separation Radius", &forcesConfig._separationRadius, 0.01f, 0, 10.f)
+            || ImGui::DragFloat("Separation Factor", &forcesConfig._separationFactor, 0.01f, 0, 10.f)
+            || ImGui::DragFloat("Alignment Radius", &forcesConfig._alignmentRadius, 0.01f, 0, 10.f)
+            || ImGui::DragFloat("Alignment Factor", &forcesConfig._alignmentFactor, 0.01f, 0, 10.f)
+            || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesionRadius, 0.01f, 0, 10.f)
+            || ImGui::DragFloat("Cohesion Factor", &forcesConfig._cohesionFactor, 0.01f, 0, 10.f))
         {
-            boids.updateForcesConfig(speciesId, forcesConfig);
         }
     }
 }
 
-void showBehaviorGUI(Boids::Manager& boids, unsigned int speciesId, Boids::BehaviorConfig& behaviorConfig)
+void showBehaviorGUI(Boids::BehaviorConfig& behaviorConfig)
 {
     if (ImGui::CollapsingHeader("Boids behaviour"))
     {
@@ -43,7 +42,6 @@ void showBehaviorGUI(Boids::Manager& boids, unsigned int speciesId, Boids::Behav
             || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, .001f, 0.f, 5.f)
             || ImGui::DragFloat("Food attraction radius", &behaviorConfig._foodAttractionRadius, 0.01f, 0.f, 5.f))
         {
-            boids.updateBehaviorConfig(speciesId, behaviorConfig);
         }
     }
 }

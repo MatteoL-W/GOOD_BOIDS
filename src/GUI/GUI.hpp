@@ -8,11 +8,11 @@
 
 namespace GUI {
 
-void showSpeciesGUI(std::string speciesName, Boids::Species&, Boids::Manager&);
+void showSpeciesGUI(std::string speciesName, Boids::Species&);
 
 void showParametersGUI(Boids::Species&);
-void showForcesGUI(Boids::Manager&, unsigned int speciesId, Boids::ForcesConfig&);
-void showBehaviorGUI(Boids::Manager&, unsigned int speciesId, Boids::BehaviorConfig&);
+void showForcesGUI(Boids::ForcesConfig&);
+void showBehaviorGUI(Boids::BehaviorConfig&);
 // ToDo : showShapeGUI ? avec radius ?
 void showFoodGUI(Features::FoodProvider&);
 

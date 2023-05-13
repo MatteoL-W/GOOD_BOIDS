@@ -12,8 +12,8 @@ namespace Boids {
 
 class Movement {
 public:
-    Movement() = default;
-    explicit Movement(unsigned int _speciesId, utils::TransformAttributes const&, BehaviorConfig const&, ForcesConfig const&);
+    explicit Movement(unsigned int _speciesId, utils::TransformAttributes const&, BehaviorConfig&, ForcesConfig&);
+
     // ToDo : Strong type ?
     void update(Iterator::IForEachBoidMovement const&, Features::ObstaclesManager const&, Features::FoodProvider&, float sceneRadius, float boidRadius);
 
@@ -44,8 +44,8 @@ private:
 private:
     unsigned int               _speciesId{};
     utils::TransformAttributes _transformAttributes{};
-    BehaviorConfig             _behaviorConfig{};
-    ForcesConfig               _forcesConfig{};
+    BehaviorConfig&            _behaviorConfig;
+    ForcesConfig&              _forcesConfig;
 };
 
 } // namespace Boids

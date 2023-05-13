@@ -4,8 +4,9 @@
 
 namespace Boids {
 
-Boid::Boid(unsigned int speciesId, BoidsShapesType const& shape, utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
-    : _speciesId(speciesId), _shape(shape), _movement(speciesId, transformAttributes, behaviorConfig, forcesConfig)
+
+Boid::Boid(Species& species, const utils::TransformAttributes& transformAttributes)
+: _species(species), _movement(species._id, transformAttributes, species._behaviorConfig, species._forcesConfig)
 {}
 
 void Boid::update(std::vector<Boid> const& boids, Features::ObstaclesManager const& obstacles, Features::FoodProvider& foodProvider, float sceneRadius)
@@ -20,14 +21,14 @@ void Boid::draw(utils::RenderingDatas& renderingDatas)
         [&](auto const& shape) {
             shape.draw(_movement.getTransformAttributes(), renderingDatas);
         },
-        _shape
+        _species._shape
     );
 }
 
 float Boid::getRadius() const
 {
     float radius = 0.f;
-    std::visit([&](auto const& shape) { radius = shape.getRadius(); }, _shape);
+    std::visit([&](auto const& shape) { radius = shape.getRadius(); }, _species._shape);
     return radius;
 }
 

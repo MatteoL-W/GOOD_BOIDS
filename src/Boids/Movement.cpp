@@ -4,7 +4,7 @@
 
 namespace Boids {
 
-Movement::Movement(unsigned int speciesId, utils::TransformAttributes const& transformAttributes, BehaviorConfig const& behaviorConfig, ForcesConfig const& forcesConfig)
+Movement::Movement(unsigned int speciesId, utils::TransformAttributes const& transformAttributes, BehaviorConfig& behaviorConfig, ForcesConfig& forcesConfig)
     : _speciesId(speciesId), _transformAttributes(transformAttributes), _behaviorConfig(behaviorConfig), _forcesConfig(forcesConfig)
 {}
 

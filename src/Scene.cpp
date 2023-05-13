@@ -5,8 +5,6 @@
 #include "Rendering/Cameras/CameraManager.h"
 #include "Rendering/Lights/Directional.h"
 #include "Rendering/Shapes/List/Plane.h"
-#include "Rendering/Shapes/ShapesRegister.h"
-#include "utils/TransformAttributes.h"
 
 void Scene::setupWorld(p6::Context& ctx)
 {
@@ -25,18 +23,14 @@ void Scene::setupWorld(p6::Context& ctx)
 
 void Scene::initializeBoids(p6::Context& ctx)
 {
-    auto firstSpecies = Boids::Species{
-        Rendering::Shapes::getDuckInstance(),
-        10,
-        {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f},
-        {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f},
-    };
     _boidsManager.addSpecies(ctx, firstSpecies);
+    _boidsManager.addSpecies(ctx, secondSpecies);
 
     ctx.imgui = [&]() {
         ImGui::Begin("My super GUI");
 
-        GUI::showSpeciesGUI("Little boids", firstSpecies, _boidsManager);
+        GUI::showSpeciesGUI("Little boids", firstSpecies);
+        GUI::showSpeciesGUI("Med boids", secondSpecies);
         GUI::showFoodGUI(_foodProvider);
 
         ImGui::End();
@@ -59,7 +53,6 @@ void Scene::updateMembers(p6::Context& ctx)
     _cameraManager.updateEvents(ctx);
     _foodProvider.update(ctx);
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
-
 }
 
 void Scene::renderDepthMap()
