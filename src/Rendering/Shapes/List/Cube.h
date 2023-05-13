@@ -34,7 +34,7 @@ public:
 private:
     float                 _radius{};
     Programs::Transparent _shader{};
-    Model                 _model;
+    Engine::Model         _model;
 };
 
 } // namespace Rendering::Shapes

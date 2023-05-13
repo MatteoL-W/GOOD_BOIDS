@@ -7,6 +7,8 @@ inline constexpr T* bufferOffset(std::size_t offset)
     return reinterpret_cast<T*>(static_cast<std::uintptr_t>(offset));
 }
 
+namespace Rendering::Engine {
+
 Model::Model(std::string const& path, bool const isBinaryGltf)
 {
     loadModel(path, isBinaryGltf);
@@ -208,3 +210,5 @@ void Model::drawMesh(tinygltf::Mesh const& mesh) const
         glDrawElements(primitive.mode, static_cast<GLsizei>(indexAccessor.count), indexAccessor.componentType, bufferOffset<char>(indexAccessor.byteOffset));
     }
 }
+
+} // namespace Rendering::Engine

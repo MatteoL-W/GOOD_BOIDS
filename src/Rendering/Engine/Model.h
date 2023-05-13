@@ -5,6 +5,8 @@
 #include <string>
 #include "Rendering/Programs/Texture/Texture.h"
 
+namespace Rendering::Engine {
+
 class Model {
 public:
     explicit Model(std::string const& path, bool isBinaryGltf = false);
@@ -34,3 +36,5 @@ private:
     GLuint                _vao{};
     std::map<int, GLuint> _vbos;
 };
+
+} // namespace Rendering::Engine

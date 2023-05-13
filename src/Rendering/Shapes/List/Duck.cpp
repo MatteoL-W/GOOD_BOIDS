@@ -6,9 +6,9 @@ namespace Rendering::Shapes {
 
 Duck::Duck()
     : _LODHandler(
-        {Model{"assets/models/Duck/Duck.gltf"},
-         Model{"assets/models/Duck/DuckMQ.gltf"},
-         Model{"assets/models/Duck/DuckLQ.gltf"}},
+        {Engine::Model{"assets/models/Duck/Duck.gltf"},
+         Engine::Model{"assets/models/Duck/DuckMQ.gltf"},
+         Engine::Model{"assets/models/Duck/DuckLQ.gltf"}},
         10.f
     )
 {}
