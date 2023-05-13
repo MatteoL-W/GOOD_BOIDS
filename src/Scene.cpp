@@ -13,8 +13,7 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeBoids(ctx);
     initializeLights();
 
-    auto cameraManager = Camera::getCameraInstance();
-    cameraManager.handleEvents(ctx);
+    _cameraManager.handleEvents(ctx);
 
     ctx.update = [&]() {
         updateMembers(ctx);
@@ -55,11 +54,12 @@ void Scene::initializeLights()
 void Scene::updateMembers(p6::Context& ctx)
 {
     _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
+    _renderingDatas._points[0].setPosition(Spectator::getSpectatorPosition());
 
+    _cameraManager.updateEvents(ctx);
     _foodProvider.update(ctx);
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
 
-    _renderingDatas._points[0].setPosition(Spectator::getSpectatorPosition());
 }
 
 void Scene::renderDepthMap()

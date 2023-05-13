@@ -45,8 +45,6 @@ void Trackball::handleEvents(p6::Context& ctx)
             rotateLeft(drag.delta.x * 100);
         }
     };
-
-    Spectator::getControlsInstance().handleEvents(ctx, _marker);
 }
 
 } // namespace Camera

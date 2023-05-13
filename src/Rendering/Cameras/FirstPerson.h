@@ -14,6 +14,7 @@ public:
     glm::vec3 getFront() const { return _marker._front; };
     glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _marker._front, _marker._up); };
     void      handleEvents(p6::Context& ctx);
+    void      updateEvents(p6::Context& ctx) { Spectator::getControlsInstance().handleEvents(ctx, _marker); };
 
     void rotateLeft(float degrees);
     void rotateUp(float degrees);

@@ -18,6 +18,7 @@ public:
     glm::mat4  getViewMatrix() const;
     CameraType getAbstractCamera() const { return _camera; };
     void       handleEvents(p6::Context& ctx);
+    void       updateEvents(p6::Context& ctx);
     void       changeCamera(CameraType& newCamera);
 
 private:

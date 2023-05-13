@@ -52,6 +52,16 @@ void CameraManager::handleEvents(p6::Context& ctx)
     );
 }
 
+void CameraManager::updateEvents(p6::Context& ctx)
+{
+    std::visit(
+        [&](auto& camera) {
+            camera.updateEvents(ctx);
+        },
+        _camera
+    );
+}
+
 void CameraManager::changeCamera(CameraType& newCamera)
 {
     _camera = newCamera;

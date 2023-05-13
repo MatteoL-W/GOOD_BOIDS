@@ -24,9 +24,12 @@ private:
 
 private:
     float          _sceneRadius = 5.f;
+
     Boids::Manager _boidsManager{};
 
     Spectator::Spectator _spectator{};
+
+    Camera::CameraManager _cameraManager{Camera::getCameraInstance()};
 
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
     Features::ObstaclesManager _obstaclesManager{};
