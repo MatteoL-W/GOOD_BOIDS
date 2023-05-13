@@ -37,9 +37,9 @@ void Scene::initializeBoids(SceneRadius& sceneRadius)
 
 void Scene::initializeLights()
 {
-    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, .1f, .2f, .3f};
+    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.1f, .2f, .3f}};
     _renderingDatas._points      = {
-        Rendering::Lights::Point{Spectator::getSpectatorPosition(), 1.f, .09f, .032f, .01f, .3f, .4f},
+        Rendering::Lights::Point{Spectator::getSpectatorPosition(), Rendering::Lights::Intensity{.01f, .3f, .4f}, 1.f, .09f, .032f},
     };
 }
 
@@ -50,7 +50,10 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
 
         GUI::showFoodGUI(_foodProvider);
         GUI::showCameraGUI();
+        GUI::showDirectionalLightGUI(_renderingDatas._directional);
+        GUI::showPointLightsGUI(_renderingDatas._points);
 
+        ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))
         {
             GUI::showSpeciesGUI("Little boids", _firstSpecies);

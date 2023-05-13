@@ -2,24 +2,24 @@
 
 #include <p6/p6.h>
 #include <glpp-extended/lib/glm/glm/gtc/type_ptr.hpp>
+#include "Intensity.h"
 
 namespace Rendering::Lights {
 
 class Directional {
 public:
-    Directional(glm::vec3 position, glm::vec3 direction, float ambient, float diffuse, float specular);
+    Directional(glm::vec3 position, glm::vec3 direction, Intensity intensity);
 
-    glm::vec3 getPosition() const { return _position; };
-    void      setMatrices(p6::Shader const&) const;
+    glm::vec3  getPosition() const { return _position; };
+    glm::vec3& getPosition() { return _position; };
+    glm::vec3& getDirection() { return _direction; };
+    void       setMatrices(p6::Shader const&) const;
 
 private:
     glm::vec3 _position{}; // The position is needed for the shadow
     glm::vec3 _direction{};
 
-    // Intensities
-    float _ambient{};
-    float _diffuse{};
-    float _specular{};
+    Intensity _intensity{};
 };
 
 } // namespace Rendering::Lights
