@@ -18,14 +18,14 @@ void showSpeciesGUI(std::string speciesName, Boids::Species& species)
 // ToDo: Remove ?
 void showParametersGUI(Boids::Species& species)
 {
-    ImGui::SeparatorText("Parameters");
+    ImGui::Text("Parameters");
 
     ImGui::DragInt("Number of Boids", &species._quantity, 1.f, 0, 500);
 }
 
 void showForcesGUI(Boids::ForcesConfig& forcesConfig)
 {
-    ImGui::SeparatorText("Boids forces");
+    ImGui::Text("Boids forces");
 
     if (ImGui::DragFloat("Separation Radius", &forcesConfig._separationRadius, 0.01f, 0, 10.f)
         || ImGui::DragFloat("Separation Factor", &forcesConfig._separationFactor, 0.01f, 0, 10.f)
@@ -39,7 +39,7 @@ void showForcesGUI(Boids::ForcesConfig& forcesConfig)
 
 void showBehaviorGUI(Boids::BehaviorConfig& behaviorConfig)
 {
-    ImGui::SeparatorText("Boids behaviour");
+    ImGui::Text("Boids behaviour");
 
     if (ImGui::DragFloat("Boids min speed", &behaviorConfig._minSpeed, .001f, 0.f, 2.f)
         || ImGui::DragFloat("Boids max speed", &behaviorConfig._maxSpeed, .001f, 0.f, 5.f)
