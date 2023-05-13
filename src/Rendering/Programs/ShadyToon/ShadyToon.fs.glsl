@@ -15,18 +15,22 @@ struct DirLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    vec3 color;
 };
 
 struct PointLight {
     vec3 position;
 
-    float constant;
-    float linear;
-    float quadratic;
-
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    vec3 color;
+
+    float constant;
+    float linear;
+    float quadratic;
 };
 
 uniform sampler2D uDiffuseTexture;
@@ -38,7 +42,7 @@ uniform DirLight dirLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int uPointLightsAmount;
 
-vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 normal);
+vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 lightColor, vec3 normal);
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir);
 float CalcShadow(vec4 fragPosLightSpace);
@@ -56,7 +60,7 @@ void main()
     FragColor = vec4(result, 1.0);
 }
 
-vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 normal) {
+vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 lightColor, vec3 normal) {
     vec3 lightDir = normalize(lightPos - fs_in.FragPos);
     float intensity = max(dot(normal, lightDir), 0.0);
 
@@ -68,15 +72,15 @@ vec3 CalcShadyToon(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 normal
     float threshold = float(toonLevel) * levelStep;
     float quantizedIntensity = threshold * float(numLevels);
 
-    vec3 shadedColor = quantizedIntensity * lightDiff;
-    shadedColor += lightAmbient;
+    vec3 shadedColor = quantizedIntensity * lightDiff * lightColor;
+    shadedColor += lightAmbient * lightColor;
 
     return shadedColor;
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
     vec3 color = texture(uDiffuseTexture, fs_in.TexCoords).rgb;
-    vec3 shadedColor = CalcShadyToon(light.position, light.ambient, light.diffuse, normal);
+    vec3 shadedColor = CalcShadyToon(light.position, light.ambient, light.diffuse, light.color, normal);
     shadedColor += light.ambient;
 
     vec3 lightDir = normalize(light.position - fs_in.FragPos);
@@ -91,7 +95,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
 }
 
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir) {
-    vec3 shadedColor = CalcShadyToon(light.position, light.ambient, light.diffuse, normal);
+    vec3 shadedColor = CalcShadyToon(light.position, light.ambient, light.diffuse, light.color, normal);
     shadedColor += light.ambient;
 
     float shadow = CalcShadow(fs_in.FragPosLightSpace);

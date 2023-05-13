@@ -8,10 +8,11 @@ namespace Rendering::Lights {
 
 class Point {
 public:
-    Point(glm::vec3 position, Intensity intensity, float constant, float linear, float quadratic);
+    Point(glm::vec3 position, Intensity intensity, glm::vec3 color, float constant, float linear, float quadratic);
 
     glm::vec3& getPosition() { return _position; };
     Intensity& getIntensity() { return _intensity; };
+    glm::vec3& getColor() { return _color; };
     float& getConstant() { return _constant; };
     float& getLinear() { return _linear; };
     float& getQuadratic() { return _quadratic; };
@@ -23,6 +24,7 @@ private:
     // ToDo: Color
     glm::vec3 _position{};
     Intensity _intensity{};
+    glm::vec3 _color{};
 
     float _constant{};
     float _linear{};

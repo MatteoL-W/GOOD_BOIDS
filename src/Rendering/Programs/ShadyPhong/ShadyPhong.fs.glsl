@@ -15,18 +15,23 @@ struct DirLight {
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    vec3 color;
 };
 
 struct PointLight {
     vec3 position;
 
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+
+    vec3 color;
+
     float constant;
     float linear;
     float quadratic;
 
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
 };
 
 uniform sampler2D uDiffuseTexture;
@@ -38,7 +43,7 @@ uniform DirLight dirLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int uPointLightsAmount;
 
-mat3 CalcBlinnPhong(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 lightSpec, vec3 normal, vec3 viewDir);
+mat3 CalcBlinnPhong(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 lightSpec, vec3 lightColor, vec3 normal, vec3 viewDir);
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir);
 float CalcShadow(vec4 fragPosLightSpace);
@@ -55,7 +60,7 @@ void main()
     FragColor = vec4(result, 1.0);
 }
 
-mat3 CalcBlinnPhong(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 lightSpec, vec3 normal, vec3 viewDir) {
+mat3 CalcBlinnPhong(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 lightSpec, vec3 lightColor, vec3 normal, vec3 viewDir) {
     vec3 color = texture(uDiffuseTexture, fs_in.TexCoords).rgb;
 
     vec3 lightDir = normalize(lightPos - fs_in.FragPos);
@@ -64,15 +69,15 @@ mat3 CalcBlinnPhong(vec3 lightPos, vec3 lightAmbient, vec3 lightDiff, vec3 light
     vec3 halfwayDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
 
-    vec3 ambient = lightAmbient * color;
-    vec3 diffuse = lightDiff * diff * color;
-    vec3 specular = lightSpec * spec * color;
+    vec3 ambient = lightAmbient * color * lightColor;
+    vec3 diffuse = lightDiff * diff * color * lightColor;
+    vec3 specular = lightSpec * spec * color * lightColor;
 
     return mat3(ambient, diffuse, specular);
 }
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
-    mat3 blinnPhong = CalcBlinnPhong(light.position, light.ambient, light.diffuse, light.specular, normal, viewDir);
+    mat3 blinnPhong = CalcBlinnPhong(light.position, light.ambient, light.diffuse, light.specular, light.color, normal, viewDir);
 
     // Calculate attenuation
     float distance = length(light.position - fs_in.FragPos);
@@ -86,7 +91,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 viewDir) {
 
 vec3 CalcDirLightAndShadows(DirLight light, vec3 normal, vec3 viewDir) {
     vec3 color = texture(uDiffuseTexture, fs_in.TexCoords).rgb;
-    mat3 blinnPhong = CalcBlinnPhong(light.position, light.ambient, light.diffuse, light.specular, normal, viewDir);
+    mat3 blinnPhong = CalcBlinnPhong(light.position, light.ambient, light.diffuse, light.specular, light.color, normal, viewDir);
 
     // Calculate shadow
     float shadow = CalcShadow(fs_in.FragPosLightSpace);
