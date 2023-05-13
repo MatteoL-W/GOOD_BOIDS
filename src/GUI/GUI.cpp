@@ -60,7 +60,8 @@ void showFoodGUI(Features::FoodProvider& foodProvider)
     ImGui::Spacing();
 }
 
-void showCameraGUI() {
+void showCameraGUI()
+{
     ImGui::SeparatorText("Camera");
 
     auto cameraManager = Camera::getCameraInstance();

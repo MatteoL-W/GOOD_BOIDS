@@ -34,10 +34,10 @@ public:
     float getRadius() const { return _radius; };
 
 private:
-    float                                        _radius{};
-    Rendering::Programs::Normal                  _shader{};
-    std::vector<Rendering::Geometries::Vertex3D> _vertices{};
-    Rendering::Engine::Mesh                      _mesh;
+    float                             _radius{};
+    Programs::Normal                  _shader{};
+    std::vector<Geometries::Vertex3D> _vertices{};
+    Engine::Mesh                      _mesh;
 };
 
 } // namespace Rendering::Shapes

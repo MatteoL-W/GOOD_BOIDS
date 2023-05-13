@@ -35,9 +35,9 @@ public:
     float getRadius() const { return _radius; };
 
 private:
-    float                               _radius{};
-    Rendering::Programs::ToonAndShadow  _shader{};
-    Rendering::Programs::DepthMap       _depthMap{};
+    float                   _radius{};
+    Programs::ToonAndShadow _shader{};
+    Programs::DepthMap      _depthMap{};
 
     utils::LODHandler _LODHandler;
 };

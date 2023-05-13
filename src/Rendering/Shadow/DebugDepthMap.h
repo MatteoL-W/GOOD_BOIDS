@@ -11,9 +11,9 @@ public:
     void render(p6::Context& ctx, GLuint depthMapTexture);
 
 private:
-    Rendering::Programs::Debug _shader{};
-    GLuint                     _quadVAO{};
-    GLuint                     _quadVBO{};
+    Programs::Debug _shader{};
+    GLuint          _quadVAO{};
+    GLuint          _quadVBO{};
 };
 
 } // namespace Rendering::Shadow

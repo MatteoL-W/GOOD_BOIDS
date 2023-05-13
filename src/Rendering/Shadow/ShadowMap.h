@@ -10,7 +10,7 @@ class ShadowMap {
 public:
     explicit ShadowMap();
     ~ShadowMap();
-    void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Rendering::Lights::Directional&);
+    void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Lights::Directional&);
 
     glm::mat4 getLightSpaceMatrix() { return _lightSpaceMatrix; };
     GLuint    getDepthMapTextureId() const { return _depthMapTexture; };
@@ -19,13 +19,13 @@ public:
 private:
     void generateDepthTexture();
     void attachTextureToFBO() const;
-    void generateLightSpaceMatrix(Rendering::Lights::Directional&);
+    void generateLightSpaceMatrix(Lights::Directional&);
 
 private:
     const unsigned int _SHADOW_WIDTH  = 2048;
     const unsigned int _SHADOW_HEIGHT = 2048;
 
-    Rendering::Programs::DepthMap _shader{};
+    Programs::DepthMap _shader{};
 
     GLuint    _depthMapTexture{};
     GLuint    _depthMapFBO{};

@@ -7,7 +7,7 @@ namespace Rendering::Engine {
 
 class Mesh {
 public:
-    explicit Mesh(std::vector<Rendering::Geometries::Vertex3D> const&);
+    explicit Mesh(std::vector<Geometries::Vertex3D> const&);
     Mesh(Mesh&& other) noexcept;
     Mesh& operator=(Mesh&& other) noexcept;
 
@@ -16,7 +16,7 @@ public:
     void draw(GLsizei verticesSize) const;
 
 private:
-    void generateVbo(std::vector<Rendering::Geometries::Vertex3D> const& vertices);
+    void generateVbo(std::vector<Geometries::Vertex3D> const& vertices);
     void generateVao();
 
 private:

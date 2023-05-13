@@ -5,7 +5,7 @@
 namespace Rendering::Shapes {
 
 Plane::Plane(float radius)
-    : _radius(radius), _vertices(Rendering::Geometries::plane_vertices()), _mesh(Rendering::Engine::Mesh{_vertices})
+    : _radius(radius), _vertices(Geometries::plane_vertices()), _mesh(Engine::Mesh{_vertices})
 {
     // ToDo: Texture class
     glGenTextures(1, &_textureId);

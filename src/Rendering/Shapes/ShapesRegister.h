@@ -4,7 +4,7 @@
 #include "Rendering/Shapes/List/Duck.h"
 #include "Rendering/Shapes/List/Sphere.h"
 
-using BoidsShapesType = std::variant<Rendering::Shapes::Sphere, Rendering::Shapes::Duck>;
+using BoidsShapesType     = std::variant<Rendering::Shapes::Sphere, Rendering::Shapes::Duck>;
 using SpectatorShapesType = std::variant<Rendering::Shapes::Duck>;
 
 namespace Rendering::Shapes {

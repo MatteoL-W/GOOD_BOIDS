@@ -25,10 +25,10 @@ private:
     void createMesh();
 
 private:
-    Rendering::Programs::SkyBox _skyBoxShader{};
-    GLuint                      _cubeMapTextureId{};
-    GLuint                      _vbo{};
-    GLuint                      _vao{};
+    Programs::SkyBox _skyBoxShader{};
+    GLuint           _cubeMapTextureId{};
+    GLuint           _vbo{};
+    GLuint           _vao{};
 };
 
 } // namespace Rendering::Engine

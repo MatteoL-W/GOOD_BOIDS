@@ -45,7 +45,7 @@ void ShadowMap::attachTextureToFBO() const
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Rendering::Lights::Directional& directional)
+void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Lights::Directional& directional)
 {
     glCullFace(GL_FRONT);
     generateLightSpaceMatrix(directional);
@@ -59,7 +59,7 @@ void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCaste
     glCullFace(GL_BACK);
 }
 
-void ShadowMap::generateLightSpaceMatrix(Rendering::Lights::Directional& directional)
+void ShadowMap::generateLightSpaceMatrix(Lights::Directional& directional)
 {
     auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 15.f);
     auto const lightView       = glm::lookAt(directional.getPosition(), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));

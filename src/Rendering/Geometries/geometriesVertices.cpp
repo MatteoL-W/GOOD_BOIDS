@@ -6,7 +6,7 @@
 
 namespace Rendering::Geometries {
 
-std::vector<Rendering::Geometries::Vertex3D> sphere_vertices(float radius, size_t discLat, size_t discLong) // NOLINT(bugprone-easily-swappable-parameters, readability-inconsistent-declaration-parameter-name)
+std::vector<Vertex3D> sphere_vertices(float radius, size_t discLat, size_t discLong) // NOLINT(bugprone-easily-swappable-parameters, readability-inconsistent-declaration-parameter-name)
 {
     // ToDo: Attention ! dans cette implantation on duplique beaucoup de sommets. Une meilleur stratégie est de passer
     // par un Index Buffer Object, que nous verrons dans les prochains TDs
@@ -17,7 +17,7 @@ std::vector<Rendering::Geometries::Vertex3D> sphere_vertices(float radius, size_
     const float phi   = 2.f * glm::pi<float>() / fDiscLat;
     const float theta = glm::pi<float>() / fDiscLong;
 
-    std::vector<Rendering::Geometries::Vertex3D> data;
+    std::vector<Vertex3D> data;
 
     // Construit l'ensemble des vertex
     for (size_t j = 0; j <= discLong; ++j)
@@ -29,8 +29,8 @@ std::vector<Rendering::Geometries::Vertex3D> sphere_vertices(float radius, size_
 
         for (size_t i = 0; i <= discLat; ++i)
         {
-            const auto                      fi = static_cast<float>(i);
-            Rendering::Geometries::Vertex3D vertex{};
+            const auto fi = static_cast<float>(i);
+            Vertex3D   vertex{};
 
             vertex._texture.x = fi / fDiscLat;
             vertex._texture.y = 1.f - fj / fDiscLong;
@@ -45,7 +45,7 @@ std::vector<Rendering::Geometries::Vertex3D> sphere_vertices(float radius, size_
         }
     }
 
-    std::vector<Rendering::Geometries::Vertex3D> vertices{};
+    std::vector<Vertex3D> vertices{};
     for (size_t j = 0; j < discLong; ++j)
     {
         const size_t offset = j * (discLat + 1);
@@ -63,7 +63,7 @@ std::vector<Rendering::Geometries::Vertex3D> sphere_vertices(float radius, size_
     return vertices;
 }
 
-std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float radius, size_t discLat, size_t discHeight)
+std::vector<Vertex3D> cone_vertices(float height, float radius, size_t discLat, size_t discHeight)
 {
     // ToDo: Attention ! dans cette implantation on duplique beaucoup de sommets. Une meilleur stratégie est de passer
     // par un Index Buffer Object, que nous verrons dans les prochains TDs
@@ -74,7 +74,7 @@ std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float r
     const float phi = 2.f * glm::pi<float>() / fDiscLat;
     const float h   = height / fDiscHeight;
 
-    std::vector<Rendering::Geometries::Vertex3D> data;
+    std::vector<Vertex3D> data;
 
     // Construit l'ensemble des vertex
     for (size_t j = 0; j <= discHeight; ++j)
@@ -84,7 +84,7 @@ std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float r
             const auto fj = static_cast<float>(j);
             const auto fi = static_cast<float>(i);
 
-            Rendering::Geometries::Vertex3D vertex{};
+            Vertex3D vertex{};
 
             vertex._texture.x = fi / fDiscLat;
             vertex._texture.y = fj / fDiscHeight;
@@ -102,7 +102,7 @@ std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float r
         }
     }
 
-    std::vector<Rendering::Geometries::Vertex3D> vertices{};
+    std::vector<Vertex3D> vertices{};
     for (size_t j = 0; j < discHeight; ++j)
     {
         const size_t offset = j * discLat;
@@ -120,9 +120,9 @@ std::vector<Rendering::Geometries::Vertex3D> cone_vertices(float height, float r
     return vertices;
 }
 
-std::vector<Rendering::Geometries::Vertex3D> plane_vertices()
+std::vector<Vertex3D> plane_vertices()
 {
-    return std::vector<Rendering::Geometries::Vertex3D>{{{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {1.f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 1.f}}};
+    return std::vector<Vertex3D>{{{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {1.f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, -1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 0.0f}}, {{1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {1.f, 1.f}}, {{-1.f, 0.0f, 1.f}, {0.0f, 1.f, 0.0f}, {0.0f, 1.f}}};
 }
 
 // Function to create and return the skybox vertices

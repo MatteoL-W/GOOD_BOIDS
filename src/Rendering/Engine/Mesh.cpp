@@ -3,18 +3,18 @@
 
 namespace Rendering::Engine {
 
-Mesh::Mesh(std::vector<Rendering::Geometries::Vertex3D> const& vertices)
+Mesh::Mesh(std::vector<Geometries::Vertex3D> const& vertices)
 {
     generateVbo(vertices);
     generateVao();
 }
 
-void Mesh::generateVbo(std::vector<Rendering::Geometries::Vertex3D> const& vertices)
+void Mesh::generateVbo(std::vector<Geometries::Vertex3D> const& vertices)
 {
     glGenBuffers(1, &_vbo);
 
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Rendering::Geometries::Vertex3D), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Geometries::Vertex3D), vertices.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -25,13 +25,13 @@ void Mesh::generateVao()
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Geometries::Vertex3D), reinterpret_cast<void*>(offsetof(Rendering::Geometries::Vertex3D, _position)));
+    glVertexAttribPointer(VERTEX_ATTR_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Geometries::Vertex3D), reinterpret_cast<void*>(offsetof(Geometries::Vertex3D, _position)));
 
     glEnableVertexAttribArray(VERTEX_ATTR_NORMAL);
-    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Rendering::Geometries::Vertex3D), reinterpret_cast<void*>(offsetof(Rendering::Geometries::Vertex3D, _normal)));
+    glVertexAttribPointer(VERTEX_ATTR_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(Geometries::Vertex3D), reinterpret_cast<void*>(offsetof(Geometries::Vertex3D, _normal)));
 
     glEnableVertexAttribArray(VERTEX_ATTR_TEX_COORDS);
-    glVertexAttribPointer(VERTEX_ATTR_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(Rendering::Geometries::Vertex3D), reinterpret_cast<void*>(offsetof(Rendering::Geometries::Vertex3D, _texture)));
+    glVertexAttribPointer(VERTEX_ATTR_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(Geometries::Vertex3D), reinterpret_cast<void*>(offsetof(Geometries::Vertex3D, _texture)));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

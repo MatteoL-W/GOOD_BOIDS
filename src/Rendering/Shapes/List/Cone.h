@@ -32,11 +32,11 @@ public:
     float getRadius() const { return _radius; };
 
 private:
-    float                                        _radius{};
-    Rendering::Programs::PhongAndShadow          _shader{};
-    Rendering::Programs::DepthMap                _depthMap{};
-    std::vector<Rendering::Geometries::Vertex3D> _vertices{};
-    Rendering::Engine::Mesh                      _mesh;
+    float                             _radius{};
+    Programs::PhongAndShadow          _shader{};
+    Programs::DepthMap                _depthMap{};
+    std::vector<Geometries::Vertex3D> _vertices{};
+    Engine::Mesh                      _mesh;
 };
 
 } // namespace Rendering::Shapes
