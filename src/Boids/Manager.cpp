@@ -4,6 +4,7 @@ namespace Boids {
 
 void Manager::addSpecies(p6::Context& ctx, Species& species)
 {
+    // ToDo: Remove aspect ratio
     for (int i = 0; i < species._quantity; i++)
         _boids.emplace_back(
             species,

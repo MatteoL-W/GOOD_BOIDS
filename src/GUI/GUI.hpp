@@ -13,7 +13,9 @@ void showSpeciesGUI(std::string speciesName, Boids::Species&);
 void showParametersGUI(Boids::Species&);
 void showForcesGUI(Boids::ForcesConfig&);
 void showBehaviorGUI(Boids::BehaviorConfig&);
-// ToDo : showShapeGUI ? avec radius ?
+void showShapeGUI(BoidsShapesType&);
+
 void showFoodGUI(Features::FoodProvider&);
+void showCameraGUI();
 
 } // namespace GUI

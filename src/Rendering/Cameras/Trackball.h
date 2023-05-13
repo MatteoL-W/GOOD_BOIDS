@@ -3,7 +3,7 @@
 #include "Spectator/Controls.h"
 #include "p6/p6.h"
 
-// ToDo : Remove ?
+// Only Debug use
 
 namespace Camera {
 

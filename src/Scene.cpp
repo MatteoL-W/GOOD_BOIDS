@@ -10,6 +10,7 @@ void Scene::setupWorld(p6::Context& ctx)
 {
     initializeBoids(ctx);
     initializeLights();
+    initializeImGui(ctx);
 
     _cameraManager.handleEvents(ctx);
 
@@ -25,16 +26,6 @@ void Scene::initializeBoids(p6::Context& ctx)
 {
     _boidsManager.addSpecies(ctx, firstSpecies);
     _boidsManager.addSpecies(ctx, secondSpecies);
-
-    ctx.imgui = [&]() {
-        ImGui::Begin("My super GUI");
-
-        GUI::showSpeciesGUI("Little boids", firstSpecies);
-        GUI::showSpeciesGUI("Med boids", secondSpecies);
-        GUI::showFoodGUI(_foodProvider);
-
-        ImGui::End();
-    };
 }
 
 void Scene::initializeLights()
@@ -42,6 +33,27 @@ void Scene::initializeLights()
     _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, .1f, .2f, .3f};
     _renderingDatas._points      = {
         Rendering::Lights::Point{Spectator::getSpectatorPosition(), 1.f, .09f, .032f, .01f, .3f, .4f},
+    };
+}
+
+void Scene::initializeImGui(p6::Context& ctx)
+{
+    ctx.imgui = [&]() {
+        ImGui::Begin("My super GUI");
+
+        GUI::showFoodGUI(_foodProvider);
+        GUI::showCameraGUI();
+
+        if (ImGui::BeginTabBar("Species"))
+        {
+            GUI::showSpeciesGUI("Little boids", firstSpecies);
+            GUI::showSpeciesGUI("Med boids", secondSpecies);
+            ImGui::EndTabBar();
+        }
+
+        ImGui::End();
+
+//        ImGui::ShowDemoWindow();
     };
 }
 
@@ -89,3 +101,4 @@ void Scene::render(p6::Context& ctx)
     _skyBox.draw();
     _cubeMap.draw();
 }
+

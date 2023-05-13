@@ -17,6 +17,7 @@ public:
 private:
     void initializeBoids(p6::Context&);
     void initializeLights();
+    void initializeImGui(p6::Context& ctx);
 
     void updateMembers(p6::Context&);
     void renderDepthMap();

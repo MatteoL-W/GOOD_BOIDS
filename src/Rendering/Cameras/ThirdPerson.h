@@ -16,6 +16,8 @@ public:
     void      handleEvents(p6::Context& ctx);
     void      updateEvents(p6::Context& ctx) { Spectator::getControlsInstance().handleEvents(ctx, _marker); };
 
+    void setMarker(Spectator::Marker& marker) { _marker = marker; };
+
     void rotateLeft(float degrees);
     void rotateUp(float degrees);
 
