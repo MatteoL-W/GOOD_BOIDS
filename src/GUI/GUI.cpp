@@ -15,6 +15,7 @@ void showSpeciesGUI(std::string speciesName, Boids::Species& species)
     }
 }
 
+// ToDo: Remove ?
 void showParametersGUI(Boids::Species& species)
 {
     ImGui::SeparatorText("Parameters");
@@ -75,6 +76,54 @@ void showCameraGUI()
     {
         Camera::CameraType newCam = Camera::FirstPerson{};
         cameraManager.changeCamera(newCam);
+    }
+
+    ImGui::Spacing();
+}
+
+void showDirectionalLightGUI(std::optional<Rendering::Lights::Directional>& light)
+{
+    if (!light.has_value())
+        return;
+
+    ImGui::SeparatorText("Directional light");
+
+    ImGui::SliderFloat3("Direction", glm::value_ptr(light->getDirection()), -10.0f, 10.0f);
+    ImGui::SliderFloat3("Position", glm::value_ptr(light->getPosition()), -10.0f, 10.0f);
+    ImGui::SliderFloat("Ambient", &light->getIntensity()._ambient, 0.f, 1.f);
+    ImGui::SliderFloat("Specular", &light->getIntensity()._specular, 0.f, 1.f);
+    ImGui::SliderFloat("Diffuse", &light->getIntensity()._diffuse, 0.f, 1.f);
+
+    ImGui::Spacing();
+}
+
+void showPointLightsGUI(std::vector<Rendering::Lights::Point>& lights)
+{
+    ImGui::SeparatorText("Point lights");
+
+    if (lights.size() < 10 && ImGui::Button("Add light"))
+    {
+        auto newLight = Rendering::Lights::Point{{}, {.1, .2, .3}, 1.f, .09f, .032f};
+        lights.push_back(newLight);
+    }
+
+    // We don't print the first light, it's the spectator one
+    if (lights.size() <= 1)
+        return;
+
+    for (size_t i = 1; i < lights.size(); i++)
+    {
+        std::string const title = "Point light n°" + std::to_string(i);
+        if (ImGui::CollapsingHeader(title.c_str()))
+        {
+            ImGui::SliderFloat3(("PL Position " + std::to_string(i)).c_str(), glm::value_ptr(lights[i].getPosition()), -10.0f, 10.0f);
+            ImGui::SliderFloat(("PL Ambient " + std::to_string(i)).c_str(), &lights[i].getIntensity()._ambient, 0.f, 1.f);
+            ImGui::SliderFloat(("PL Specular " + std::to_string(i)).c_str(), &lights[i].getIntensity()._specular, 0.f, 1.f);
+            ImGui::SliderFloat(("PL Diffuse " + std::to_string(i)).c_str(), &lights[i].getIntensity()._diffuse, 0.f, 1.f);
+            ImGui::SliderFloat(("PL Constant " + std::to_string(i)).c_str(), &lights[i].getConstant(), 0.f, 1.f);
+            ImGui::SliderFloat(("PL Linear " + std::to_string(i)).c_str(), &lights[i].getLinear(), 0.f, 1.f);
+            ImGui::SliderFloat(("PL Quadratic " + std::to_string(i)).c_str(), &lights[i].getQuadratic(), 0.f, 1.f);
+        }
     }
 
     ImGui::Spacing();

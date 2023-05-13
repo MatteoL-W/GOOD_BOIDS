@@ -20,7 +20,7 @@ void Manager::update(Features::ObstaclesManager const& obstacles, Features::Food
         boid.update(_boids, obstacles, foodProvider, sceneRadius);
 }
 
-void Manager::draw(utils::RenderingDatas renderingDatas)
+void Manager::draw(utils::RenderingDatas& renderingDatas)
 {
     for (auto& boid : _boids)
         boid.draw(renderingDatas);

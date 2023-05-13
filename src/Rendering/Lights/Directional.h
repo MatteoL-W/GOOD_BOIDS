@@ -13,12 +13,14 @@ public:
     glm::vec3  getPosition() const { return _position; };
     glm::vec3& getPosition() { return _position; };
     glm::vec3& getDirection() { return _direction; };
-    void       setMatrices(p6::Shader const&) const;
+    Intensity& getIntensity() { return _intensity; };
+
+    void setMatrices(p6::Shader const&) const;
 
 private:
+    // ToDo: Color
     glm::vec3 _position{}; // The position is needed for the shadow
     glm::vec3 _direction{};
-
     Intensity _intensity{};
 };
 

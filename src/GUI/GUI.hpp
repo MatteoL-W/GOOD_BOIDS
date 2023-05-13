@@ -13,9 +13,11 @@ void showSpeciesGUI(std::string speciesName, Boids::Species&);
 void showParametersGUI(Boids::Species&);
 void showForcesGUI(Boids::ForcesConfig&);
 void showBehaviorGUI(Boids::BehaviorConfig&);
-void showShapeGUI(BoidsShapesType&);
+
 
 void showFoodGUI(Features::FoodProvider&);
 void showCameraGUI();
+void showDirectionalLightGUI(std::optional<Rendering::Lights::Directional>&);
+void showPointLightsGUI(std::vector<Rendering::Lights::Point>&);
 
 } // namespace GUI

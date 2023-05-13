@@ -19,7 +19,7 @@ public:
     void addSpecies(SceneRadius&, Species&);
 
     void update(Features::ObstaclesManager const&, Features::FoodProvider&, SceneRadius& sceneRadius);
-    void draw(utils::RenderingDatas renderingDatas);
+    void draw(utils::RenderingDatas& renderingDatas);
 
     void reset() { _boids.clear(); };
 
