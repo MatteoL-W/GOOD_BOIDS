@@ -16,7 +16,7 @@ void FoodProvider::enableDrop()
     _randomFoodStartTime = Clock::now();
 }
 
-void FoodProvider::update(p6::Context& ctx)
+void FoodProvider::update(SceneRadius& sceneRadius)
 {
     if (!_randomFoodStartTime.has_value())
         return;
@@ -25,7 +25,7 @@ void FoodProvider::update(p6::Context& ctx)
     auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(current_time - *_randomFoodStartTime).count();
     if (elapsed_time >= _config._providing_interval)
     {
-        addFoodRandomly(ctx);
+        addFoodRandomly(sceneRadius);
         _randomFoodStartTime = current_time;
     }
 }
@@ -49,12 +49,13 @@ void FoodProvider::draw() const
     }
 }
 
-void FoodProvider::addFoodRandomly(p6::Context& ctx)
+void FoodProvider::addFoodRandomly(SceneRadius& sceneRadius)
 {
     for (int i = 0; i < _config._drops; i++)
         _foods.emplace_back(
-            p6::random::number(-ctx.aspect_ratio(), ctx.aspect_ratio()),
-            p6::random::number(-1, 1), p6::random::number(-1, 1)
+            p6::random::number(-sceneRadius.value, sceneRadius.value),
+            p6::random::number(-sceneRadius.value, sceneRadius.value),
+            p6::random::number(-sceneRadius.value, sceneRadius.value)
         );
 }
 

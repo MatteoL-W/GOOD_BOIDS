@@ -3,6 +3,7 @@
 #include <p6/p6.h>
 #include <iterator>
 #include <list>
+#include "utils/StrongType.h"
 
 namespace Features {
 using Clock = std::chrono::high_resolution_clock;
@@ -24,7 +25,7 @@ public:
 
     /// Enable the food dropping randomly in the map
     void enableDrop();
-    void update(p6::Context&);
+    void update(SceneRadius&);
     void draw() const;
     void erase(std::list<glm::vec3>::const_iterator it) { _foods.erase(it); };
 
@@ -33,9 +34,8 @@ public:
     FoodConfig&                 getConfig() { return _config; };
 
 private:
-    // ToDo : Don't use ctx but screen values
     /// Add a new food randomly inside the map
-    void addFoodRandomly(p6::Context&);
+    void addFoodRandomly(SceneRadius&);
 
 private:
     std::optional<Clock::time_point> _randomFoodStartTime;
