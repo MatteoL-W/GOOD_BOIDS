@@ -57,10 +57,12 @@ glm::vec3 computeFoodAttraction(Movement const& boid, Features::FoodProvider& fo
     if (foodAttractionRadius < minDistance)
         return glm::vec3{};
 
+    auto const foodAttraction = glm::normalize(*closestFood - boid.getPosition());
+
     if (minDistance < foodProvider.getFoodRadius())
         foodProvider.erase(closestFood);
 
-    return glm::normalize(*closestFood - boid.getPosition());
+    return foodAttraction;
 }
 
 glm::vec3 computeSeparationForce(Movement const& boid, std::vector<Movement> const& closeBoids)
