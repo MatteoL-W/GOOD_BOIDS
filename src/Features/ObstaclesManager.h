@@ -2,13 +2,15 @@
 
 #include <p6/p6.h>
 #include <vector>
+#include "Rendering/Shapes/ShapesRegister.h"
 
 namespace Features {
 
 struct SphereObstacle {
-    glm::vec3 _position{};
-    float     _radius{};
-    bool      _visible = true;
+    glm::vec3                  _position{};
+    float                      _radius{};
+    bool                       _visible = true;
+    ObstaclesShapesType const& _shape{Rendering::Shapes::getObstacleShapeInstance()};
 };
 
 class ObstaclesManager {

@@ -12,7 +12,7 @@ public:
 
 private:
     Controls                   _controls;
-    SpectatorShapesType const& _shape{Rendering::Shapes::getDuckInstance2()};
+    SpectatorShapesType const& _shape{Rendering::Shapes::getSpectatorShapeInstance()};
 };
 
 } // namespace Spectator

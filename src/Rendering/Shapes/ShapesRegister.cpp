@@ -14,10 +14,15 @@ BoidsShapesType const& getDuckInstance()
     return cone;
 }
 
-SpectatorShapesType const& getDuckInstance2()
+SpectatorShapesType const& getSpectatorShapeInstance()
 {
     static SpectatorShapesType const cone = Duck{};
     return cone;
+}
+
+ObstaclesShapesType const& getObstacleShapeInstance() {
+    static ObstaclesShapesType const sphere = Sphere{0.5};
+    return sphere;
 }
 
 } // namespace Rendering::Shapes

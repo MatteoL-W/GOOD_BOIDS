@@ -12,6 +12,8 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeLights();
     initializeImGui(ctx.imgui);
 
+    _obstaclesManager.addOne({0.f,0.f,0.f}, 0.3f);
+
     _cameraManager.handleEvents(ctx);
 
     ctx.update = [&]() {
@@ -23,11 +25,11 @@ void Scene::setupWorld(p6::Context& ctx)
 
 void Scene::initializeBoids(SceneRadius& sceneRadius)
 {
-    _firstSpecies._quantity       = 1;
+    _firstSpecies._quantity       = 10;
     _firstSpecies._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 0.6f};
     _firstSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
 
-    _secondSpecies._quantity       = 1;
+    _secondSpecies._quantity       = 10;
     _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f};
     _secondSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
 
@@ -106,6 +108,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _floor.draw({._position = glm::vec3{0.f, -_sceneRadius.value + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _spectator.draw(_renderingDatas);
+    _obstaclesManager.draw();
     _foodProvider.draw();
 
     _skyBox.draw();

@@ -5,12 +5,13 @@
 namespace Rendering::Shapes {
 
 Duck::Duck()
-    : _LODHandler(
-        {Engine::Model{"assets/models/Duck/Duck.gltf"},
-         Engine::Model{"assets/models/Duck/DuckMQ.gltf"},
-         Engine::Model{"assets/models/Duck/DuckLQ.gltf"}},
-        10.f
-    )
+    : _radius(0.2f)
+    , _LODHandler(
+          {Engine::Model{"assets/models/Duck/Duck.gltf"},
+           Engine::Model{"assets/models/Duck/DuckMQ.gltf"},
+           Engine::Model{"assets/models/Duck/DuckLQ.gltf"}},
+          10.f
+      )
 {}
 
 void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const

@@ -40,6 +40,7 @@ lib
 .idea
 cmake-build-debug
 cmake-build-debug-clang
+cmake-build-debug-visual-studio
 cmake-build-release
 
 #Imgui
