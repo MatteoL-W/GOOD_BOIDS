@@ -25,8 +25,8 @@ private:
 private:
     SceneRadius _sceneRadius{};
 
-    Boids::Species _firstSpecies{Rendering::Shapes::getDuckInstance()};
-    Boids::Species _secondSpecies{Rendering::Shapes::getDuckInstance()};
+    Boids::Species _firstSpecies{Rendering::Shapes::getCloudInstance()};
+    Boids::Species _secondSpecies{Rendering::Shapes::getCloudInstance()};
     Boids::Manager _boidsManager{};
 
     Spectator::Spectator  _spectator{};

@@ -49,8 +49,8 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
         GUI::showObstacleGUI(_obstaclesManager.getConfig());
         GUI::showFoodGUI(_foodProvider.getConfig());
         GUI::showCameraGUI();
-        GUI::showDirectionalLightGUI(_renderingDatas._directional);
-        GUI::showPointLightsGUI(_renderingDatas._points);
+        //GUI::showDirectionalLightGUI(_renderingDatas._directional);
+        //GUI::showPointLightsGUI(_renderingDatas._points);
 
         ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))

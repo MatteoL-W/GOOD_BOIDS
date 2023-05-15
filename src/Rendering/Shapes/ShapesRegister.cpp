@@ -14,6 +14,12 @@ BoidsShapesType const& getDuckInstance()
     return cone;
 }
 
+BoidsShapesType const& getCloudInstance()
+{
+    static BoidsShapesType const cloud = Cloud{};
+    return cloud;
+}
+
 SpectatorShapesType const& getSpectatorShapeInstance()
 {
     static SpectatorShapesType const cone = Duck{};
