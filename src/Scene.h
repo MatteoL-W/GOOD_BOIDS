@@ -34,7 +34,7 @@ private:
     Camera::CameraManager _cameraManager{Camera::getCameraInstance()};
 
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
-    Features::ObstaclesManager _obstaclesManager{};
+    Features::ObstaclesManager _obstaclesManager{Features::ObstaclesConfig{}, true};
 
     utils::RenderingDatas            _renderingDatas{._renderType = utils::RenderType::Classic};
     Rendering::Shadow::ShadowMap     _shadowMap{};

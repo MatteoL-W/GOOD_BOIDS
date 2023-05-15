@@ -8,7 +8,7 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeLights();
     initializeImGui(ctx.imgui);
 
-    _obstaclesManager.addOne({0.f, 0.f, 0.f}, 0.3f);
+    _obstaclesManager.enableDrop();
 
     _cameraManager.handleEvents(ctx);
 
@@ -73,6 +73,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _cameraManager.updateEvents(ctx);
     _foodProvider.update(_sceneRadius);
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
+    _obstaclesManager.update(_sceneRadius);
 }
 
 void Scene::renderDepthMap()
