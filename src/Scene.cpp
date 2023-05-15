@@ -1,10 +1,6 @@
 #include "Scene.h"
-#include "Boids/Manager.h"
-#include "Features/ObstaclesManager.h"
 #include "GUI/GUI.hpp"
 #include "Rendering/Cameras/CameraManager.h"
-#include "Rendering/Lights/Directional.h"
-#include "Rendering/Shapes/List/Plane.h"
 
 void Scene::setupWorld(p6::Context& ctx)
 {
@@ -12,7 +8,7 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeLights();
     initializeImGui(ctx.imgui);
 
-    _obstaclesManager.addOne({0.f,0.f,0.f}, 0.3f);
+    _obstaclesManager.addOne({0.f, 0.f, 0.f}, 0.3f);
 
     _cameraManager.handleEvents(ctx);
 

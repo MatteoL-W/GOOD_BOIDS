@@ -3,6 +3,8 @@
 
 namespace Rendering::Shadow {
 
+// ToDo: Remove
+
 DebugDepthMap::DebugDepthMap()
 {
     float quadVertices[] = {
