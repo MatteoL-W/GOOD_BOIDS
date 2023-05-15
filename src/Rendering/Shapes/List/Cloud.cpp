@@ -6,9 +6,7 @@ namespace Rendering::Shapes {
 
 Cloud::Cloud()
     : _LODHandler(
-        {Engine::Model{"assets/models/Cloud/cloud6.gltf"},
-         Engine::Model{"assets/models/Duck/duck.gltf"},
-         Engine::Model{"assets/models/Duck/duckLQ.gltf"}},
+        {Engine::Model{"assets/models/Cloud/cute_cloud.gltf", false}},
         10.f
     )
 {}
@@ -17,11 +15,11 @@ void Cloud::draw(utils::TransformAttributes const& transformAttributes, utils::R
 {
     glCullFace(GL_FRONT);
 
-    auto const rotationQuaternion = glm::rotation(glm::vec3(1.f, 0.f, 0.f), glm::normalize(transformAttributes._velocity));
+    auto const rotationQuaternion = glm::rotation(glm::vec3(0.f, -1.f, 0.f), glm::normalize(transformAttributes._velocity));
 
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3(0.005f));
     modelMatrix      = modelMatrix * glm::mat4_cast(rotationQuaternion);
+    modelMatrix      = glm::scale(modelMatrix, glm::vec3{0.5});
 
     switch (renderingDatas._renderType)
     {
