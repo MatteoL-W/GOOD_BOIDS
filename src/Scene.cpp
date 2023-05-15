@@ -46,7 +46,8 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
     imguiFn = [&]() {
         ImGui::Begin("My super GUI");
 
-        GUI::showFoodGUI(_foodProvider);
+        GUI::showObstacleGUI(_obstaclesManager.getConfig());
+        GUI::showFoodGUI(_foodProvider.getConfig());
         GUI::showCameraGUI();
         GUI::showDirectionalLightGUI(_renderingDatas._directional);
         GUI::showPointLightsGUI(_renderingDatas._points);

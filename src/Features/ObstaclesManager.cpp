@@ -30,7 +30,7 @@ void ObstaclesManager::update(SceneRadius& sceneRadius)
 
     auto current_time = Clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(current_time - *_randomDropStartTime).count();
-    if (elapsed_time >= _config._providing_interval)
+    if (elapsed_time >= _config._providingInterval)
     {
         addObstaclesRandomly(sceneRadius);
         _randomDropStartTime = current_time;

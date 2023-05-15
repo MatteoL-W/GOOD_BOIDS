@@ -23,7 +23,7 @@ void FoodProvider::update(SceneRadius& sceneRadius)
 
     auto current_time = Clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(current_time - *_randomFoodStartTime).count();
-    if (elapsed_time >= _config._providing_interval)
+    if (elapsed_time >= _config._providingInterval)
     {
         addFoodRandomly(sceneRadius);
         _randomFoodStartTime = current_time;

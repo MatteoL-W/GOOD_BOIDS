@@ -48,13 +48,26 @@ void showBehaviorGUI(Boids::BehaviorConfig& behaviorConfig)
     }
 }
 
-void showFoodGUI(Features::FoodProvider& foodProvider)
+void showFoodGUI(Features::FoodConfig& foodConfig)
 {
     ImGui::SeparatorText("Food Provider");
 
-    if (ImGui::DragInt("Number of drops", &foodProvider.getConfig()._drops, 3, 0, 10)
-        || ImGui::DragInt("Interval of drop", &foodProvider.getConfig()._providing_interval, 5, 0, 30)
-        || ImGui::DragFloat("Food radius", &foodProvider.getConfig()._radius, 0.1f, 0.01f, 0.2f))
+    if (ImGui::DragInt("Number of drops", &foodConfig._drops, 3, 0, 10)
+        || ImGui::DragInt("Interval of drop", &foodConfig._providingInterval, 5, 0, 30)
+        || ImGui::DragFloat("Food radius", &foodConfig._radius, 0.1f, 0.01f, 0.2f))
+    {
+    }
+
+    ImGui::Spacing();
+}
+
+void showObstacleGUI(Features::ObstaclesConfig& config) {
+    ImGui::SeparatorText("Obstacles Manager");
+
+    if (ImGui::DragInt("Number of drops", &config._drops, 3, 0, 10)
+        || ImGui::DragInt("Interval of drop", &config._providingInterval, 5, 0, 30)
+        || ImGui::DragFloat("Food radius", &config._radius, 0.1f, 0.01f, 0.2f)
+        || ImGui::DragFloat("Falling factor", &config._fallingFactor, 0.01f, 0.01f, 0.05f))
     {
     }
 

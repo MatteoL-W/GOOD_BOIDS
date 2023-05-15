@@ -15,7 +15,8 @@ void showForcesGUI(Boids::ForcesConfig&);
 void showBehaviorGUI(Boids::BehaviorConfig&);
 
 
-void showFoodGUI(Features::FoodProvider&);
+void showFoodGUI(Features::FoodConfig&);
+void showObstacleGUI(Features::ObstaclesConfig&);
 void showCameraGUI();
 void showDirectionalLightGUI(std::optional<Rendering::Lights::Directional>&);
 void showPointLightsGUI(std::vector<Rendering::Lights::Point>&);
