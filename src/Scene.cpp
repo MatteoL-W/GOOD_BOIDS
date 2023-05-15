@@ -21,11 +21,11 @@ void Scene::setupWorld(p6::Context& ctx)
 
 void Scene::initializeBoids(SceneRadius& sceneRadius)
 {
-    _firstSpecies._quantity       = 10;
+    _firstSpecies._quantity       = 1;
     _firstSpecies._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 0.6f};
     _firstSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
 
-    _secondSpecies._quantity       = 10;
+    _secondSpecies._quantity       = 1;
     _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f};
     _secondSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
 
