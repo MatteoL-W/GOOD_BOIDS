@@ -32,7 +32,7 @@ void FoodProvider::update(SceneRadius& sceneRadius)
 
 void FoodProvider::draw() const
 {
-    auto const& sphereShape    = Rendering::Shapes::getSphereInstance(_config._radius);
+    auto const& sphereShape    = Rendering::Shapes::getFoodShapeInstance(_config._radius);
     auto        renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
 
     if (_foods.empty())

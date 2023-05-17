@@ -8,8 +8,6 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeLights();
     initializeImGui(ctx.imgui);
 
-    _obstaclesManager.enableDrop();
-
     _cameraManager.handleEvents(ctx);
 
     ctx.update = [&]() {
@@ -106,7 +104,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _floor.draw({._position = glm::vec3{0.f, -_sceneRadius.value + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);
     _spectator.draw(_renderingDatas);
-    _obstaclesManager.draw();
+    _obstaclesManager.draw(_renderingDatas);
     _foodProvider.draw();
 
     _skyBox.draw();

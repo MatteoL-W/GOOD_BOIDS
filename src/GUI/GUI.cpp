@@ -52,8 +52,8 @@ void showFoodGUI(Features::FoodConfig& foodConfig)
 {
     ImGui::SeparatorText("Food Provider");
 
-    if (ImGui::DragInt("Number of drops", &foodConfig._drops, 3, 0, 10)
-        || ImGui::DragInt("Interval of drop", &foodConfig._providingInterval, 5, 0, 30)
+    if (ImGui::DragInt("Number of food drops", &foodConfig._drops, 3, 0, 10)
+        || ImGui::DragInt("Interval of food drop", &foodConfig._providingInterval, 5, 0, 30)
         || ImGui::DragFloat("Food radius", &foodConfig._radius, 0.1f, 0.01f, 0.2f))
     {
     }
@@ -64,9 +64,9 @@ void showFoodGUI(Features::FoodConfig& foodConfig)
 void showObstacleGUI(Features::ObstaclesConfig& config) {
     ImGui::SeparatorText("Obstacles Manager");
 
-    if (ImGui::DragInt("Number of drops", &config._drops, 3, 0, 10)
-        || ImGui::DragInt("Interval of drop", &config._providingInterval, 5, 0, 30)
-        || ImGui::DragFloat("Food radius", &config._radius, 0.1f, 0.01f, 0.2f)
+    if (ImGui::DragInt("Number of obstacles drops", &config._drops, 3, 0, 10)
+        || ImGui::DragInt("Interval of obstacles drop", &config._providingInterval, 5, 0, 30)
+        || ImGui::DragFloat("Obstacle radius", &config._radius, 0.1f, 0.01f, 0.2f)
         || ImGui::DragFloat("Falling factor", &config._fallingFactor, 0.01f, 0.01f, 0.05f))
     {
     }
