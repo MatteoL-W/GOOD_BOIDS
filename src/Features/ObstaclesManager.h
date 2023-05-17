@@ -11,16 +11,16 @@ using Clock = std::chrono::high_resolution_clock;
 
 struct ObstaclesConfig {
     /// The obstacles providing interval in seconds.
-    int _providingInterval = 5;
+    int _providingInterval = 6;
 
     /// The number of obstacles dropping every interval
-    int _drops = 5;
+    int _drops = 2;
 
     /// The radius of the obstacles
     float _radius = 0.10f;
 
     /// The height the drop will lose every tick
-    float _fallingFactor = 0.01f;
+    float _fallingFactor = 0.02f;
 };
 
 struct SphereObstacle {
@@ -34,7 +34,7 @@ public:
     explicit ObstaclesManager(ObstaclesConfig const& config, bool enableDropsInstantly = true);
 
     void update(SceneRadius& sceneRadius);
-    void draw();
+    void draw(utils::RenderingDatas&);
     void addOne(glm::vec3 pos, float radius = 0.1f);
     void enableDrop() { _randomDropStartTime = Clock::now(); };
 

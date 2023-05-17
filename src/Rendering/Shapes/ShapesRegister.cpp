@@ -2,18 +2,6 @@
 
 namespace Rendering::Shapes {
 
-BoidsShapesType const& getSphereInstance(float radius)
-{
-    static BoidsShapesType const sphere = Sphere{radius};
-    return sphere;
-}
-
-BoidsShapesType const& getDuckInstance()
-{
-    static BoidsShapesType const cone = Duck{};
-    return cone;
-}
-
 BoidsShapesType const& getCloudInstance()
 {
     static BoidsShapesType const cloud = Cloud{};
@@ -26,9 +14,14 @@ SpectatorShapesType const& getSpectatorShapeInstance()
     return cone;
 }
 
-ObstaclesShapesType const& getObstacleShapeInstance() {
-    static ObstaclesShapesType const sphere = Sphere{0.5};
-    return sphere;
+ObstaclesShapesType const& getDropShapeInstance() {
+    static ObstaclesShapesType const shape = Drop{};
+    return shape;
+}
+
+FoodShapesType const& getFoodShapeInstance(float radius) {
+    static FoodShapesType const food = Sphere{radius};
+    return food;
 }
 
 } // namespace Rendering::Shapes

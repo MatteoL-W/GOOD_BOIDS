@@ -3,6 +3,8 @@
 
 namespace Features {
 
+// ToDO Visible ?????
+
 ObstaclesManager::ObstaclesManager(const ObstaclesConfig& config, bool enableDropsInstantly)
     : _config(config)
 {
@@ -49,15 +51,15 @@ void ObstaclesManager::addObstaclesRandomly(SceneRadius& sceneRadius)
     }
 }
 
-void ObstaclesManager::draw()
+void ObstaclesManager::draw(utils::RenderingDatas& renderingDatas)
 {
-    auto renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
+//    auto renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
+    ObstaclesShapesType const& shape = Rendering::Shapes::getDropShapeInstance();
     for (auto const& obstacle : _obstacles)
     {
         if (!obstacle._visible)
             return;
 
-        ObstaclesShapesType const& shape = Rendering::Shapes::getObstacleShapeInstance();
         std::visit(
             [&](auto const& sphereShape) {
                 sphereShape.draw(utils::TransformAttributes{obstacle._position}, renderingDatas);
