@@ -17,7 +17,7 @@ struct ObstaclesConfig {
     int _drops = 2;
 
     /// The radius of the obstacles
-    float _radius = 0.10f;
+    float _radius = 0.4f;
 
     /// The height the drop will lose every tick
     float _fallingFactor = 0.02f;
@@ -26,7 +26,6 @@ struct ObstaclesConfig {
 struct SphereObstacle {
     glm::vec3 _position{};
     float     _radius{};
-    bool      _visible = true;
 };
 
 class ObstaclesManager {
