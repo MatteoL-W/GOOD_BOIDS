@@ -19,7 +19,7 @@ void Cloud::draw(utils::TransformAttributes const& transformAttributes, utils::R
 
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
     modelMatrix      = modelMatrix * glm::mat4_cast(rotationQuaternion);
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3{0.5});
+    modelMatrix      = glm::scale(modelMatrix, glm::vec3{0.2f});
 
     switch (renderingDatas._renderType)
     {

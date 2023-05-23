@@ -5,7 +5,7 @@
 namespace Rendering::Shapes {
 
 Drop::Drop()
-    : _radius(0.2f)
+    : _radius(.01f)
     , _model(Engine::Model{"assets/models/Drop/scene.gltf"})
 {}
 
@@ -15,7 +15,6 @@ void Drop::draw(utils::TransformAttributes const& transformAttributes, utils::Re
 
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
     modelMatrix      = modelMatrix * glm::mat4_cast(rotationQuaternion);
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3{0.1});
     modelMatrix      = glm::scale(modelMatrix, glm::vec3{_radius});
 
     switch (renderingDatas._renderType)
