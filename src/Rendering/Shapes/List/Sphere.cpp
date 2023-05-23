@@ -4,7 +4,7 @@
 namespace Rendering::Shapes {
 
 Sphere::Sphere(float radius)
-    : _radius(radius), _vertices(Geometries::sphere_vertices(1.f, 32, 16)), _mesh(Engine::Mesh{_vertices})
+    : _radius(radius), _vertices(Geometries::generateSphereVertices(1.f, 32, 16)), _mesh(Engine::Mesh{_vertices})
 {}
 
 void Sphere::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
