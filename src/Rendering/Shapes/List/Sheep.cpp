@@ -1,20 +1,15 @@
-#include "Duck.h"
 #include <glm/gtx/quaternion.hpp>
 #include "Rendering/Engine/Mesh.h"
+#include "Sheep.h"
 
 namespace Rendering::Shapes {
 
-Duck::Duck()
+Sheep::Sheep()
     : _radius(0.2f)
-    , _LODHandler(
-          {Engine::Model{"assets/models/Duck/Duck.gltf"},
-           Engine::Model{"assets/models/Duck/DuckMQ.gltf"},
-           Engine::Model{"assets/models/Duck/DuckLQ.gltf"}},
-          10.f
-      )
+    , _model("assets/models/Duck/Duck.gltf")
 {}
 
-void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
+void Sheep::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     glCullFace(GL_FRONT);
 
@@ -37,7 +32,7 @@ void Duck::draw(utils::TransformAttributes const& transformAttributes, utils::Re
         break;
     }
 
-    _LODHandler.drawCorrespondingModel(transformAttributes._position);
+    _model.draw();
 
     glUseProgram(0);
     glCullFace(GL_BACK);
