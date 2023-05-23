@@ -19,7 +19,6 @@ public:
     void setMatrices(p6::Shader const&) const;
 
 private:
-    // ToDo: Color
     glm::vec3 _position{}; // The position is needed for the shadow
     glm::vec3 _direction{};
     Intensity _intensity{};

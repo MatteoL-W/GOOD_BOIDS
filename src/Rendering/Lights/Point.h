@@ -21,7 +21,6 @@ public:
     void setPosition(glm::vec3 position) { _position = position; };
 
 private:
-    // ToDo: Color
     glm::vec3 _position{};
     Intensity _intensity{};
     glm::vec3 _color{};
