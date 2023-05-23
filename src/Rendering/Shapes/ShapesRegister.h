@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Rendering/Shapes/List/Cone.h"
 #include "Rendering/Shapes/List/Duck.h"
 #include "Rendering/Shapes/List/Sphere.h"
 
