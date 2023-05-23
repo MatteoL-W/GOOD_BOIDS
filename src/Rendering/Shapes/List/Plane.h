@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Engine/Model.h"
+#include "Rendering/Engine/Texture.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/DepthMap/DepthMap.h"
 #include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
@@ -35,7 +36,7 @@ public:
     float getRadius() const { return _radius; };
 
 private:
-    GLuint                            _textureId{};
+    Engine::Texture                   _texture;
     float                             _radius{};
     Programs::PhongAndShadow          _shader{};
     Programs::DepthMap                _depthMap{};

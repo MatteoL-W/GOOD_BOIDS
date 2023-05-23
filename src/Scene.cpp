@@ -101,7 +101,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     glViewport(0, 0, canvasDimensions.x, canvasDimensions.y);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    _shadowMap.bindTextureOnFirstUnit();
+    _shadowMap.bindTextureUnit(1);
 
     _floor.draw({._position = glm::vec3{0.f, -_sceneRadius.value + .1f, 0.f}}, _renderingDatas);
     _boidsManager.draw(_renderingDatas);

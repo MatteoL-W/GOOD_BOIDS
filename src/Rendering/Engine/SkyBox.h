@@ -21,7 +21,7 @@ public:
     void draw();
 
 private:
-    void createSkyBox(std::vector<std::string> faces);
+    void createTexture(std::vector<std::string> faces);
     void createMesh();
 
 private:

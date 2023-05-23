@@ -10,9 +10,9 @@ ShadowMap::ShadowMap()
     attachTextureToFBO();
 };
 
-void ShadowMap::bindTextureOnFirstUnit() const
+void ShadowMap::bindTextureUnit(GLuint unit) const
 {
-    glActiveTexture(GL_TEXTURE1);
+    glActiveTexture(GL_TEXTURE0 + unit);
     glBindTexture(GL_TEXTURE_2D, _depthMapTexture);
 }
 

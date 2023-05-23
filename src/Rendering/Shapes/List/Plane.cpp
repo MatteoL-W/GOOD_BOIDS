@@ -5,19 +5,8 @@
 namespace Rendering::Shapes {
 
 Plane::Plane(float radius)
-    : _radius(radius), _vertices(Geometries::generatePlaneVertices()), _mesh(Engine::Mesh{_vertices})
+    : _texture("assets/textures/EarthMap.jpg"), _radius(radius), _vertices(Geometries::generatePlaneVertices()), _mesh(Engine::Mesh{_vertices})
 {
-    // ToDo: Texture class
-    glGenTextures(1, &_textureId);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
-
-    const auto texture = p6::load_image_buffer("assets/textures/EarthMap.jpg");
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture.width(), texture.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture.data());
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Plane::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
@@ -38,10 +27,9 @@ void Plane::draw(utils::TransformAttributes const& transformAttributes, utils::R
         break;
     }
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
+    _texture.bindOnUnit(0);
     _mesh.draw(static_cast<GLsizei>(_vertices.size()));
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Rendering::Engine::Texture::unbind();
 }
 
 } // namespace Rendering::Shapes

@@ -10,11 +10,12 @@ class ShadowMap {
 public:
     explicit ShadowMap();
     ~ShadowMap();
+
     void renderDepthMap(std::function<void(glm::mat4)> const& renderCastersShadowsFn, Lights::Directional&);
 
     glm::mat4 getLightSpaceMatrix() { return _lightSpaceMatrix; };
     GLuint    getDepthMapTextureId() const { return _depthMapTexture; };
-    void      bindTextureOnFirstUnit() const;
+    void      bindTextureUnit(GLuint unit) const;
 
 private:
     void generateDepthTexture();

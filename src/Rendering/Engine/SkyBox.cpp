@@ -5,6 +5,7 @@ namespace Rendering::Engine {
 
 SkyBox::SkyBox()
 {
+    // ToDo: Move to parameters
     std::vector<std::string> const faces{
         "assets/skybox/right.jpg",
         "assets/skybox/left.jpg",
@@ -13,11 +14,11 @@ SkyBox::SkyBox()
         "assets/skybox/front.jpg",
         "assets/skybox/back.jpg"};
 
-    createSkyBox(faces);
+    createTexture(faces);
     createMesh();
 }
 
-void SkyBox::createSkyBox(std::vector<std::string> faces)
+void SkyBox::createTexture(std::vector<std::string> faces)
 {
     glGenTextures(1, &_cubeMapTextureId);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _cubeMapTextureId);
