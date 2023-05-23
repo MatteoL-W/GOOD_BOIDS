@@ -4,8 +4,6 @@
 #include "Boids/Manager.h"
 #include "Features/FoodProvider.h"
 
-// ToDo "separator text" pour imgui
-
 namespace GUI {
 
 void showSpeciesGUI(std::string speciesName, Boids::Species&);
