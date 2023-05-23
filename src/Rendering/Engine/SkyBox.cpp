@@ -7,12 +7,12 @@ SkyBox::SkyBox()
 {
     // ToDo: Move to parameters
     std::vector<std::string> const faces{
-        "assets/skybox/right.jpg",
-        "assets/skybox/left.jpg",
-        "assets/skybox/bottom.jpg",
-        "assets/skybox/top.jpg",
-        "assets/skybox/front.jpg",
-        "assets/skybox/back.jpg"};
+        "assets/skybox/old/right.jpg",
+        "assets/skybox/old/left.jpg",
+        "assets/skybox/old/bottom.jpg",
+        "assets/skybox/old/top.jpg",
+        "assets/skybox/old/front.jpg",
+        "assets/skybox/old/back.jpg"};
 
     createTexture(faces);
     createMesh();
