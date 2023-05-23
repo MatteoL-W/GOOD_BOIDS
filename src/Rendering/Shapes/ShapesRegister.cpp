@@ -10,7 +10,7 @@ BoidsShapesType const& getCloudInstance()
 
 SpectatorShapesType const& getSpectatorShapeInstance()
 {
-    static SpectatorShapesType const cone = Duck{};
+    static SpectatorShapesType const cone = Sheep{};
     return cone;
 }
 

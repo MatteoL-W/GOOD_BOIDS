@@ -17,17 +17,17 @@
 
 namespace Rendering::Shapes {
 
-class Duck {
+class Sheep {
 public:
-    explicit Duck();
+    explicit Sheep();
 
     // We delete the copy constructors because the class has resources that cannot be copied
-    Duck(const Duck& other)            = delete;
-    Duck& operator=(const Duck& other) = delete;
+    Sheep(const Sheep& other)            = delete;
+    Sheep& operator=(const Sheep& other) = delete;
 
     // Move constructors
-    Duck(Duck&& other) noexcept            = default;
-    Duck& operator=(Duck&& other) noexcept = default;
+    Sheep(Sheep&& other) noexcept            = default;
+    Sheep& operator=(Sheep&& other) noexcept = default;
 
 public:
     void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
@@ -39,7 +39,7 @@ private:
     Programs::ToonAndShadow _shader{};
     Programs::DepthMap      _depthMap{};
 
-    utils::LODHandler _LODHandler;
+    Engine::Model _model;
 };
 
 } // namespace Rendering::Shapes
