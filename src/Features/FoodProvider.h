@@ -16,7 +16,7 @@ struct FoodConfig {
     int _drops = 4;
 
     /// The radius of the food
-    float _radius = 0.05f;
+    float _radius = 0.3f;
 };
 
 class FoodProvider {

@@ -20,8 +20,8 @@ ObstaclesShapesType const& getDropShapeInstance() {
 }
 
 FoodShapesType const& getFoodShapeInstance(float radius) {
-    static FoodShapesType const food = Sphere{radius};
-    return food;
+    static FoodShapesType const star = Star{radius};
+    return star;
 }
 
 } // namespace Rendering::Shapes
