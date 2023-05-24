@@ -1,15 +1,14 @@
-#include "Plane.h"
+#include "Ground.h"
 #include "Rendering/Engine/Mesh.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
 
 namespace Rendering::Shapes {
 
-Plane::Plane(float radius)
-    : _texture("assets/textures/EarthMap.jpg"), _radius(radius), _vertices(Geometries::generatePlaneVertices()), _mesh(Engine::Mesh{_vertices})
-{
-}
+Ground::Ground(float radius)
+    : _texture("assets/textures/ground.jpg"), _radius(radius), _vertices(Geometries::generatePlaneVertices()), _mesh(Engine::Mesh{_vertices})
+{}
 
-void Plane::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
+void Ground::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
     auto modelViewMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
     modelViewMatrix      = glm::scale(modelViewMatrix, glm::vec3{_radius});
