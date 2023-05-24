@@ -7,7 +7,7 @@ namespace Rendering::Engine {
 
 class SkyBox {
 public:
-    SkyBox();
+    SkyBox() = default;
     ~SkyBox();
 
     // We delete the copy constructors because the class has resources that cannot be copied
@@ -18,6 +18,7 @@ public:
     SkyBox(SkyBox&& other) noexcept            = default;
     SkyBox& operator=(SkyBox&& other) noexcept = default;
 
+    void setFaces(std::vector<std::string> const& facesPaths);
     void draw();
 
 private:
