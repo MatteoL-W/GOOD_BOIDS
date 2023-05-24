@@ -18,17 +18,17 @@
 
 namespace Rendering::Shapes {
 
-class Plane {
+class Ground {
 public:
-    explicit Plane(float radius);
+    explicit Ground(float radius);
 
     // We delete the copy constructors because the class has resources that cannot be copied
-    Plane(const Plane& other)            = delete;
-    Plane& operator=(const Plane& other) = delete;
+    Ground(const Ground& other)            = delete;
+    Ground& operator=(const Ground& other) = delete;
 
     // Move constructors
-    Plane(Plane&& other) noexcept            = default;
-    Plane& operator=(Plane&& other) noexcept = default;
+    Ground(Ground&& other) noexcept            = default;
+    Ground& operator=(Ground&& other) noexcept = default;
 
 public:
     void  draw([[maybe_unused]] utils::TransformAttributes const&, utils::RenderingDatas&) const;
