@@ -16,6 +16,7 @@ public:
 private:
     void initializeBoids(SceneRadius&);
     void initializeLights();
+    void initializeSkyBox();
     void initializeImGui(std::function<void()>& imguiFn);
 
     void updateMembers(p6::Context&);
@@ -35,8 +36,8 @@ private:
     Features::FoodProvider     _foodProvider{Features::FoodConfig{}, true};
     Features::ObstaclesManager _obstaclesManager{Features::ObstaclesConfig{}, true};
 
-    utils::RenderingDatas            _renderingDatas{._renderType = utils::RenderType::Classic};
-    Rendering::Shadow::ShadowMap     _shadowMap{};
+    utils::RenderingDatas        _renderingDatas{._renderType = utils::RenderType::Classic};
+    Rendering::Shadow::ShadowMap _shadowMap{};
 
     Rendering::Engine::SkyBox _skyBox{};
     Rendering::Shapes::Cube   _cubeMap{_sceneRadius.value};

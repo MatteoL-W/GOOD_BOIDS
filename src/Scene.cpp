@@ -6,6 +6,7 @@ void Scene::setupWorld(p6::Context& ctx)
 {
     initializeBoids(_sceneRadius);
     initializeLights();
+    initializeSkyBox();
     initializeImGui(ctx.imgui);
 
     _cameraManager.handleEvents(ctx);
@@ -39,6 +40,18 @@ void Scene::initializeLights()
     };
 }
 
+void Scene::initializeSkyBox()
+{
+    _skyBox.setFaces(
+        {"assets/skybox/new/posx.png",
+         "assets/skybox/new/negx.png",
+         "assets/skybox/new/negy.png",
+         "assets/skybox/new/posy.png",
+         "assets/skybox/new/posz.png",
+         "assets/skybox/new/negz.png"}
+    );
+}
+
 void Scene::initializeImGui(std::function<void()>& imguiFn)
 {
     imguiFn = [&]() {
@@ -47,8 +60,8 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
         GUI::showObstacleGUI(_obstaclesManager.getConfig());
         GUI::showFoodGUI(_foodProvider.getConfig());
         GUI::showCameraGUI();
-        //GUI::showDirectionalLightGUI(_renderingDatas._directional);
-        //GUI::showPointLightsGUI(_renderingDatas._points);
+        // GUI::showDirectionalLightGUI(_renderingDatas._directional);
+        // GUI::showPointLightsGUI(_renderingDatas._points);
 
         ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))
