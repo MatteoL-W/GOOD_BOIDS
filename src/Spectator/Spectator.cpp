@@ -9,7 +9,7 @@ Spectator::Spectator()
 
 void Spectator::draw(utils::RenderingDatas& renderingDatas) const
 {
-    auto direction           = Camera::getFront() * glm::vec3{1.f, 0.f, 1.f};
+    auto direction           = Camera::getFront() * glm::vec3{1.f, 1.f, 1.f};
     auto transformAttributes = utils::TransformAttributes{._position = getSpectatorPosition(), ._velocity = direction};
 
     std::visit(
