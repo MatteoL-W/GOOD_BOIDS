@@ -13,7 +13,8 @@ public:
         : _distance(distance), _angleX(angleX), _angleY(angleY) {}
 
     glm::vec3 getPosition() const;
-    glm::vec3 getFront() const { return glm::vec3{1.f, 0.f, 0.f}; };
+    glm::vec3 getFront() const { return glm::vec3{0.f, 0.f, 1.f}; };
+    glm::vec3 getLeft() const { return glm::vec3{-1.f, 0.f, 0.f}; };
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
     void      updateEvents(p6::Context& ctx) { Spectator::getControlsInstance().handleEvents(ctx, _marker); };

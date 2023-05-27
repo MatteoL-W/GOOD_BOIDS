@@ -13,11 +13,13 @@ void Sheep::draw(utils::TransformAttributes const& transformAttributes, utils::R
 {
     glCullFace(GL_FRONT);
 
-    auto const rotationQuaternion = glm::rotation(glm::vec3(0.f, -1.f, 0.f), glm::normalize(transformAttributes._velocity));
+    auto const rotationFrontQuaternion = glm::rotation(glm::vec3(0.f, -1.f, 0.f), glm::normalize(transformAttributes._velocity));
+    auto const rotationLeftQuaternion = glm::rotation(glm::vec3(1.f, 0.f, 0.f), glm::normalize(transformAttributes._left));
 
     auto modelMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
     modelMatrix      = glm::scale(modelMatrix, glm::vec3(_radius));
-    modelMatrix      = modelMatrix * glm::mat4_cast(rotationQuaternion);
+    modelMatrix      = modelMatrix * glm::mat4_cast(rotationFrontQuaternion);
+    modelMatrix      = modelMatrix * glm::mat4_cast(rotationLeftQuaternion);
 
     switch (renderingDatas._renderType)
     {
