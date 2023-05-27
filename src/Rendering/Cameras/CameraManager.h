@@ -15,6 +15,7 @@ public:
 
     glm::vec3  getPosition() const;
     glm::vec3  getFront() const;
+    glm::vec3  getLeft() const;
     glm::mat4  getViewMatrix() const;
     CameraType getAbstractCamera() const { return _camera; };
     void       handleEvents(p6::Context& ctx);
@@ -31,5 +32,6 @@ bool      isFirstPerson();
 glm::mat4 getViewMatrix();
 glm::vec3 getPosition();
 glm::vec3 getFront();
+glm::vec3 getLeft();
 
 } // namespace Camera

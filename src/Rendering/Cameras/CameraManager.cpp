@@ -30,6 +30,18 @@ glm::vec3 CameraManager::getFront() const
     return front;
 }
 
+glm::vec3 CameraManager::getLeft() const
+{
+    auto left = glm::vec3{};
+    std::visit(
+        [&](auto const& camera) {
+            left = camera.getLeft();
+        },
+        _camera
+    );
+    return left;
+}
+
 glm::mat4 CameraManager::getViewMatrix() const
 {
     auto viewMatrix = glm::mat4{};
@@ -96,6 +108,12 @@ glm::vec3 getFront()
 {
     auto camera = getCameraInstance();
     return camera.getFront();
+}
+
+glm::vec3 getLeft()
+{
+    auto camera = getCameraInstance();
+    return camera.getLeft();
 }
 
 } // namespace Camera

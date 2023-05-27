@@ -9,8 +9,11 @@ Spectator::Spectator()
 
 void Spectator::draw(utils::RenderingDatas& renderingDatas) const
 {
-    auto direction           = Camera::getFront() * glm::vec3{1.f, 1.f, 1.f};
-    auto transformAttributes = utils::TransformAttributes{._position = getSpectatorPosition(), ._velocity = direction};
+    auto transformAttributes = utils::TransformAttributes{
+        ._position = getSpectatorPosition(),
+        ._velocity = Camera::getFront(),
+        ._left     = Camera::getLeft(),
+    };
 
     std::visit(
         [&](auto const& shape) {
