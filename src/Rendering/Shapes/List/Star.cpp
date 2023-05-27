@@ -11,8 +11,6 @@ Star::Star(float radius)
 
 void Star::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
-    glCullFace(GL_FRONT);
-
     auto modelMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
     modelMatrix      = glm::scale(modelMatrix, glm::vec3(_radius));
     modelMatrix      = glm::rotate(modelMatrix, 90.f, glm::vec3{0.f, 0.f, 1.f});
@@ -33,7 +31,6 @@ void Star::draw(utils::TransformAttributes const& transformAttributes, utils::Re
     _model.draw();
 
     glUseProgram(0);
-    glCullFace(GL_BACK);
 }
 
 } // namespace Rendering::Shapes
