@@ -17,7 +17,7 @@ public:
     glm::vec3 getLeft() const { return glm::vec3{-1.f, 0.f, 0.f}; };
     glm::mat4 getViewMatrix() const;
     void      handleEvents(p6::Context& ctx);
-    void      updateEvents(p6::Context& ctx) { Spectator::getControlsInstance().handleEvents(ctx, _marker); };
+    void      updateEvents(p6::Context& ctx, SceneRadius& sceneRadius) { Spectator::getControlsInstance().handleEvents(ctx, _marker, sceneRadius); };
 
     void moveFront(float delta) { _distance += delta; };
     void rotateLeft(float degrees) { _angleX += degrees; };

@@ -82,7 +82,7 @@ void Scene::updateMembers(p6::Context& ctx)
     _renderingDatas._lightSpaceMatrix = _shadowMap.getLightSpaceMatrix();
     _renderingDatas._points[0].setPosition(Spectator::getSpectatorPosition());
 
-    _cameraManager.updateEvents(ctx);
+    _cameraManager.updateEvents(ctx, _sceneRadius);
     _foodProvider.update(_sceneRadius);
     _boidsManager.update(_obstaclesManager, _foodProvider, _sceneRadius);
     _obstaclesManager.update(_sceneRadius);

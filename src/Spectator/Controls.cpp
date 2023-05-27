@@ -2,25 +2,46 @@
 
 namespace Spectator {
 
-void Controls::handleEvents(p6::Context& ctx, Marker& marker)
+bool isWithinSceneBounds(const glm::vec3& position, const SceneRadius& sceneRadius)
 {
+    return (
+        position.x >= -sceneRadius.value && position.x <= sceneRadius.value &&
+        position.y >= -sceneRadius.value && position.y <= sceneRadius.value &&
+        position.z >= -sceneRadius.value && position.z <= sceneRadius.value
+    );
+}
+
+glm::vec3 stepUpward(float distance = Controls::getDefaultStep()) { return distance * glm::vec3{0.f, 1.f, 0.f}; };
+glm::vec3 stepDownward(float distance = Controls::getDefaultStep()) { return distance * glm::vec3{0.f, -1.f, 0.f}; };
+glm::vec3 stepLeft(glm::vec3 const& left, float distance = Controls::getDefaultStep()) { return distance * left; };
+glm::vec3 stepRight(glm::vec3 const& left, float distance = Controls::getDefaultStep()) { return distance * left; };
+glm::vec3 stepForward(glm::vec3 const& front, float distance = Controls::getDefaultStep()) { return distance * front; };
+glm::vec3 stepBackward(glm::vec3 const& front, float distance = Controls::getDefaultStep()) { return distance * front; };
+
+void Controls::handleEvents(p6::Context& ctx, Marker& marker, SceneRadius& sceneRadius)
+{
+    glm::vec3 newPosition = _position;
+
     if (ctx.key_is_pressed(GLFW_KEY_SPACE))
-        moveUpward();
+        newPosition += stepUpward();
 
     if (ctx.key_is_pressed(GLFW_KEY_TAB))
-        moveDownward();
+        newPosition += stepDownward();
 
     if (ctx.key_is_pressed(GLFW_KEY_W))
-        moveForward(marker._front);
+        newPosition += stepForward(marker._front);
 
     if (ctx.key_is_pressed(GLFW_KEY_S))
-        moveBackward(marker._front);
+        newPosition += stepBackward(marker._front);
 
     if (ctx.key_is_pressed(GLFW_KEY_A))
-        moveLeft(marker._left);
+        newPosition += stepLeft(marker._left);
 
     if (ctx.key_is_pressed(GLFW_KEY_D))
-        moveRight(marker._left);
+        newPosition += stepRight(marker._left);
+
+    if (isWithinSceneBounds(newPosition, sceneRadius))
+        _position = newPosition;
 }
 
 Controls& getControlsInstance()
