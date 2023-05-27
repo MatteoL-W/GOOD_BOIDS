@@ -33,8 +33,8 @@ void ThirdPerson::handleEvents(p6::Context& ctx)
 
 void ThirdPerson::computeDirectionVectors()
 {
-    _marker._front = glm::vec3{cos(_verticalRotation) * sin(_horizontalRotation), sin(_verticalRotation), cos(_verticalRotation) * cos(_horizontalRotation)};
-    _marker._left  = glm::vec3{sin(_horizontalRotation + p6::PI / 2), 0, cos(_horizontalRotation + p6::PI / 2)};
+    _marker._front = glm::vec3{glm::cos(_verticalRotation) * glm::sin(_horizontalRotation), glm::sin(_verticalRotation), glm::cos(_verticalRotation) * glm::cos(_horizontalRotation)};
+    _marker._left  = glm::vec3{glm::sin(_horizontalRotation + p6::PI / 2), 0.f, glm::cos(_horizontalRotation + p6::PI / 2)};
     _marker._up    = glm::cross(_marker._front, _marker._left);
 }
 
