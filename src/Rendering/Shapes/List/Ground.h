@@ -39,7 +39,6 @@ private:
     Engine::Texture                   _texture;
     float                             _radius{};
     Programs::PhongAndShadow          _shader{};
-    Programs::DepthMap                _depthMap{};
     std::vector<Geometries::Vertex3D> _vertices{};
     Engine::Mesh                      _mesh;
 };
