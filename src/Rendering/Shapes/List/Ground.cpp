@@ -13,18 +13,8 @@ void Ground::draw(utils::TransformAttributes const& transformAttributes, utils::
     auto modelViewMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
     modelViewMatrix      = glm::scale(modelViewMatrix, glm::vec3{_radius});
 
-    switch (renderingDatas._renderType)
-    {
-    case utils::RenderType::Classic:
-        _shader._program.use();
-        _shader.setMatrices(modelViewMatrix, renderingDatas);
-        break;
-
-    case utils::RenderType::DepthMap:
-        _depthMap._program.use();
-        _depthMap.setMatrices(modelViewMatrix, renderingDatas._lightSpaceMatrix);
-        break;
-    }
+    _shader._program.use();
+    _shader.setMatrices(modelViewMatrix, renderingDatas);
 
     _texture.bindOnUnit(0);
     _mesh.draw(static_cast<GLsizei>(_vertices.size()));
