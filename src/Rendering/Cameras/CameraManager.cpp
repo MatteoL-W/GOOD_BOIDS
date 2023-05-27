@@ -64,11 +64,11 @@ void CameraManager::handleEvents(p6::Context& ctx)
     );
 }
 
-void CameraManager::updateEvents(p6::Context& ctx)
+void CameraManager::updateEvents(p6::Context& ctx, SceneRadius& sceneRadius)
 {
     std::visit(
         [&](auto& camera) {
-            camera.updateEvents(ctx);
+            camera.updateEvents(ctx, sceneRadius);
         },
         _camera
     );

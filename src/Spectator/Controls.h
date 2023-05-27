@@ -1,6 +1,7 @@
 #pragma once
 
 #include <p6/p6.h>
+#include "utils/StrongType.h"
 
 namespace Spectator {
 
@@ -12,16 +13,9 @@ struct Marker {
 
 class Controls {
 public:
-    void             handleEvents(p6::Context& ctx, Marker&);
+    void             handleEvents(p6::Context& ctx, Marker&, SceneRadius&);
     glm::vec3 const& getPosition() const { return _position; };
-
-private:
-    void moveUpward(float distance = _step) { _position += distance * glm::vec3{0.f, 1.f, 0.f}; };
-    void moveDownward(float distance = _step) { _position += distance * glm::vec3{0.f, -1.f, 0.f}; };
-    void moveLeft(glm::vec3 const& left, float distance = _step) { _position += distance * left; };
-    void moveRight(glm::vec3 const& left, float distance = _step) { _position -= distance * left; };
-    void moveForward(glm::vec3 const& front, float distance = _step) { _position += distance * front; };
-    void moveBackward(glm::vec3 const& front, float distance = _step) { _position -= distance * front; };
+    static float     getDefaultStep() { return _step; };
 
 private:
     static float constexpr _step = 0.05f;

@@ -15,7 +15,7 @@ public:
     glm::vec3 getLeft() const { return _marker._left; };
     glm::mat4 getViewMatrix() const { return glm::lookAt(getPosition(), getPosition() + _marker._front, _marker._up); };
     void      handleEvents(p6::Context& ctx);
-    void      updateEvents(p6::Context& ctx) { Spectator::getControlsInstance().handleEvents(ctx, _marker); };
+    void      updateEvents(p6::Context& ctx, SceneRadius& sceneRadius) { Spectator::getControlsInstance().handleEvents(ctx, _marker, sceneRadius); };
 
     void setMarker(Spectator::Marker& marker) { _marker = marker; };
 
