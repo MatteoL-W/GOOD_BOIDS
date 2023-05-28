@@ -14,9 +14,9 @@ bool isWithinSceneBounds(const glm::vec3& position, const SceneRadius& sceneRadi
 glm::vec3 stepUpward(float distance = Controls::getDefaultStep()) { return distance * glm::vec3{0.f, 1.f, 0.f}; };
 glm::vec3 stepDownward(float distance = Controls::getDefaultStep()) { return distance * glm::vec3{0.f, -1.f, 0.f}; };
 glm::vec3 stepLeft(glm::vec3 const& left, float distance = Controls::getDefaultStep()) { return distance * left; };
-glm::vec3 stepRight(glm::vec3 const& left, float distance = Controls::getDefaultStep()) { return distance * left; };
+glm::vec3 stepRight(glm::vec3 const& left, float distance = Controls::getDefaultStep()) { return distance * -left; };
 glm::vec3 stepForward(glm::vec3 const& front, float distance = Controls::getDefaultStep()) { return distance * front; };
-glm::vec3 stepBackward(glm::vec3 const& front, float distance = Controls::getDefaultStep()) { return distance * front; };
+glm::vec3 stepBackward(glm::vec3 const& front, float distance = Controls::getDefaultStep()) { return distance * -front; };
 
 void Controls::handleEvents(p6::Context& ctx, Marker& marker, SceneRadius& sceneRadius)
 {
