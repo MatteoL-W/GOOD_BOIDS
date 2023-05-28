@@ -24,7 +24,7 @@ void Model::loadModel(std::string const& path, bool const isBinaryGltf)
                                         : _loader.LoadASCIIFromFile(&_model, &err, &warn, path);
 
     if (!warn.empty() || !err.empty())
-        throw std::runtime_error((warn.empty() ? warn.c_str() : err.c_str()));
+        throw std::runtime_error((warn.empty() ? err.c_str() : warn.c_str()));
 
     if (!hasLoaded)
         throw std::runtime_error("Failed to parse gltf");
