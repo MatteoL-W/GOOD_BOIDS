@@ -27,12 +27,13 @@ void showForcesGUI(Boids::ForcesConfig& forcesConfig)
 {
     ImGui::Text("Boids forces");
 
-    if (ImGui::DragFloat("Separation Radius", &forcesConfig._separationRadius, 0.01f, 0, 10.f)
-        || ImGui::DragFloat("Separation Factor", &forcesConfig._separationFactor, 0.01f, 0, 10.f)
-        || ImGui::DragFloat("Alignment Radius", &forcesConfig._alignmentRadius, 0.01f, 0, 10.f)
-        || ImGui::DragFloat("Alignment Factor", &forcesConfig._alignmentFactor, 0.01f, 0, 10.f)
-        || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesionRadius, 0.01f, 0, 10.f)
-        || ImGui::DragFloat("Cohesion Factor", &forcesConfig._cohesionFactor, 0.01f, 0, 10.f))
+    if (ImGui::DragFloat("Separation Radius", &forcesConfig._separationRadius, 0.01f, 0.f, 10.f)
+        || ImGui::DragFloat("Separation Factor", &forcesConfig._separationFactor, 0.01f, 0.f, 10.f)
+        || ImGui::DragFloat("Alignment Radius", &forcesConfig._alignmentRadius, 0.01f, 0.f, 10.f)
+        || ImGui::DragFloat("Alignment Factor", &forcesConfig._alignmentFactor, 0.01f, 0.f, 10.f)
+        || ImGui::DragFloat("Cohesion Radius", &forcesConfig._cohesionRadius, 0.01f, 0.f, 10.f)
+        || ImGui::DragFloat("Cohesion Factor", &forcesConfig._cohesionFactor, 0.01f, 0.f, 10.f)
+        || ImGui::DragFloat("Turn factor", &forcesConfig._turnFactor, 0.1f, 0.f, 2.f))
     {
     }
 }
