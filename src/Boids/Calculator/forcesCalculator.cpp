@@ -95,10 +95,11 @@ glm::vec3 computeCohesionForce(Movement const& boid, std::vector<Movement> const
 
     auto averagePosition = glm::vec3{};
     for (auto const& closeMember : closeBoids)
-        averagePosition += glm::normalize(closeMember.getPosition());
+        averagePosition += closeMember.getPosition();
 
     averagePosition /= static_cast<float>(closeBoids.size());
     return averagePosition - boid.getPosition();
 }
+
 
 }; // namespace Boids::Calculator

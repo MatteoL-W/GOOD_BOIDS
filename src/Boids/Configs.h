@@ -9,14 +9,14 @@ struct BehaviorConfig {
 };
 
 struct ForcesConfig {
-    float _separationRadius = .1f;
-    float _separationFactor = .1f;
-    float _alignmentRadius  = .2f;
-    float _alignmentFactor  = .4f;
-    float _cohesionRadius   = .2f;
-    float _cohesionFactor   = .4f;
+    float _turnFactor = .8f;
 
-    float _turnFactor = .4f; // ToDo: Add to GUI
+    float _separationRadius = .7f;
+    float _separationFactor = .1f;
+    float _alignmentRadius  = 1.5f;
+    float _alignmentFactor  = 1.5f;
+    float _cohesionRadius   = 1.f;
+    float _cohesionFactor   = 0.1f;
 };
 
 } // namespace Boids
