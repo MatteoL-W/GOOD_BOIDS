@@ -8,6 +8,18 @@ BoidsShapesType const& getCloudInstance()
     return cloud;
 }
 
+BoidsShapesType const& getBlueCloudInstance()
+{
+    static BoidsShapesType const cloud = BlueCloud{};
+    return cloud;
+}
+
+BoidsShapesType const& getPinkCloudInstance()
+{
+    static BoidsShapesType const cloud = PinkCloud{};
+    return cloud;
+}
+
 SpectatorShapesType const& getSpectatorShapeInstance()
 {
     static SpectatorShapesType const cone = Sheep{};

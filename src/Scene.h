@@ -27,7 +27,9 @@ private:
     SceneRadius _sceneRadius{};
 
     Boids::Species _firstSpecies{Rendering::Shapes::getCloudInstance()};
-    Boids::Species _secondSpecies{Rendering::Shapes::getCloudInstance()}; // ToDo: Add Species
+    Boids::Species _secondSpecies{Rendering::Shapes::getPinkCloudInstance()};
+    Boids::Species _thirdSpecies{Rendering::Shapes::getBlueCloudInstance()};
+//    Boids::Species _demoLODSpecies{Rendering::Shapes::getPinkCloudInstance()}; ToDo
     Boids::Manager _boidsManager{};
 
     Spectator::Spectator  _spectator{};

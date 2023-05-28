@@ -6,7 +6,9 @@ namespace Rendering::Shapes {
 
 Cloud::Cloud()
     : _LODHandler(
-        {Engine::Model{"assets/models/Cloud/cute_cloud.gltf", false}},
+        {Engine::Model{"assets/models/Cloud/cute_cloud.gltf", false},
+         Engine::Model{"assets/models/Cloud/cute_cloud_mid.gltf", false},
+         Engine::Model{"assets/models/Cloud/cute_cloud_low.gltf", false}},
         10.f
     )
 {}

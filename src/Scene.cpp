@@ -20,16 +20,19 @@ void Scene::setupWorld(p6::Context& ctx)
 
 void Scene::initializeBoids(SceneRadius& sceneRadius)
 {
-    _firstSpecies._quantity       = 15;
+    _firstSpecies._quantity       = 25;
     _firstSpecies._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 1.4f};
-//    _firstSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
 
-    _secondSpecies._quantity       = 0;
-    _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.025f, ._foodAttractionRadius = 0.6f};
-    _secondSpecies._forcesConfig   = {._separationRadius = 0.13f, ._separationFactor = 0.01f, ._alignmentRadius = .3f, ._alignmentFactor = .5f, ._cohesionRadius = .3f, ._cohesionFactor = .5f};
+    _secondSpecies._quantity       = 8;
+    _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.1f, ._foodAttractionRadius = 4.f};
+
+    _thirdSpecies._quantity       = 10;
+    _thirdSpecies._behaviorConfig = {._minSpeed = .060f, ._maxSpeed = 0.085f};
+    _thirdSpecies._forcesConfig = {._cohesionRadius = 3.f, ._cohesionFactor = 0.2f};
 
     _boidsManager.addSpecies(sceneRadius, _firstSpecies);
     _boidsManager.addSpecies(sceneRadius, _secondSpecies);
+    _boidsManager.addSpecies(sceneRadius, _thirdSpecies);
 }
 
 void Scene::initializeLights()
@@ -66,8 +69,9 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
         ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))
         {
-            GUI::showSpeciesGUI("Little boids", _firstSpecies);
-            GUI::showSpeciesGUI("Med boids", _secondSpecies);
+            GUI::showSpeciesGUI("Majority", _firstSpecies);
+            GUI::showSpeciesGUI("Eaters", _secondSpecies);
+            GUI::showSpeciesGUI("Gangsters", _thirdSpecies);
             ImGui::EndTabBar();
         }
 
