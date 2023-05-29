@@ -25,6 +25,7 @@ void Scene::initializeBoids(SceneRadius& sceneRadius)
 
     _secondSpecies._quantity       = 3;
     _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.1f, ._foodAttractionRadius = 4.5f};
+    _secondSpecies._forcesConfig   = {._separationRadius = 0.1f, ._alignmentFactor = 0.f, ._cohesionFactor = 0.f};
 
     _thirdSpecies._quantity       = 5;
     _thirdSpecies._behaviorConfig = {._minSpeed = .060f, ._maxSpeed = 0.085f};
@@ -45,7 +46,7 @@ void Scene::loadSpecies(SceneRadius& sceneRadius)
 
 void Scene::initializeLights()
 {
-    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.07f, .2f, .3f}, {1.f, 1.f, 1.f}};
+    _renderingDatas._directional = Rendering::Lights::Directional{{10.f, 4.2f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.07f, .2f, .3f}, {1.f, 1.f, 1.f}};
     _renderingDatas._points      = {
         Rendering::Lights::Point{Spectator::getSpectatorPosition(), Rendering::Lights::Intensity{.01f, .3f, .4f}, {1.f, 1.f, 1.f}, 1.f, .09f, .032f},
     };
@@ -144,7 +145,6 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _spectator.draw(_renderingDatas);
     _obstaclesManager.draw(_renderingDatas);
     _foodProvider.draw();
-    _sheep.draw({},_renderingDatas);
 
     _skyBox.draw();
     _cubeMap.draw();
