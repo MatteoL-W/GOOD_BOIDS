@@ -11,6 +11,8 @@ Drop::Drop()
 
 void Drop::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
 {
+    glCullFace(GL_FRONT);
+
     auto const rotationQuaternion = glm::rotation(glm::vec3{0.f, 0.f, 1.f}, glm::vec3{0.f, 1.f, 0.f});
 
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
@@ -32,6 +34,7 @@ void Drop::draw(utils::TransformAttributes const& transformAttributes, utils::Re
 
     _model.draw();
 
+    glCullFace(GL_BACK);
     glUseProgram(0);
 }
 
