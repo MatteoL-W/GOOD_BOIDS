@@ -15,7 +15,6 @@ void showSpeciesGUI(std::string speciesName, Boids::Species& species)
     }
 }
 
-// ToDo: Remove ?
 void showParametersGUI(Boids::Species& species)
 {
     ImGui::Text("Parameters");

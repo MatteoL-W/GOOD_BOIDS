@@ -15,6 +15,7 @@ public:
 
 private:
     void initializeBoids(SceneRadius&);
+    void loadSpecies(SceneRadius& sceneRadius);
     void initializeLights();
     void initializeSkyBox();
     void initializeImGui(std::function<void()>& imguiFn);

@@ -32,6 +32,11 @@ void Scene::initializeBoids(SceneRadius& sceneRadius)
 
     _demoLODSpecies._quantity = 0;
 
+    loadSpecies(sceneRadius);
+}
+
+void Scene::loadSpecies(SceneRadius& sceneRadius)
+{
     _boidsManager.addSpecies(sceneRadius, _firstSpecies);
     _boidsManager.addSpecies(sceneRadius, _secondSpecies);
     _boidsManager.addSpecies(sceneRadius, _thirdSpecies);
@@ -69,12 +74,19 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
         GUI::showDirectionalLightGUI(_renderingDatas._directional);
         GUI::showPointLightsGUI(_renderingDatas._points);
 
+        if (ImGui::Button("Reload all boids"))
+        {
+            _boidsManager.reset();
+            loadSpecies(_sceneRadius);
+        }
+
         ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))
         {
             GUI::showSpeciesGUI("Majority", _firstSpecies);
             GUI::showSpeciesGUI("Eaters", _secondSpecies);
             GUI::showSpeciesGUI("Gangsters", _thirdSpecies);
+            GUI::showSpeciesGUI("LOD Demo", _demoLODSpecies);
             ImGui::EndTabBar();
         }
 
