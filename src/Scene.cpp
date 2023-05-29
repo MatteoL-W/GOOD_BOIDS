@@ -20,13 +20,13 @@ void Scene::setupWorld(p6::Context& ctx)
 
 void Scene::initializeBoids(SceneRadius& sceneRadius)
 {
-    _firstSpecies._quantity       = 25;
+    _firstSpecies._quantity       = 10;
     _firstSpecies._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 1.4f};
 
-    _secondSpecies._quantity       = 8;
+    _secondSpecies._quantity       = 3;
     _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.1f, ._foodAttractionRadius = 4.5f};
 
-    _thirdSpecies._quantity       = 10;
+    _thirdSpecies._quantity       = 5;
     _thirdSpecies._behaviorConfig = {._minSpeed = .060f, ._maxSpeed = 0.085f};
     _thirdSpecies._forcesConfig   = {._cohesionRadius = 3.f, ._cohesionFactor = 0.2f};
 
@@ -45,7 +45,7 @@ void Scene::loadSpecies(SceneRadius& sceneRadius)
 
 void Scene::initializeLights()
 {
-    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.1f, .2f, .3f}, {1.f, 1.f, 1.f}};
+    _renderingDatas._directional = Rendering::Lights::Directional{{.0f, 5.0f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.07f, .2f, .3f}, {1.f, 1.f, 1.f}};
     _renderingDatas._points      = {
         Rendering::Lights::Point{Spectator::getSpectatorPosition(), Rendering::Lights::Intensity{.01f, .3f, .4f}, {1.f, 1.f, 1.f}, 1.f, .09f, .032f},
     };
@@ -68,12 +68,6 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
     imguiFn = [&]() {
         ImGui::Begin("My super GUI");
 
-        GUI::showCameraGUI();
-        GUI::showObstacleGUI(_obstaclesManager.getConfig());
-        GUI::showFoodGUI(_foodProvider.getConfig());
-        GUI::showDirectionalLightGUI(_renderingDatas._directional);
-        GUI::showPointLightsGUI(_renderingDatas._points);
-
         if (ImGui::Button("Reload all boids"))
         {
             _boidsManager.reset();
@@ -95,6 +89,12 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
             GUI::showSpeciesGUI("LOD Demo", _demoLODSpecies);
             ImGui::EndTabBar();
         }
+
+        GUI::showCameraGUI();
+        GUI::showDirectionalLightGUI(_renderingDatas._directional);
+        GUI::showPointLightsGUI(_renderingDatas._points);
+        GUI::showObstacleGUI(_obstaclesManager.getConfig());
+        GUI::showFoodGUI(_foodProvider.getConfig());
 
         ImGui::End();
 
@@ -144,6 +144,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _spectator.draw(_renderingDatas);
     _obstaclesManager.draw(_renderingDatas);
     _foodProvider.draw();
+    _sheep.draw({},_renderingDatas);
 
     _skyBox.draw();
     _cubeMap.draw();

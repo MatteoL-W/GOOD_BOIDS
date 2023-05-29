@@ -1,5 +1,5 @@
 #pragma once
 
 struct SceneRadius {
-    float value = 6.f;
+    float value = 4.f;
 };
