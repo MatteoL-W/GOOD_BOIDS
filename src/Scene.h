@@ -29,7 +29,7 @@ private:
     Boids::Species _firstSpecies{Rendering::Shapes::getCloudInstance()};
     Boids::Species _secondSpecies{Rendering::Shapes::getPinkCloudInstance()};
     Boids::Species _thirdSpecies{Rendering::Shapes::getBlueCloudInstance()};
-//    Boids::Species _demoLODSpecies{Rendering::Shapes::getPinkCloudInstance()}; ToDo
+    Boids::Species _demoLODSpecies{Rendering::Shapes::getDebugLODInstance()};
     Boids::Manager _boidsManager{};
 
     Spectator::Spectator  _spectator{};

@@ -20,6 +20,12 @@ BoidsShapesType const& getPinkCloudInstance()
     return cloud;
 }
 
+BoidsShapesType const& getDebugLODInstance()
+{
+    static BoidsShapesType const cloud = DebugLOD{};
+    return cloud;
+}
+
 SpectatorShapesType const& getSpectatorShapeInstance()
 {
     static SpectatorShapesType const cone = Sheep{};

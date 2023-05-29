@@ -24,15 +24,18 @@ void Scene::initializeBoids(SceneRadius& sceneRadius)
     _firstSpecies._behaviorConfig = {._minSpeed = .050f, ._maxSpeed = 0.075f, ._foodAttractionRadius = 1.4f};
 
     _secondSpecies._quantity       = 8;
-    _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.1f, ._foodAttractionRadius = 4.f};
+    _secondSpecies._behaviorConfig = {._minSpeed = .020f, ._maxSpeed = 0.1f, ._foodAttractionRadius = 4.5f};
 
     _thirdSpecies._quantity       = 10;
     _thirdSpecies._behaviorConfig = {._minSpeed = .060f, ._maxSpeed = 0.085f};
     _thirdSpecies._forcesConfig   = {._cohesionRadius = 3.f, ._cohesionFactor = 0.2f};
 
+    _demoLODSpecies._quantity = 0;
+
     _boidsManager.addSpecies(sceneRadius, _firstSpecies);
     _boidsManager.addSpecies(sceneRadius, _secondSpecies);
     _boidsManager.addSpecies(sceneRadius, _thirdSpecies);
+    _boidsManager.addSpecies(sceneRadius, _demoLODSpecies);
 }
 
 void Scene::initializeLights()
