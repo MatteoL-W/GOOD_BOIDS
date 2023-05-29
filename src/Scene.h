@@ -5,6 +5,7 @@
 #include "Rendering/Engine/SkyBox.h"
 #include "Rendering/Shadow/ShadowMap.h"
 #include "Rendering/Shapes/List/Cube.h"
+#include "Rendering/Shapes/List/Fence.h"
 #include "Rendering/Shapes/List/Ground.h"
 #include "Spectator/Spectator.h"
 #include "utils/RenderingDatas.h"
@@ -45,4 +46,5 @@ private:
     Rendering::Engine::SkyBox _skyBox{};
     Rendering::Shapes::Cube   _cubeMap{_sceneRadius.value};
     Rendering::Shapes::Ground _floor{_sceneRadius.value};
+    Rendering::Shapes::Fence  _fence{};
 };

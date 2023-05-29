@@ -5,7 +5,7 @@
 namespace Rendering::Shapes {
 
 Ground::Ground(float radius)
-    : _texture("assets/textures/ground.jpg"), _radius(radius), _vertices(Geometries::generatePlaneVertices()), _mesh(Engine::Mesh{_vertices})
+    : _texture("assets/textures/ground.png"), _radius(radius), _vertices(Geometries::generatePlaneVertices()), _mesh(Engine::Mesh{_vertices})
 {}
 
 void Ground::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const

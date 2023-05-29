@@ -145,6 +145,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _spectator.draw(_renderingDatas);
     _obstaclesManager.draw(_renderingDatas);
     _foodProvider.draw();
+    _fence.draw(utils::TransformAttributes{._position = {0.f, -_sceneRadius.value, 0.f}}, _renderingDatas);
 
     _skyBox.draw();
     _cubeMap.draw();
