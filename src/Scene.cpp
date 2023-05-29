@@ -46,7 +46,7 @@ void Scene::loadSpecies(SceneRadius& sceneRadius)
 
 void Scene::initializeLights()
 {
-    _renderingDatas._directional = Rendering::Lights::Directional{{10.f, 4.2f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.07f, .2f, .3f}, {1.f, 1.f, 1.f}};
+    _renderingDatas._directional = Rendering::Lights::Directional{{10.f, 7.f, -5.f}, {0.f, 0.f, 0.f}, Rendering::Lights::Intensity{.07f, .2f, .3f}, {1.f, 1.f, 1.f}};
     _renderingDatas._points      = {
         Rendering::Lights::Point{Spectator::getSpectatorPosition(), Rendering::Lights::Intensity{.01f, .3f, .4f}, {1.f, 1.f, 1.f}, 1.f, .09f, .032f},
     };
@@ -127,6 +127,8 @@ void Scene::renderDepthMap()
             };
             _boidsManager.draw(renderingDatas);
             _spectator.draw(renderingDatas);
+            _fence.draw(utils::TransformAttributes{._position = {0.f, -_sceneRadius.value, 0.f}}, renderingDatas);
+            _house.draw({._position = {0.f, -_sceneRadius.value, 0.f}}, renderingDatas);
         },
         _renderingDatas._directional.value()
     );
@@ -146,6 +148,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _obstaclesManager.draw(_renderingDatas);
     _foodProvider.draw();
     _fence.draw(utils::TransformAttributes{._position = {0.f, -_sceneRadius.value, 0.f}}, _renderingDatas);
+    _house.draw({._position = {0.f, -_sceneRadius.value, 0.f}}, _renderingDatas);
 
     _skyBox.draw();
     _cubeMap.draw();
