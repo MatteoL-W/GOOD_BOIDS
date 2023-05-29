@@ -28,7 +28,7 @@ void Scene::initializeBoids(SceneRadius& sceneRadius)
 
     _thirdSpecies._quantity       = 10;
     _thirdSpecies._behaviorConfig = {._minSpeed = .060f, ._maxSpeed = 0.085f};
-    _thirdSpecies._forcesConfig = {._cohesionRadius = 3.f, ._cohesionFactor = 0.2f};
+    _thirdSpecies._forcesConfig   = {._cohesionRadius = 3.f, ._cohesionFactor = 0.2f};
 
     _boidsManager.addSpecies(sceneRadius, _firstSpecies);
     _boidsManager.addSpecies(sceneRadius, _secondSpecies);
@@ -60,9 +60,9 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
     imguiFn = [&]() {
         ImGui::Begin("My super GUI");
 
+        GUI::showCameraGUI();
         GUI::showObstacleGUI(_obstaclesManager.getConfig());
         GUI::showFoodGUI(_foodProvider.getConfig());
-        GUI::showCameraGUI();
         GUI::showDirectionalLightGUI(_renderingDatas._directional);
         GUI::showPointLightsGUI(_renderingDatas._points);
 

@@ -67,7 +67,6 @@ void showObstacleGUI(Features::ObstaclesConfig& config) {
 
     if (ImGui::DragInt("Number of obstacles drops", &config._drops, 3, 0, 10)
         || ImGui::DragInt("Interval of obstacles drop", &config._providingInterval, 5, 0, 30)
-        || ImGui::DragFloat("Obstacle radius", &config._radius, 0.1f, 0.01f, 0.2f)
         || ImGui::DragFloat("Falling factor", &config._fallingFactor, 0.01f, 0.01f, 0.05f))
     {
     }
