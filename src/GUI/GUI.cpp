@@ -120,11 +120,10 @@ void showPointLightsGUI(std::vector<Rendering::Lights::Point>& lights)
         lights.push_back(newLight);
     }
 
-    // We don't print the first light, it's the spectator one
-    if (lights.size() <= 1)
+    if (lights.empty())
         return;
 
-    for (size_t i = 1; i < lights.size(); i++)
+    for (size_t i = 0; i < lights.size(); i++)
     {
         std::string const title = "Point light n°" + std::to_string(i);
         if (ImGui::CollapsingHeader(title.c_str()))

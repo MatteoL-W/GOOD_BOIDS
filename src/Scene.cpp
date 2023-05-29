@@ -80,6 +80,12 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
             loadSpecies(_sceneRadius);
         }
 
+        if (ImGui::Button("Reset parameters and reload all boids"))
+        {
+            _boidsManager.reset();
+            initializeBoids(_sceneRadius);
+        }
+
         ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))
         {
