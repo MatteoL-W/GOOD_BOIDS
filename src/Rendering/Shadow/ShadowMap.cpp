@@ -61,7 +61,7 @@ void ShadowMap::renderDepthMap(std::function<void(glm::mat4)> const& renderCaste
 
 void ShadowMap::generateLightSpaceMatrix(Lights::Directional& directional)
 {
-    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 15.f);
+    auto const lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.1f, 20.f);
     auto const lightView       = glm::lookAt(directional.getPosition(), directional.getDirection(), glm::vec3(0.0f, 1.0f, 0.0f));
     _lightSpaceMatrix          = lightProjection * lightView;
 }
