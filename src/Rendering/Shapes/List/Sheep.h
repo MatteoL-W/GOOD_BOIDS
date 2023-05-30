@@ -29,13 +29,9 @@ public:
     Sheep(Sheep&& other) noexcept            = default;
     Sheep& operator=(Sheep&& other) noexcept = default;
 
-public:
-    void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
-    void  setRadius(float radius) { _radius = radius; };
-    float getRadius() const { return _radius; };
+    void draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
 
 private:
-    float                   _radius{};
     Programs::ToonAndShadow _shader{};
     Programs::DepthMap      _depthMap{};
 

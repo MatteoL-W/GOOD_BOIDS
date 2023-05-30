@@ -29,13 +29,9 @@ public:
     House(House&& other) noexcept            = default;
     House& operator=(House&& other) noexcept = default;
 
-public:
-    void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
-    void  setRadius(float radius) { _radius = radius; };
-    float getRadius() const { return _radius; };
+    void draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
 
 private:
-    float                    _radius{};
     Programs::PhongAndShadow _shader{};
     Programs::DepthMap       _depthMap{};
 

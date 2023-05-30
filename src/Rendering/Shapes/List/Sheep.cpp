@@ -5,8 +5,7 @@
 namespace Rendering::Shapes {
 
 Sheep::Sheep()
-    : _radius(0.2f)
-    , _model("assets/models/Sheep/Sheep.gltf")
+    : _model("assets/models/Sheep/Sheep2.gltf")
 {}
 
 void Sheep::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
@@ -17,7 +16,6 @@ void Sheep::draw(utils::TransformAttributes const& transformAttributes, utils::R
     auto const rotationLeftQuaternion = glm::rotation(glm::vec3(1.f, 0.f, 0.f), glm::normalize(transformAttributes._left));
 
     auto modelMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3(_radius));
     modelMatrix      = modelMatrix * glm::mat4_cast(rotationFrontQuaternion);
     modelMatrix      = modelMatrix * glm::mat4_cast(rotationLeftQuaternion);
 

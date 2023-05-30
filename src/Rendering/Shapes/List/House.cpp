@@ -4,8 +4,7 @@
 namespace Rendering::Shapes {
 
 House::House()
-    : _radius(1.f)
-    , _model(Engine::Model{"assets/models/House/house2.gltf"})
+    : _model(Engine::Model{"assets/models/House/house2.gltf"})
 {}
 
 void House::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
@@ -13,7 +12,6 @@ void House::draw(utils::TransformAttributes const& transformAttributes, utils::R
     glCullFace(GL_FRONT);
 
     auto modelMatrix = glm::translate(glm::mat4{1}, transformAttributes._position);
-    modelMatrix      = glm::scale(modelMatrix, glm::vec3{_radius});
 
     switch (renderingDatas._renderType)
     {

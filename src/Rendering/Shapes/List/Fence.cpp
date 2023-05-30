@@ -5,8 +5,7 @@
 namespace Rendering::Shapes {
 
 Fence::Fence()
-    : _radius(1.f)
-    , _model(Engine::Model{"assets/models/Fence/fence.gltf"})
+    : _model(Engine::Model{"assets/models/Fence/fence.gltf"})
 {}
 
 void Fence::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const

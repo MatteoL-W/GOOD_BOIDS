@@ -29,15 +29,11 @@ public:
     Fence(Fence&& other) noexcept            = default;
     Fence& operator=(Fence&& other) noexcept = default;
 
-public:
-    void  draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
-    void  setRadius(float radius) { _radius = radius; };
-    float getRadius() const { return _radius; };
+    void draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas&) const;
 
 private:
     void drawWithRightShader(glm::mat4& model, utils::RenderingDatas& renderingDatas) const;
 
-    float                    _radius{};
     Programs::PhongAndShadow _shader{};
     Programs::DepthMap       _depthMap{};
 
