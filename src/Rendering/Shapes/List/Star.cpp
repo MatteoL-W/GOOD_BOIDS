@@ -6,7 +6,7 @@ namespace Rendering::Shapes {
 
 Star::Star(float radius)
     : _radius(radius)
-    , _model("assets/models/Star/Star.gltf")
+    , _model("assets/models/Star/Star2.gltf")
 {}
 
 void Star::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
@@ -15,7 +15,6 @@ void Star::draw(utils::TransformAttributes const& transformAttributes, utils::Re
 
     auto modelMatrix = glm::translate(glm::mat4{1.f}, transformAttributes._position);
     modelMatrix      = glm::scale(modelMatrix, glm::vec3(_radius));
-    modelMatrix      = glm::rotate(modelMatrix, 90.f, glm::vec3{0.f, 0.f, 1.f});
 
     switch (renderingDatas._renderType)
     {

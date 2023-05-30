@@ -5,8 +5,8 @@
 namespace Rendering::Shapes {
 
 Drop::Drop()
-    : _radius(.01f)
-    , _model(Engine::Model{"assets/models/Drop/scene.gltf"})
+    : _radius(.5f)
+    , _model(Engine::Model{"assets/models/Drop/drop.gltf"})
 {}
 
 void Drop::draw(utils::TransformAttributes const& transformAttributes, utils::RenderingDatas& renderingDatas) const
