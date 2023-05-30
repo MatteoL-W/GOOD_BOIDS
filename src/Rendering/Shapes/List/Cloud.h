@@ -35,7 +35,7 @@ public:
     float getRadius() const { return _radius; };
 
 private:
-    float                   _radius{};
+    float                   _radius{0.2f};
     Programs::ToonAndShadow _shader{};
     Programs::DepthMap      _depthMap{};
 

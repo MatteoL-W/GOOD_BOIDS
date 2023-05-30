@@ -2,34 +2,23 @@
 
 namespace Boids::Calculator {
 
-glm::vec3 computeObstaclesAvoidance(Movement const& boid, Features::ObstaclesManager const& obstacles, float boidRadius)
+glm::vec3 computeObstaclesAvoidance(const Movement& boid, const Features::ObstaclesManager& obstacles, float boidRadius)
 {
-    auto force = glm::vec3{};
+    glm::vec3 force;
 
-    for (auto const& obstacle : obstacles.getObstacles())
+    for (const auto& obstacle : obstacles.getObstacles())
     {
-        auto toObstacle      = obstacle._position - boid.getPosition();
-        auto distance        = glm::length(toObstacle);
-        auto avoidanceRadius = boidRadius + obstacle._radius * 2;
+        auto const  direction    = obstacle._position - boid.getPosition();
+        float const distance     = glm::length(direction);
+        float const sumOfRadii   = obstacle._radius + boidRadius;
+        float const safeDistance = sumOfRadii * 2.f; // Define a safe distance threshold
 
-        if (distance > avoidanceRadius)
-            continue;
-
-        if (distance < obstacle._radius)
+        if (distance < safeDistance)
         {
-            /// The boid is inside the obstacle, push it away drastically
-            force -= glm::normalize(toObstacle);
-            continue;
+            // The boid is too close to the obstacle, calculate the desired force
+            auto const avoidanceForce = glm::normalize(direction) * (safeDistance - distance);
+            force += avoidanceForce;
         }
-
-        /// Smoother bend when the obstacle is pretty close
-        auto tangentPoint         = boid.getPosition() + glm::normalize(toObstacle) * obstacle._radius;
-        auto awayFromTangentForce = boid.getPosition() - tangentPoint;
-        auto distanceFactor       = (avoidanceRadius - distance) / avoidanceRadius;
-        auto smoothFactor         = glm::smoothstep(0.0f, 1.0f, distanceFactor);
-        awayFromTangentForce *= smoothFactor;
-
-        force += awayFromTangentForce;
     }
 
     return force;
@@ -100,6 +89,5 @@ glm::vec3 computeCohesionForce(Movement const& boid, std::vector<Movement> const
     averagePosition /= static_cast<float>(closeBoids.size());
     return averagePosition - boid.getPosition();
 }
-
 
 }; // namespace Boids::Calculator
