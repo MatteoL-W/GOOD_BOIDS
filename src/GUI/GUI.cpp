@@ -116,7 +116,7 @@ void showPointLightsGUI(std::vector<Rendering::Lights::Point>& lights)
 
     if (lights.size() < 10 && ImGui::Button("Add light"))
     {
-        auto newLight = Rendering::Lights::Point{{}, {.1, .2, .3}, {1.f, 1.f, 1.f}, 1.f, .09f, .032f};
+        auto newLight = Rendering::Lights::Point{{}, {.1f, .2f, .3f}, {1.f, 1.f, 1.f}, 1.f, .09f, .032f};
         lights.push_back(newLight);
     }
 
