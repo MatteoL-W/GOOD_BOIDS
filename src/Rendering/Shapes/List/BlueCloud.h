@@ -10,7 +10,7 @@
 #include "Rendering/Engine/Model.h"
 #include "Rendering/Geometries/geometriesVertices.hpp"
 #include "Rendering/Programs/DepthMap/DepthMap.h"
-#include "Rendering/Programs/ShadyToon/ToonAndShadow.h"
+#include "Rendering/Programs/ShadyPhong/PhongAndShadow.h"
 #include "utils/LODHandler.h"
 #include "utils/RenderingDatas.h"
 #include "utils/TransformAttributes.h"
@@ -36,7 +36,7 @@ public:
 
 private:
     float                   _radius{0.2f};
-    Programs::ToonAndShadow _shader{};
+    Programs::PhongAndShadow _shader{};
     Programs::DepthMap      _depthMap{};
 
     utils::LODHandler _LODHandler;
