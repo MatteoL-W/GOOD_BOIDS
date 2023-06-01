@@ -32,7 +32,7 @@ void FoodProvider::update(SceneRadius& sceneRadius)
 
 void FoodProvider::draw(utils::RenderingDatas& renderingDatas) const
 {
-    auto const& shape          = Rendering::Shapes::getFoodShapeInstance(_config._radius);
+    auto const& shape = Rendering::Shapes::getFoodShapeInstance(_config._radius);
 
     if (_foods.empty())
         return;
@@ -53,7 +53,7 @@ void FoodProvider::addFoodRandomly(SceneRadius& sceneRadius)
     for (int i = 0; i < _config._drops; i++)
         _foods.emplace_back(
             p6::random::number(-sceneRadius.value, sceneRadius.value),
-            p6::random::number(-sceneRadius.value, sceneRadius.value),
+            p6::random::number(-sceneRadius.value + 2.5f, sceneRadius.value),
             p6::random::number(-sceneRadius.value, sceneRadius.value)
         );
 }
