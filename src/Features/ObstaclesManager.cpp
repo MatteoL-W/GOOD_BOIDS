@@ -24,7 +24,8 @@ void ObstaclesManager::update(SceneRadius& sceneRadius)
 
         // Modify remaining obstacles
         for (auto& obstacle : _obstacles)
-            obstacle._position.y -= _config._fallingFactor;
+            if (!obstacle._isStaticAndInvisible)
+                obstacle._position.y -= _config._fallingFactor;
     }
 
     if (!_randomDropStartTime.has_value())
@@ -58,16 +59,17 @@ void ObstaclesManager::draw(utils::RenderingDatas& renderingDatas)
     {
         std::visit(
             [&](auto const& sphereShape) {
-                sphereShape.draw(utils::TransformAttributes{obstacle._position}, renderingDatas);
+                if (!obstacle._isStaticAndInvisible)
+                    sphereShape.draw(utils::TransformAttributes{obstacle._position}, renderingDatas);
             },
             shape
         );
     }
 }
 
-void ObstaclesManager::addOne(glm::vec3 pos, float radius)
+void ObstaclesManager::addOne(glm::vec3 pos, float radius, bool isStaticAndInvisible)
 {
-    _obstacles.push_back(SphereObstacle{glm::vec3{pos}, radius});
+    _obstacles.push_back({._position = glm::vec3{pos}, ._radius = radius, ._isStaticAndInvisible = isStaticAndInvisible});
 }
 
 } // namespace Features

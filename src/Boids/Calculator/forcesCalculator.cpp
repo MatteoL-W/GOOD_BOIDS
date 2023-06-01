@@ -4,8 +4,7 @@ namespace Boids::Calculator {
 
 glm::vec3 computeObstaclesAvoidance(const Movement& boid, const Features::ObstaclesManager& obstacles, float boidRadius)
 {
-    glm::vec3 force;
-
+    auto force = glm::vec3{};
     for (const auto& obstacle : obstacles.getObstacles())
     {
         auto const  direction    = obstacle._position - boid.getPosition();
@@ -16,7 +15,7 @@ glm::vec3 computeObstaclesAvoidance(const Movement& boid, const Features::Obstac
         if (distance < safeDistance)
         {
             // The boid is too close to the obstacle, calculate the desired force
-            auto const avoidanceForce = glm::normalize(direction) * (safeDistance - distance);
+            auto const avoidanceForce = glm::vec3{0.f, 1.f, 0.f};
             force += avoidanceForce;
         }
     }

@@ -7,6 +7,7 @@ void Scene::setupWorld(p6::Context& ctx)
     initializeBoids(_sceneRadius);
     initializeLights();
     initializeSkyBox();
+    initializeObstacles();
     initializeImGui(ctx.imgui);
 
     _cameraManager.handleEvents(ctx);
@@ -16,6 +17,10 @@ void Scene::setupWorld(p6::Context& ctx)
         renderDepthMap();
         render({ctx.main_canvas_width(), ctx.main_canvas_height()});
     };
+}
+void Scene::initializeObstacles()
+{
+    _obstaclesManager.addOne({0.f, -_sceneRadius.value + 0.5f, 0.f}, 1.f, true);
 }
 
 void Scene::initializeBoids(SceneRadius& sceneRadius)
@@ -80,6 +85,15 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
             _boidsManager.reset();
             initializeBoids(_sceneRadius);
         }
+
+        if (ImGui::Button("Reset obstacles"))
+            _obstaclesManager.reset();
+
+        if (ImGui::Button("Add house obstacle"))
+            initializeObstacles();
+
+        if (ImGui::Button("Reset foods"))
+            _foodProvider.reset();
 
         ImGui::SeparatorText("Species");
         if (ImGui::BeginTabBar("Species"))
@@ -146,7 +160,7 @@ void Scene::render(glm::ivec2 canvasDimensions)
     _boidsManager.draw(_renderingDatas);
     _spectator.draw(_renderingDatas);
     _obstaclesManager.draw(_renderingDatas);
-    _foodProvider.draw();
+    _foodProvider.draw(_renderingDatas);
     _fence.draw(utils::TransformAttributes{._position = {0.f, -_sceneRadius.value, 0.f}}, _renderingDatas);
     _house.draw({._position = {0.f, -_sceneRadius.value, 0.f}}, _renderingDatas);
 

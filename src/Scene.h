@@ -20,6 +20,7 @@ private:
     void loadSpecies(SceneRadius& sceneRadius);
     void initializeLights();
     void initializeSkyBox();
+    void initializeObstacles();
     void initializeImGui(std::function<void()>& imguiFn);
 
     void updateMembers(p6::Context&);

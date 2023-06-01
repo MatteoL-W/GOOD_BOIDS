@@ -26,6 +26,7 @@ struct ObstaclesConfig {
 struct SphereObstacle {
     glm::vec3 _position{};
     float     _radius{};
+    bool      _isStaticAndInvisible{false};
 };
 
 class ObstaclesManager {
@@ -34,8 +35,9 @@ public:
 
     void update(SceneRadius& sceneRadius);
     void draw(utils::RenderingDatas&);
-    void addOne(glm::vec3 pos, float radius = 0.1f);
+    void addOne(glm::vec3 pos, float radius = 0.1f, bool isStaticAndInvisible = false);
     void enableDrop() { _randomDropStartTime = Clock::now(); };
+    void reset() { _obstacles.clear(); };
 
     std::vector<SphereObstacle> const& getObstacles() const { return _obstacles; };
     ObstaclesConfig&                   getConfig() { return _config; };

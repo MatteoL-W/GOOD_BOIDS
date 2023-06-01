@@ -1,5 +1,4 @@
 #include "Star.h"
-#include <glm/gtx/quaternion.hpp>
 #include "Rendering/Engine/Mesh.h"
 
 namespace Rendering::Shapes {

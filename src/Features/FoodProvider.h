@@ -3,6 +3,7 @@
 #include <p6/p6.h>
 #include <iterator>
 #include <list>
+#include "utils/RenderingDatas.h"
 #include "utils/StrongType.h"
 
 namespace Features {
@@ -26,8 +27,9 @@ public:
     /// Enable the food dropping randomly in the map
     void enableDrop();
     void update(SceneRadius&);
-    void draw() const;
+    void draw(utils::RenderingDatas& renderingDatas) const;
     void erase(std::list<glm::vec3>::const_iterator it) { _foods.erase(it); };
+    void reset() { _foods.clear(); };
 
     std::list<glm::vec3> const& getFood() const { return _foods; };
     float                       getFoodRadius() const { return _config._radius; };

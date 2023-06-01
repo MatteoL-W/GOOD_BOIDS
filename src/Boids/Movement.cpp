@@ -12,9 +12,9 @@ void Movement::update(Iterator::IForEachBoidMovement const& boids, Features::Obs
 {
     // Add forces to acceleration
     addFoodAttraction(foodProvider);
-    addObstaclesAvoidance(obstacles, boidRadius);
     addClassicBoidsForces(boids, boidRadius);
     addWallSteering(sceneRadius);
+    addObstaclesAvoidance(obstacles, boidRadius);
 
     addToVelocity(getAcceleration());
     utils::vec::constrain(_transformAttributes._velocity, _behaviorConfig._minSpeed, _behaviorConfig._maxSpeed);

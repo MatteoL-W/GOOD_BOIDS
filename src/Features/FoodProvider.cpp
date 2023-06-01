@@ -30,10 +30,9 @@ void FoodProvider::update(SceneRadius& sceneRadius)
     }
 }
 
-void FoodProvider::draw() const
+void FoodProvider::draw(utils::RenderingDatas& renderingDatas) const
 {
-    auto const& sphereShape    = Rendering::Shapes::getFoodShapeInstance(_config._radius);
-    auto        renderingDatas = utils::RenderingDatas{._renderType = utils::RenderType::Classic};
+    auto const& shape          = Rendering::Shapes::getFoodShapeInstance(_config._radius);
 
     if (_foods.empty())
         return;
@@ -44,7 +43,7 @@ void FoodProvider::draw() const
             [&](auto const& sphereShape) {
                 sphereShape.draw(utils::TransformAttributes{food}, renderingDatas);
             },
-            sphereShape
+            shape
         );
     }
 }
