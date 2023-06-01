@@ -71,9 +71,18 @@ void Scene::initializeSkyBox()
 
 void Scene::initializeImGui(std::function<void()>& imguiFn)
 {
-    imguiFn = [&]() {
-        ImGui::Begin("My super GUI");
+    imguiFn = [this]() {
+        ImGui::Begin("GOOD BOIDS");
 
+        ImGui::SeparatorText("Species");
+        if (ImGui::BeginTabBar("Species"))
+        {
+            GUI::showSpeciesGUI("Majority", _firstSpecies);
+            GUI::showSpeciesGUI("Eaters", _secondSpecies);
+            GUI::showSpeciesGUI("Gangsters", _thirdSpecies);
+            GUI::showSpeciesGUI("LOD Demo", _demoLODSpecies);
+            ImGui::EndTabBar();
+        }
         if (ImGui::Button("Reload all boids"))
         {
             _boidsManager.reset();
@@ -86,34 +95,27 @@ void Scene::initializeImGui(std::function<void()>& imguiFn)
             initializeBoids(_sceneRadius);
         }
 
+        GUI::showCameraGUI();
+
+        GUI::showDirectionalLightGUI(_renderingDatas._directional);
+        GUI::showPointLightsGUI(_renderingDatas._points);
+        if (ImGui::Button("Reload lights")) {
+            _renderingDatas._directional.reset();
+            _renderingDatas._points.clear();
+            initializeLights();
+        }
+
+        GUI::showObstacleGUI(_obstaclesManager.getConfig());
         if (ImGui::Button("Reset obstacles"))
             _obstaclesManager.reset();
-
         if (ImGui::Button("Add house obstacle"))
             initializeObstacles();
 
+        GUI::showFoodGUI(_foodProvider.getConfig());
         if (ImGui::Button("Reset foods"))
             _foodProvider.reset();
 
-        ImGui::SeparatorText("Species");
-        if (ImGui::BeginTabBar("Species"))
-        {
-            GUI::showSpeciesGUI("Majority", _firstSpecies);
-            GUI::showSpeciesGUI("Eaters", _secondSpecies);
-            GUI::showSpeciesGUI("Gangsters", _thirdSpecies);
-            GUI::showSpeciesGUI("LOD Demo", _demoLODSpecies);
-            ImGui::EndTabBar();
-        }
-
-        GUI::showCameraGUI();
-        GUI::showDirectionalLightGUI(_renderingDatas._directional);
-        GUI::showPointLightsGUI(_renderingDatas._points);
-        GUI::showObstacleGUI(_obstaclesManager.getConfig());
-        GUI::showFoodGUI(_foodProvider.getConfig());
-
         ImGui::End();
-
-        //        ImGui::ShowDemoWindow();
     };
 }
 
