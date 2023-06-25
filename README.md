@@ -8,6 +8,32 @@ Project powered by [p6](https://julesfouchy.github.io/projects/p6) | See our rep
 
 _____________________
 
+## Showcase
+
+<img src="https://lovely-stoplight-6a3.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F1819f3b5-510d-4385-b07b-3379d9496e88%2FUntitled.png?id=2eca882f-1f82-4103-b99b-b064b160d22a&table=block&spaceId=e203a247-ae3e-4820-9615-04fa17245e66&width=2000&userId=&cache=v2">
+
+<img src="https://lovely-stoplight-6a3.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff02c9812-22ae-4757-878a-b323d7b1b088%2FUntitled.png?id=c80ddece-f4dd-4796-bd89-08f52b98c06d&table=block&spaceId=e203a247-ae3e-4820-9615-04fa17245e66&width=2000&userId=&cache=v2">
+
+<img src="https://lovely-stoplight-6a3.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb34973bb-3643-4ef8-a808-1dfd39da40c7%2FUntitled.png?id=4cd4c178-6878-4234-8cb5-fbcc93f864b2&table=block&spaceId=e203a247-ae3e-4820-9615-04fa17245e66&width=2000&userId=&cache=v2">
+
+_____________________
+
+## Content
+
+- Boids (foods & obstacles)
+- Complete GUI/IHM
+- 3D glTF models
+- Skybox
+- Cube
+- Cameras (First Person and Third Person)
+- Arpenteur
+- Ponctuals and directionals lights
+- Lumières directionnelles et ponctuelles
+- Shadow mapping
+- Illuminations models (blinn-phong and toon)
+- LOD
+_____________________
+
 ## Setting up
 
 - Install CMake
